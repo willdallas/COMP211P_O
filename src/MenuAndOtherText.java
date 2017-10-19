@@ -1,11 +1,12 @@
 import java.util.Scanner;
+
 import static java.lang.System.out;
 
 class MenuAndOtherText {
 
     private static Scanner scan = new Scanner(System.in);
 
-    static void menu(String text){
+    static void menu(String text) {
 
         MiscFunctions.clearScreen();
 
@@ -21,15 +22,19 @@ class MenuAndOtherText {
 
         String userChoice = scan.next();
 
-        if (userChoice.equals("L") || userChoice.equals("l")) UserManagement.login();
-        if (userChoice.equals("R") || userChoice.equals("r")) UserManagement.register("");
-        if (userChoice.equals("A") || userChoice.equals("a")) about();
-        if (userChoice.equals("P") || userChoice.equals("p")) Game.start();
-
+        if (userChoice.equals("L") || userChoice.equals("l")) {
+            UserManagement.login();
+        } else if (userChoice.equals("R") || userChoice.equals("r")) {
+            UserManagement.register("");
+        } else if (userChoice.equals("A") || userChoice.equals("a")) {
+            about();
+        } else if (userChoice.equals("P") || userChoice.equals("p")) {
+            Game.start();
+        }
 
     }
 
-    private static void about(){
+    private static void about() {
 
         MiscFunctions.clearScreen();
 
@@ -38,7 +43,6 @@ class MenuAndOtherText {
                 "2)...................\n\t" +
                 "3)...................\n\t" +
                 "4)...................\n\n\n\n");
-
 
     }
 
