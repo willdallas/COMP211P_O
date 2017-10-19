@@ -10,9 +10,8 @@ class Game {
             out.print("\n\n\t-----GAME GOES HERE-----\n\n\n");
         }
         else{
-            MenuAndText.menu("----------\nPlease login to play the game.\n----------\n");
+            MenuAndOtherText.menu("----------\nPlease login to play the game.\n----------\n");
         }
     }
-
 
 }

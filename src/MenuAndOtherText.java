@@ -1,8 +1,7 @@
 import java.util.Scanner;
-
 import static java.lang.System.out;
 
-class MenuAndText {
+class MenuAndOtherText {
 
     private static Scanner scan = new Scanner(System.in);
 
@@ -10,7 +9,7 @@ class MenuAndText {
 
         MiscFunctions.clearScreen();
 
-        out.println(text + "\n");
+        out.println(text + "\n"); //When this method is called, text can be passed through to be displayed before the menu
 
         out.print("\tLogin (L)\n" +
                 "\tRegister (R)\n" +
