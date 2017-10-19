@@ -2,16 +2,15 @@ import static java.lang.System.out;
 
 class Game {
 
-    static void game(){
+    static void start(){
 
-        if (UserManagement.isUserAuthenticated == true){
-            out.print("GAME");
+        MiscFunctions.clearScreen();
+
+        if (UserManagement.isUserAuthenticated){
+            out.print("\n\n\t-----GAME GOES HERE-----\n\n\n");
         }
         else{
-
-            out.print("Please login to play the game.");
-
-            InformationAndMenu.menu();
+            MenuAndText.menu("----------\nPlease login to play the game.\n----------\n");
         }
     }
 

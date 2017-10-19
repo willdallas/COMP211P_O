@@ -5,7 +5,7 @@ class UserManagement {
 
     private static Scanner scan = new Scanner(System.in);
 
-    static boolean isUserAuthenticated = false;  //Not private so can be accessed later from the Game.java class to check if logged in
+    static boolean isUserAuthenticated = false;  //Not private so variable can be accessed from the Game.java class to check if logged in
 
     private static String username;
     private static String password;
@@ -13,6 +13,8 @@ class UserManagement {
     static void login(){ //Prompts user for login details, verifies their details, etc.......
 
         String usernameInput, passwordInput;
+
+        MiscFunctions.clearScreen();
 
         out.print("\n\n\tPlease enter your username: ");
         usernameInput = scan.next();
@@ -22,33 +24,35 @@ class UserManagement {
 
 
         if (passwordInput.equals(password) && usernameInput.equals(username)){
-            out.print("\n\n\tYou're logged in!\n\n");
-
             isUserAuthenticated = true;
 
-            InformationAndMenu.menu();
+            MenuAndText.menu("----------\nYou're logged in!\n----------\n");
         }
         else{
-            out.print("\n\n\tYour username and password didn't match the records.");
-            out.print("\n\tEnter 'R' to re-try, or anything else to return to the Menu: ");
-            String s = scan.next();
+            out.print("\n\nYour username and password didn't match the records.");
+            out.print("\n\nEnter 'R' to retry, or press return to the Menu: ");
+            Scanner scan_1 = scan.useDelimiter("\n");
+            String s = scan_1.next();
 
             if (s.equals("R") || s.equals("r")) login();
-            else InformationAndMenu.menu();
+            else MenuAndText.menu("");
         }
 
     }
 
-    static void register(){
+    static void register(String text){
+
+        MiscFunctions.clearScreen();
+
+        out.print(text + "\n\n");
 
         out.print("\n\n\tPlease enter a username: ");
         String usernameInput = scan.next();
 
         if (isUserEnteredDataOK(usernameInput, "username")) username = usernameInput;
         else{
-            out.print("\n\tSorry! Your username must be at least two characters long, start with a letter, and contain no symbols.");
-            out.print("\n\tPlease try again.");
-            register();
+            register("\nSorry! Your username must be at least two characters long,\n\t" +
+                    "start with a letter, and contain no symbols.\n\nPlease try again.");
         }
 
         out.print("\tPlease enter a password: ");
@@ -56,24 +60,24 @@ class UserManagement {
 
         if (isUserEnteredDataOK(passwordInput, "password")) password = passwordInput;
         else{
-            out.print("\n\tSorry! Your password must be at least five characters long, and contain at least one symbol");
-            out.print("\n\tPlease try again.");
-            register();
+            register("\nSorry! Your password must be at least five characters long, \n\t" +
+                    "and contain at least one symbol\n\nPlease try again.");
         }
 
-        out.print("\n\n\tYou have registered!\n\n");
-        InformationAndMenu.menu();
+        MenuAndText.menu("----------\nYou have registered!\n----------\n");
 
     }
 
     private static boolean isUserEnteredDataOK(String data, String type) {
 
-        if (type.equals("username"))
+        if (type.equals("username")) {
             return !(specialCharactersInString(data) > 0 || data.length() < 2 || Character.isDigit(data.charAt(0)));
+        }
 
-        if (type.equals("password")) return !(data.length() < 2 || specialCharactersInString(data) < 1);
+        if (type.equals("password")) if (!(data.length() < 2 || specialCharactersInString(data) < 1)) return true;
 
         return false;
+
     }
 
 
