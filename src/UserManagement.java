@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 import static java.lang.System.out;
 
 class UserManagement {
@@ -8,10 +7,10 @@ class UserManagement {
 
     static boolean isUserAuthenticated = false;  //Variable that can be checked by other classes (e.g. Game) to determine if the user is logged in
 
-    private static String username;
+    private static String username; //These variables used by multiple methods
     private static String password;
 
-    static void login() { //Prompts user for login details, and sets 'ifUserAuthenticated' to true if username/password match those used for registration
+    static void login() {
 
         MiscFunctions.clearScreen("");
 
@@ -21,8 +20,7 @@ class UserManagement {
         out.print("\tPlease enter your password: ");
         String passwordInput = scan.next();
 
-
-        if (passwordInput.equals(password) && usernameInput.equals(username)) {
+        if (passwordInput.equals(password) && usernameInput.equals(username)) { //Checks if username and password match those given in register()
             isUserAuthenticated = true;
             MenuAndOtherText.menu("----------\nYou're logged in!\n----------\n");
         } else {
@@ -46,7 +44,7 @@ class UserManagement {
 
         String usernameInput = usernameRegistration("");
 
-        while (usernameInput.equals("")) {
+        while (usernameInput.equals("")) { //If inadequate username given, loops until adequate one given
             out.print("\nSorry! Your username must be at least two characters long,\n" +
                     "start with a letter, and contain no symbols.");
 
@@ -56,7 +54,7 @@ class UserManagement {
 
         String passwordInput = passwordRegistration("");
 
-        while (passwordInput.equals("")) {
+        while (passwordInput.equals("")) { //If inadequate password given, loops until adequate one given
             out.print("\nSorry! Your password must be at least five characters long, \n" +
                     "and contain at least one symbol.");
 
@@ -64,7 +62,7 @@ class UserManagement {
         }
         password = usernameInput;
 
-        MenuAndOtherText.menu("----------\nYou have registered!\n----------\n");
+        MenuAndOtherText.menu("----------\nYou have registered!\n----------\n"); //When both username and password satisfactory, returns to menu
 
     }
 
@@ -80,10 +78,10 @@ class UserManagement {
     }
 
     private static String passwordRegistration(String firstTimeOrNot) {
-        out.print("\n\n\tPlease " + firstTimeOrNot + "enter a new password: ");
+        out.print("\n\n\tPlease " + firstTimeOrNot + "enter a new password: "); //Modifies text printed depending on whether it's the first time
         String input = scan.next();
 
-        if (!(input.length() < 5 || specialCharactersInString(input) < 1)) {
+        if (!(input.length() < 5 || specialCharactersInString(input) < 1)) { //Checks if given password meets specifications: length > 5, special characters > 1)
             return input;
         } else {
             return "";
