@@ -26,7 +26,6 @@ class UserManagement {
         } else {
             out.print("\n\nYour username and password didn't match the records.");
             out.print("\n\nEnter 'R' to retry, or press enter to return to the Menu: ");
-
             String input = scan.next();
 
             if (input.equals("R") || input.equals("r")) {
@@ -60,7 +59,7 @@ class UserManagement {
 
             passwordInput = passwordRegistration("re-");
         }
-        password = usernameInput;
+        password = passwordInput;
 
         MenuAndOtherText.menu("----------\nYou have registered!\n----------\n"); //When both username and password satisfactory, returns to menu
 
