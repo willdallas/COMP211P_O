@@ -4,7 +4,7 @@ class Game {
 
     static void start() {
 
-        MiscFunctions.clearScreen();
+        MiscFunctions.clearScreen("");
 
         if (UserManagement.isUserAuthenticated) {
             out.print("\n\n\t-----GAME GOES HERE-----\n\n\n");
