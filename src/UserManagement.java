@@ -55,7 +55,7 @@ class UserManagement {
 
         while (passwordInput.equals("")) { //If inadequate password given, loops until adequate one given
             out.print("\nSorry! Your password must be at least five characters long, \n" +
-                    "and contain at least one symbol.");
+                    "and contain at least one symbol.\n\n");
 
             passwordInput = passwordRegistration("re-");
         }
@@ -77,7 +77,7 @@ class UserManagement {
     }
 
     private static String passwordRegistration(String firstTimeOrNot) {
-        out.print("\n\n\tPlease " + firstTimeOrNot + "enter a new password: "); //Modifies text printed depending on whether it's the first time
+        out.print("\tPlease " + firstTimeOrNot + "enter a new password: "); //Modifies text printed depending on whether it's the first time
         String input = scan.next();
 
         if (!(input.length() < 5 || specialCharactersInString(input) < 1)) { //Checks if given password meets specifications: length > 5, special characters > 1)
