@@ -3,14 +3,15 @@ import static java.lang.System.out;
 
 class UserManagement {
 
-    private static Scanner scan = new Scanner(System.in).useDelimiter("\n");
+    private MenuAndOtherText menuAndOtherText = new MenuAndOtherText(); //Creates objects for classes used in this class
+    private Scanner scan = new Scanner(System.in).useDelimiter("\n");   //
 
-    static boolean isUserAuthenticated = false;  //Variable that can be checked by other classes (e.g. Game) to determine if the user is logged in
+    private static boolean isUserAuthenticated = false;  //Variable that can be checked by other classes (e.g. Game) to determine if the user is logged in
 
     private static String username; //These variables used by multiple methods
-    private static String password;
+    private static String password; //
 
-    static void login() {
+    void login() {
 
         MiscFunctions.clearScreen("");
 
@@ -22,7 +23,7 @@ class UserManagement {
 
         if (passwordInput.equals(password) && usernameInput.equals(username)) { //Checks if username and password match those given in register()
             isUserAuthenticated = true;
-            MenuAndOtherText.menu("----------\nYou're logged in!\n----------\n");
+            menuAndOtherText.menu("----------\nYou're logged in!\n----------\n");
         } else {
             out.print("\n\nYour username and password didn't match the records.");
             out.print("\n\nEnter 'R' to retry, or press enter to return to the Menu: ");
@@ -31,18 +32,17 @@ class UserManagement {
             if (input.equals("R") || input.equals("r")) {
                 login();
             } else {
-                MenuAndOtherText.menu("");
+                menuAndOtherText.menu("");
             }
         }
 
     }
 
-    static void register() {
+    void register() {
 
         MiscFunctions.clearScreen("");
 
         String usernameInput = usernameRegistration("");
-
         while (usernameInput.equals("")) { //If inadequate username given, loops until adequate one given
             out.print("\nSorry! Your username must be at least two characters long,\n" +
                     "start with a letter, and contain no symbols.");
@@ -52,7 +52,6 @@ class UserManagement {
         username = usernameInput;
 
         String passwordInput = passwordRegistration("");
-
         while (passwordInput.equals("")) { //If inadequate password given, loops until adequate one given
             out.print("\nSorry! Your password must be at least five characters long, \n" +
                     "and contain at least one symbol.\n\n");
@@ -61,11 +60,11 @@ class UserManagement {
         }
         password = passwordInput;
 
-        MenuAndOtherText.menu("----------\nYou have registered!\n----------\n"); //When both username and password satisfactory, returns to menu
+        menuAndOtherText.menu("----------\nYou have registered!\n----------\n"); //When both username and password satisfactory, returns to menu
 
     }
 
-    private static String usernameRegistration(String firstTimeOrNot) {
+    private String usernameRegistration(String firstTimeOrNot) {
         out.print("\n\n\tPlease " + firstTimeOrNot + "enter a new username: ");
         String input = scan.next();
 
@@ -76,7 +75,7 @@ class UserManagement {
         }
     }
 
-    private static String passwordRegistration(String firstTimeOrNot) {
+    private String passwordRegistration(String firstTimeOrNot) {
         out.print("\tPlease " + firstTimeOrNot + "enter a new password: "); //Modifies text printed depending on whether it's the first time
         String input = scan.next();
 
@@ -88,19 +87,23 @@ class UserManagement {
 
     }
 
-    private static int specialCharactersInString(String str) { //Returns number of special characters in string
+    private int specialCharactersInString(String string) { //Returns number of special characters in string
 
-        String specialCharacters = " !\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+        String specialCharacters = " !\"#$£%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
-        int count = 0;
+        int numberOfCharacters = 0;
 
-        for (int i = 0; i < str.length(); i++) {
-            if (specialCharacters.contains(str.substring(i))) {
-                count++;
+        for (int i = 0; i < string.length(); i++) {
+            if (specialCharacters.contains(Character.toString(string.charAt(i)))) {
+                numberOfCharacters++;
             }
         }
 
-        return count;
+        return numberOfCharacters;
+    }
+
+    static boolean isUserAuthenticated() {
+        return isUserAuthenticated;
     }
 
 }

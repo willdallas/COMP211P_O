@@ -3,9 +3,9 @@ import static java.lang.System.out;
 
 class MenuAndOtherText {
 
-    private static Scanner scan = new Scanner(System.in).useDelimiter("\n");
+    private Scanner scan = new Scanner(System.in).useDelimiter("\n");
 
-    static void menu(String text) {
+    void menu(String text) {
 
         MiscFunctions.clearScreen(text + "\n");  //When this method is called, text can be passed through to be displayed before the menu
 
@@ -17,21 +17,32 @@ class MenuAndOtherText {
                 "\tQuit (Q)\n\n" +
                 "\tPlease choose an option: ");
 
-        String userChoice = scan.next();
+        char userChoice = scan.next().charAt(0);
 
-        if (userChoice.equals("L") || userChoice.equals("l")) {
-            UserManagement.login();
-        } else if (userChoice.equals("R") || userChoice.equals("r")) {
-            UserManagement.register();
-        } else if (userChoice.equals("A") || userChoice.equals("a")) {
-            about();
-        } else if (userChoice.equals("P") || userChoice.equals("p")) {
-            Game.start();
+        UserManagement userManagement = new UserManagement();
+        Game game = new Game();
+
+        switch (userChoice) {
+            case 'L':
+            case 'l':
+                userManagement.login();
+                break;
+            case 'R':
+            case 'r':
+                userManagement.register();
+                break;
+            case 'A':
+            case 'a':
+                about();
+                break;
+            case 'P':
+            case 'p':
+                game.start();
         }
 
     }
 
-    private static void about() {
+    private void about() {
 
         MiscFunctions.clearScreen("");
 
@@ -41,7 +52,7 @@ class MenuAndOtherText {
                 "3)...................\n\t" +
                 "4)...................\n\n\n\n");
 
-        out.print("Press any key to return to the Menu: ");
+        out.print("Press enter to return to the Menu: ");
         scan.next();
 
         menu("");
