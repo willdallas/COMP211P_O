@@ -6,10 +6,10 @@ class UserManagement {
     private MenuAndOtherText menuAndOtherText = new MenuAndOtherText(); //Creates objects for classes used in this class
     private Scanner scan = new Scanner(System.in).useDelimiter("\n");   //
 
-    private static boolean isUserAuthenticated = false;  //Variable that can be checked by other classes (e.g. Game) to determine if the user is logged in
-
     private static String username; //These variables used by multiple methods
     private static String password; //
+
+    private static boolean isUserAuthenticated = false;  //Variable that can be checked by other classes (e.g. Game) to determine if the user is logged in
 
     void login() {
 
@@ -102,7 +102,7 @@ class UserManagement {
         return numberOfCharacters;
     }
 
-    static boolean isUserAuthenticated() {
+    static boolean getAuthenticationStatus() {
         return isUserAuthenticated;
     }
 

@@ -11,11 +11,6 @@ class MiscFunctions {
 
         out.print(s);
 
-        /*for (int i = 0; i < 50; i++) {
-            out.print("\n");
-        }
-        out.print(s);
-        */
     }
 
 }
