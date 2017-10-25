@@ -65,6 +65,7 @@ class UserManagement {
     }
 
     private String usernameRegistration(String firstTimeOrNot) {
+
         out.print("\n\n\tPlease " + firstTimeOrNot + "enter a new username: ");
         String input = scan.next();
 
@@ -76,6 +77,7 @@ class UserManagement {
     }
 
     private String passwordRegistration(String firstTimeOrNot) {
+
         out.print("\tPlease " + firstTimeOrNot + "enter a new password: "); //Modifies text printed depending on whether it's the first time
         String input = scan.next();
 
