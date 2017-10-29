@@ -1,6 +1,6 @@
 import static java.lang.System.out;
 
-class Game {
+public class Game {
 
     public void start() {
 

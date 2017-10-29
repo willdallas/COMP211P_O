@@ -1,7 +1,8 @@
 import java.util.Scanner;
+
 import static java.lang.System.out;
 
-class UserManagement {
+public class UserManagement {
 
     private MenuAndOtherText menuAndOtherText = new MenuAndOtherText(); //Creates objects for classes used by multiple methods in this class
     private Scanner scan = new Scanner(System.in).useDelimiter("\n");   //

@@ -1,7 +1,8 @@
 import java.util.Scanner;
+
 import static java.lang.System.out;
 
-class MenuAndOtherText {
+public class MenuAndOtherText {
 
     private Scanner scan = new Scanner(System.in).useDelimiter("\n");
 

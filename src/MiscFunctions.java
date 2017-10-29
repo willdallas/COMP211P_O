@@ -1,6 +1,6 @@
 import static java.lang.System.out;
 
-class MiscFunctions {
+public class MiscFunctions {
 
     public static void clearScreen(String s) { //Clears the screen, and prints "s" after
 
