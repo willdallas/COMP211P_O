@@ -2,8 +2,7 @@ import static java.lang.System.out;
 
 public class Game {
 
-    public Game() { //Will use constructor later to feed in information about the player linked to the instance of the Game class
-
+    public Game() { //Anticipated that this constructor will be used later to feed in information about the player linked to the instance of the Game class
     }
 
     public void start() {
