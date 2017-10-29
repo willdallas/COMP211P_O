@@ -8,7 +8,7 @@ public class MenuAndOtherText {
 
     public void menu(String text) {
 
-        MiscFunctions.clearScreen(text + "\n");  //When this method is called, text can be passed through to be displayed before the menu
+        MiscFunctions.clearScreen(text + "\n");
 
         out.print("\tLogin (L)\n" +
                 "\tRegister (R)\n" +

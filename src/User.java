@@ -2,9 +2,12 @@ public class User {
 
     private String username;
     private String password;
+    public static int userCount;
+    private int userNumber;
 
-    public User() {  //Anticipated that, in future, this constructor will receive input from a file storing user details
-
+    public User(int userNum) {  //Anticipated that, in future, this constructor will receive input from a file storing user details
+        userCount++;
+        userNumber = userNum;
     }
 
     public void setUsername(String usernameInput) {
@@ -22,6 +25,5 @@ public class User {
     public String getPassword() {
         return password;
     }
-
 
 }

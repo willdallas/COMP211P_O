@@ -1,6 +1,6 @@
 import static java.lang.System.out;
 
-public class MiscFunctions {
+public class MiscFunctions { //This class is designed to be expanded throughout the project with functions useful to multiple classes
 
     public static void clearScreen(String s) { //Clears the screen, and prints "s" after
 
