@@ -5,7 +5,7 @@ class MenuAndOtherText {
 
     private Scanner scan = new Scanner(System.in).useDelimiter("\n");
 
-    void menu(String text) {
+    public void menu(String text) {
 
         MiscFunctions.clearScreen(text + "\n");  //When this method is called, text can be passed through to be displayed before the menu
 
@@ -20,7 +20,7 @@ class MenuAndOtherText {
         char userChoice = scan.next().charAt(0);
 
         UserManagement userManagement = new UserManagement();
-        Game game = new Game();
+
 
         switch (userChoice) {
             case 'L':
@@ -37,6 +37,7 @@ class MenuAndOtherText {
                 break;
             case 'P':
             case 'p':
+                Game game = new Game();
                 game.start();
         }
 

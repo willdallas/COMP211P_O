@@ -2,7 +2,7 @@ import static java.lang.System.out;
 
 class MiscFunctions {
 
-    static void clearScreen(String s) { //clears the screen, and prints 's' after
+    public static void clearScreen(String s) { //Clears the screen, and prints "s" after
 
         final String ANSI_CLS = "\u001b[2J";
         final String ANSI_HOME = "\u001b[H";

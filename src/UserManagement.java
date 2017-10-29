@@ -3,15 +3,19 @@ import static java.lang.System.out;
 
 class UserManagement {
 
-    private MenuAndOtherText menuAndOtherText = new MenuAndOtherText(); //Creates objects for classes used in this class
+    private MenuAndOtherText menuAndOtherText = new MenuAndOtherText(); //Creates objects for classes used by multiple methods in this class
     private Scanner scan = new Scanner(System.in).useDelimiter("\n");   //
+    private static boolean isLoggedIn = false;
+    private static User[] userObjects = new User[15];
+    private static int userCount = 0;
 
-    private static String username; //These variables used by multiple methods
-    private static String password; //
+    public static void createUserObjects() {
+        for (int i = 0; i < userObjects.length; i++) {
+            userObjects[i] = new User();
+        }
+    }
 
-    private static boolean isUserAuthenticated = false;  //Variable that can be checked by other classes (e.g. Game) to determine if the user is logged in
-
-    void login() {
+    public void login() {
 
         MiscFunctions.clearScreen("");
 
@@ -21,10 +25,15 @@ class UserManagement {
         out.print("\tPlease enter your password: ");
         String passwordInput = scan.next();
 
-        if (passwordInput.equals(password) && usernameInput.equals(username)) { //Checks if username and password match those given in register()
-            isUserAuthenticated = true;
-            menuAndOtherText.menu("----------\nYou're logged in!\n----------\n");
-        } else {
+        for (int i = 0; i < userObjects.length; i++) {
+            if (usernameInput.equals(userObjects[i].getUsername()) && passwordInput.equals(userObjects[i].getPassword())) {
+                isLoggedIn = true;
+                menuAndOtherText.menu("----------\nYou're logged in!\n----------\n");
+                break;
+            }
+        }
+
+        if (!isLoggedIn) {
             out.print("\n\nYour username and password didn't match the records.");
             out.print("\n\nEnter 'R' to retry, or press enter to return to the Menu: ");
             String input = scan.next();
@@ -38,7 +47,7 @@ class UserManagement {
 
     }
 
-    void register() {
+    public void register() {
 
         MiscFunctions.clearScreen("");
 
@@ -49,7 +58,6 @@ class UserManagement {
 
             usernameInput = usernameRegistration("re-");
         }
-        username = usernameInput;
 
         String passwordInput = passwordRegistration("");
         while (passwordInput.equals("")) { //If inadequate password given, loops until adequate one given
@@ -58,7 +66,11 @@ class UserManagement {
 
             passwordInput = passwordRegistration("re-");
         }
-        password = passwordInput;
+
+        userObjects[userCount].setUsername(usernameInput);
+        userObjects[userCount].setPassword(passwordInput);
+
+        userCount++;
 
         menuAndOtherText.menu("----------\nYou have registered!\n----------\n"); //When both username and password satisfactory, returns to menu
 
@@ -66,7 +78,7 @@ class UserManagement {
 
     private String usernameRegistration(String firstTimeOrNot) {
 
-        out.print("\n\n\tPlease " + firstTimeOrNot + "enter a new username: ");
+        out.print("\n\n\tPlease " + firstTimeOrNot + "enter a new username: ");  //Modifies text printed depending on whether it's the first time
         String input = scan.next();
 
         if (!(specialCharactersInString(input) > 0 || input.length() < 2 || Character.isDigit(input.charAt(0)))) {
@@ -104,8 +116,8 @@ class UserManagement {
         return numberOfCharacters;
     }
 
-    static boolean getAuthenticationStatus() {
-        return isUserAuthenticated;
+    public static boolean getLoginStatus() {
+        return isLoggedIn;
     }
 
 }
