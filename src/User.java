@@ -1,29 +1,33 @@
-public class User {
+class User {
 
     private String username;
     private String password;
-    public static int userCount;
     private int userNumber;
+    static int userCount;
 
-    public User(int userNum) {  //Anticipated that, in future, this constructor will receive input from a file storing user details
+    User() {  //Anticipated that, in future, this constructor will receive input from a file storing user details
+        userNumber = userCount;
         userCount++;
-        userNumber = userNum;
     }
 
-    public void setUsername(String usernameInput) {
-        username = usernameInput;
+    void setUsername(String usernameInput) {
+        this.username = usernameInput;
     }
 
-    public void setPassword(String passwordInput) {
-        password = passwordInput;
+    void setPassword(String passwordInput) {
+        this.password = passwordInput;
     }
 
-    public String getUsername() {
-        return username;
+    String getUsername() {
+        return this.username;
     }
 
-    public String getPassword() {
-        return password;
+    String getPassword() {
+        return this.password;
+    }
+
+    int getUserNumber(){
+        return this.userNumber;
     }
 
 }

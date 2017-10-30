@@ -2,11 +2,11 @@ import java.util.Scanner;
 
 import static java.lang.System.out;
 
-public class MenuAndOtherText {
+class MenuAndOtherText {
 
-    private Scanner scan = new Scanner(System.in).useDelimiter("\n");
+    private static Scanner scan = new Scanner(System.in);
 
-    public void menu(String text) {
+    static void menu(String text) {
 
         MiscFunctions.clearScreen(text + "\n");
 
@@ -18,19 +18,29 @@ public class MenuAndOtherText {
                 "\tQuit (Q)\n\n" +
                 "\tPlease choose an option: ");
 
-        char userChoice = scan.next().charAt(0);
+        boolean choiceSuccess = false;
+        char userChoice = 0;
 
-        UserManagement userManagement = new UserManagement();
+        while (!choiceSuccess) {
+            try {
+                userChoice = scan.nextLine().charAt(0);
+                choiceSuccess = true;
+            } catch (StringIndexOutOfBoundsException e) {
+                out.print("\tInvalid input - please try again: ");
+            }
+        }
 
+        UserManagement aUserManagement = new UserManagement();
+        GameManagement aGameManagement = new GameManagement();
 
         switch (userChoice) {
             case 'L':
             case 'l':
-                userManagement.login();
+                aUserManagement.login();
                 break;
             case 'R':
             case 'r':
-                userManagement.register();
+                aUserManagement.register();
                 break;
             case 'A':
             case 'a':
@@ -38,13 +48,12 @@ public class MenuAndOtherText {
                 break;
             case 'P':
             case 'p':
-                Game game = new Game();
-                game.start();
+                aGameManagement.newGame(UserManagement.getLastUserLoggedIn());
         }
 
     }
 
-    private void about() {
+    private static void about() {
 
         MiscFunctions.clearScreen("");
 
@@ -55,7 +64,7 @@ public class MenuAndOtherText {
                 "4)...................\n\n\n\n");
 
         out.print("Press enter to return to the Menu: ");
-        scan.next();
+        scan.nextLine();
 
         menu("");
     }

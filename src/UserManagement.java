@@ -2,50 +2,53 @@ import java.util.Scanner;
 
 import static java.lang.System.out;
 
-public class UserManagement {
+class UserManagement {
 
-    private MenuAndOtherText menuAndOtherText = new MenuAndOtherText(); // Creates objects for classes used by multiple methods in this class
-    private Scanner scan = new Scanner(System.in).useDelimiter("\n");   //
-    private static boolean isLoggedIn = false;
-    public static User[] userObjects = new User[5];
+    private Scanner scan = new Scanner(System.in).useDelimiter("\n");
+    private static int lastUserLoggedIn = -1;                // Stores the array index number corresponding to last user logged in. -1 by default to test if any user has logged in.
+    private static final int NUMBER_OF_USERS = 5;            // Final variable used to set size of userObject and gameObjects arrays.
+    static User[] userObjects = new User[NUMBER_OF_USERS];
 
-    public void login() {  // This method takes user input for username and password,checks if they match those on record, then returns to the menu
+    void login() {
 
         MiscFunctions.clearScreen("");
 
-        isLoggedIn = false;
+        boolean loginSuccess = false;
 
         out.print("\n\n\tPlease enter your username: ");
-        String usernameInput = scan.next();
+        String usernameInput = scan.nextLine();
 
         out.print("\tPlease enter your password: ");
-        String passwordInput = scan.next();
+        String passwordInput = scan.nextLine();
+
 
         for (int i = 0; i < User.userCount; i++) {
-            if (userObjects[0] == null) { // Necessary to prevent a "NullPointerException" if no elements in the array have been initialized yet
+            if (userObjects[0] == null) {  // Necessary to prevent a "NullPointerException" if no elements in the array have been initialized yet (no users)
                 break;
             } else if (usernameInput.equals(userObjects[i].getUsername()) && passwordInput.equals(userObjects[i].getPassword())) {
-                isLoggedIn = true;
-                menuAndOtherText.menu("----------\nYou're logged in!\n----------\n");
+                lastUserLoggedIn = i;
+                loginSuccess = true;
+
+                MenuAndOtherText.menu("----------\nYou're logged in!\n----------\n");
                 break;
             }
         }
 
-        if (!isLoggedIn) {
+        if (!loginSuccess) {
             out.print("\n\nYour username and password didn't match the records.");
             out.print("\n\nEnter 'R' to retry, or press enter to return to the Menu: ");
-            String input = scan.next();
+            String input = scan.nextLine();
 
             if (input.equals("R") || input.equals("r")) {
                 login();
             } else {
-                menuAndOtherText.menu("");
+                MenuAndOtherText.menu("");
             }
         }
 
     }
 
-    public void register() {
+    void register() {
 
         MiscFunctions.clearScreen("");
 
@@ -65,47 +68,46 @@ public class UserManagement {
             passwordInput = passwordRegistration("re-");
         }
 
-        userObjects[User.userCount] = new User(User.userCount); // Creates new instance of User class in the userCount array for user registering
+        userObjects[User.userCount] = new User(); // Creates new instance of User class in the userCount array for user registering
         userObjects[User.userCount - 1].setUsername(usernameInput); // 1 is subtracted from the previous array index because because userCount increments by 1 when the User object is created
         userObjects[User.userCount - 1].setPassword(passwordInput);
 
-        menuAndOtherText.menu("----------\nYou have registered!\n----------\n");
+        MenuAndOtherText.menu("----------\nYou have registered!\n----------\n");
 
     }
 
-    private String usernameRegistration(String firstTimeOrNot) {
+    private String usernameRegistration(String secondTimeModifier) {
 
-        out.print("\n\n\tPlease " + firstTimeOrNot + "enter a new username: ");  // Modifies text printed depending on whether it's the first time
-        String input = scan.next();
+        out.print("\n\n\tPlease " + secondTimeModifier + "enter a new username: ");  // Modifies text printed depending on whether it's the first time this code is run
+        String input = scan.nextLine();
+        String output = "";
 
-        if (!(specialCharactersInString(input) > 0 || input.length() < 2 || Character.isDigit(input.charAt(0)))) { // Checks if username meets specifications: length > 2, special characters = 0)
-            return input;
-        } else {
-            return "";
+        if (!(specialCharactersInString(input) > 0 || input.length() < 2 || Character.isDigit(input.charAt(0)))) {
+            output = input;
         }
+        return output;
     }
 
-    private String passwordRegistration(String firstTimeOrNot) {
+    private String passwordRegistration(String secondTimeModifier) {
 
-        out.print("\tPlease " + firstTimeOrNot + "enter a new password: "); // Modifies text printed depending on whether it's the first time
-        String input = scan.next();
+        out.print("\tPlease " + secondTimeModifier + "enter a new password: ");
+        String input = scan.nextLine();
+        String output = "";
 
-        if (!(input.length() < 5 || specialCharactersInString(input) < 1)) { // Checks if given password meets specifications: length > 5, special characters > 1)
-            return input;
-        } else {
-            return "";
+        if (!(input.length() < 5 || specialCharactersInString(input) < 1)) {
+            output = input;
         }
-
+        return output;
     }
 
-    private int specialCharactersInString(String string) {
+    private int specialCharactersInString(String aString) {
 
         String specialCharacters = " !\"#$£%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
         int numberOfCharacters = 0;
 
-        for (int i = 0; i < string.length(); i++) {
-            if (specialCharacters.contains(Character.toString(string.charAt(i)))) {
+        for (int i = 0; i < aString.length(); i++) {
+            if (specialCharacters.contains(Character.toString(aString.charAt(i)))) {
                 numberOfCharacters++;
             }
         }
@@ -113,8 +115,12 @@ public class UserManagement {
         return numberOfCharacters;
     }
 
-    public static boolean getLoginStatus() {
-        return isLoggedIn;
+    static int getLastUserLoggedIn() {
+        return lastUserLoggedIn;
+    }
+
+    static int getNumberOfUsers() {
+        return NUMBER_OF_USERS;
     }
 
 }
