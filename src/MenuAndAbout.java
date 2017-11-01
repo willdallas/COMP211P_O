@@ -15,12 +15,12 @@ class MenuAndAbout {
             MiscFunctions.clearScreen(text + "\n");
 
             out.print("\tLogin (L)\n" +
-                    "\tRegister (R)\n" +
-                    "\tAbout (A)\n" +
-                    "\tPlay the Game (P)\n" +
-                    "\tShow the Leader Board (B)\n" +
-                    "\tQuit (Q)\n\n" +
-                    "\tPlease choose an option: ");
+                      "\tRegister (R)\n" +
+                      "\tAbout (A)\n" +
+                      "\tPlay the Game (P)\n" +
+                      "\tShow the Leader Board (B)\n" +
+                      "\tQuit (Q)\n\n" +
+                      "\tPlease choose an option: ");
 
             boolean choiceSuccess = false;
             char userChoice = 0;
@@ -62,14 +62,12 @@ class MenuAndAbout {
         MiscFunctions.clearScreen("");
 
         out.print("\n\n\tGame Instructions:\n\n\t" +
-                "1)...................\n\t" +
-                "2)...................\n\t" +
-                "3)...................\n\t" +
-                "4)...................\n\n\n");
+                "* You need to register and login to play the game\n\t" +
+                "* The program will display a word, and a list of other words\n\t" +
+                "* You need find the word that is a synonym of the first\n\t" +
+                "* You may skip a word if you are unsure of the answer\n\n\n");
 
         out.print("\tPress enter to return to the Menu: ");
         scan.nextLine();
-
     }
-
 }
