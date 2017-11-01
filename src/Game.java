@@ -12,6 +12,11 @@ class Game {
         MiscFunctions.clearScreen("");
 
         out.print("\n\n\t-----GAME GOES HERE-----\n\n\n");
+
+    }
+
+    int getGameNumber() {
+        return gameNumber;
     }
 
 }

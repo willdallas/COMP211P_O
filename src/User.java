@@ -3,9 +3,9 @@ class User {
     private String username;
     private String password;
     private int userNumber;
-    static int userCount;
+    private static int userCount = 0;
 
-    User() {  //Anticipated that, in future, this constructor will receive input from a file storing user details
+    User() {
         userNumber = userCount;
         userCount++;
     }
@@ -28,6 +28,10 @@ class User {
 
     int getUserNumber(){
         return this.userNumber;
+    }
+
+    static int getUserCount() {
+        return userCount;
     }
 
 }

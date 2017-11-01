@@ -4,12 +4,12 @@ import static java.lang.System.out;
 
 class UserManagement {
 
-    private Scanner scan = new Scanner(System.in).useDelimiter("\n");
+    private static Scanner scan = new Scanner(System.in);
     private static int lastUserLoggedIn = -1;                // Stores the array index number corresponding to last user logged in. -1 by default to test if any user has logged in.
-    private static final int NUMBER_OF_USERS = 5;            // Final variable used to set size of userObject and gameObjects arrays.
+    private static final int NUMBER_OF_USERS = 5;            // Constant used to set size of userObject and gameObjects arrays.
     static User[] userObjects = new User[NUMBER_OF_USERS];
 
-    void login() {
+    static String login() {
 
         MiscFunctions.clearScreen("");
 
@@ -22,35 +22,31 @@ class UserManagement {
         String passwordInput = scan.nextLine();
 
 
-        for (int i = 0; i < User.userCount; i++) {
+        for (int i = 0; i < User.getUserCount(); i++) { //  Loops through userObject array to check if username & password provided match an existing User object
             if (userObjects[0] == null) {  // Necessary to prevent a "NullPointerException" if no elements in the array have been initialized yet (no users)
                 break;
             } else if (usernameInput.equals(userObjects[i].getUsername()) && passwordInput.equals(userObjects[i].getPassword())) {
                 lastUserLoggedIn = i;
                 loginSuccess = true;
-
-                MenuAndOtherText.menu("----------\nYou're logged in!\n----------\n");
                 break;
             }
         }
 
         if (!loginSuccess) {
             out.print("\n\nYour username and password didn't match the records.");
-            out.print("\n\nEnter 'R' to retry, or press enter to return to the Menu: ");
-            String input = scan.nextLine();
-
-            if (input.equals("R") || input.equals("r")) {
-                login();
-            } else {
-                MenuAndOtherText.menu("");
-            }
+            out.print("\nPress enter to return to the Menu: ");
+            scan.nextLine();
         }
+
+        return loginSuccess ? "----------\nYou're logged in!\n----------\n" : "";
 
     }
 
-    void register() {
+    static String register() {
 
         MiscFunctions.clearScreen("");
+
+        String returnString;
 
         String usernameInput = usernameRegistration("");
         while (usernameInput.equals("")) { // If inadequate username given, loops until adequate one given
@@ -68,39 +64,36 @@ class UserManagement {
             passwordInput = passwordRegistration("re-");
         }
 
-        userObjects[User.userCount] = new User(); // Creates new instance of User class in the userCount array for user registering
-        userObjects[User.userCount - 1].setUsername(usernameInput); // 1 is subtracted from the previous array index because because userCount increments by 1 when the User object is created
-        userObjects[User.userCount - 1].setPassword(passwordInput);
+        if (User.getUserCount() <= (NUMBER_OF_USERS - 1)) {                  // if statement avoids ArrayIndexOutOfBoundsException by limiting number of registrations possible to array size
+            userObjects[User.getUserCount()] = new User();                   // Creates new instance of User class in the userCount array for user registering
+            userObjects[User.getUserCount() - 1].setUsername(usernameInput); // 1 is subtracted from the previous array index because because userCount increments by 1 when the User object is created
+            userObjects[User.getUserCount() - 1].setPassword(passwordInput);
+            returnString = "----------\nYou have registered!\n----------\n";
+        } else {
+            returnString = "----------\nSorry, no more players can be stored\n----------\n";
+        }
 
-        MenuAndOtherText.menu("----------\nYou have registered!\n----------\n");
+        return returnString;
 
     }
 
-    private String usernameRegistration(String secondTimeModifier) {
+    private static String usernameRegistration(String secondTimeModifier) {
 
         out.print("\n\n\tPlease " + secondTimeModifier + "enter a new username: ");  // Modifies text printed depending on whether it's the first time this code is run
         String input = scan.nextLine();
-        String output = "";
 
-        if (!(specialCharactersInString(input) > 0 || input.length() < 2 || Character.isDigit(input.charAt(0)))) {
-            output = input;
-        }
-        return output;
+        return (!(specialCharactersInString(input) > 0 || input.length() < 2 || Character.isDigit(input.charAt(0)))) ? input : "";
     }
 
-    private String passwordRegistration(String secondTimeModifier) {
+    private static String passwordRegistration(String secondTimeModifier) {
 
         out.print("\tPlease " + secondTimeModifier + "enter a new password: ");
         String input = scan.nextLine();
-        String output = "";
 
-        if (!(input.length() < 5 || specialCharactersInString(input) < 1)) {
-            output = input;
-        }
-        return output;
+        return (!(input.length() < 5 || specialCharactersInString(input) < 1)) ? input : "";
     }
 
-    private int specialCharactersInString(String aString) {
+    private static int specialCharactersInString(String aString) {
 
         String specialCharacters = " !\"#$£%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 

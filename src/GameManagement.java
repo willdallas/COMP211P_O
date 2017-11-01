@@ -2,16 +2,20 @@ class GameManagement {
 
     private static Game[] gameObjects = new Game[UserManagement.getNumberOfUsers()];
 
-    void newGame(int userNumber) {
+    static String newGame(int userNumber) {
 
-        if (userNumber == -1) {
-            MenuAndOtherText.menu("----------\nPlease login to play the game.\n----------\n");
-        } else {
+        String returnText;
+
+        if (userNumber != -1) {
             gameObjects[userNumber] = new Game(UserManagement.userObjects[userNumber]);
             gameObjects[userNumber].start();
+
+            returnText = "EXIT";
+        } else {
+            returnText = "----------\nPlease login to play the game.\n----------\n";
         }
 
+        return returnText;
     }
-
 
 }
