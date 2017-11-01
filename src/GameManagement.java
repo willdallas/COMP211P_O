@@ -4,17 +4,17 @@ class GameManagement {
 
     static String newGame(int userNumber) {
 
-        String returnText;
+        String returnString;
 
         if (userNumber != -1) {
             gameObjects[userNumber] = new Game(UserManagement.userObjects[userNumber]);
             gameObjects[userNumber].start();
 
-            returnText = "EXIT";
+            returnString = "EXIT";
         } else {
-            returnText = "----------\nPlease login to play the game.\n----------\n";
+            returnString = "----------\nPlease login to play the game.\n----------\n";
         }
 
-        return returnText;
+        return returnString;
     }
 }
