@@ -39,7 +39,6 @@ class UserManagement {
         }
 
         return loginSuccess ? "----------\nYou're logged in!\n----------\n" : "";
-
     }
 
     static String register() {
@@ -74,7 +73,6 @@ class UserManagement {
         }
 
         return returnString;
-
     }
 
     private static String usernameRegistration(String secondTimeModifier) {

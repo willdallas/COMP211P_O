@@ -18,5 +18,4 @@ class Game {
     int getGameNumber() {
         return gameNumber;
     }
-
 }

@@ -26,12 +26,11 @@ class User {
         return this.password;
     }
 
-    int getUserNumber(){
+    int getUserNumber() {
         return this.userNumber;
     }
 
     static int getUserCount() {
         return userCount;
     }
-
 }

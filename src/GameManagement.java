@@ -17,5 +17,4 @@ class GameManagement {
 
         return returnText;
     }
-
 }

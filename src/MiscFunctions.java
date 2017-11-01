@@ -12,5 +12,4 @@ class MiscFunctions { //This class is designed to be expanded throughout the pro
         out.print(s);
 
     }
-
 }

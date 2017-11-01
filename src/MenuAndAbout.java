@@ -12,7 +12,6 @@ class MenuAndAbout {
 
         while (!text.equals("EXIT")) {
 
-
             MiscFunctions.clearScreen(text + "\n");
 
             out.print("\tLogin (L)\n" +
@@ -22,7 +21,6 @@ class MenuAndAbout {
                     "\tShow the Leader Board (B)\n" +
                     "\tQuit (Q)\n\n" +
                     "\tPlease choose an option: ");
-
 
             boolean choiceSuccess = false;
             char userChoice = 0;
@@ -56,9 +54,7 @@ class MenuAndAbout {
                 default:
                     text = "EXIT";
             }
-
         }
-
     }
 
     private static void about() {
