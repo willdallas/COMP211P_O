@@ -10,6 +10,5 @@ class MiscFunctions { //This class is designed to be expanded throughout the pro
         System.out.flush();
 
         out.print(s);
-
     }
 }
