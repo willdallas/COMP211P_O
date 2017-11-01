@@ -8,7 +8,7 @@ class MenuAndAbout {
 
     static void menu() {
 
-        String text = "Welcome to the Word Game";
+        String text = "\nWelcome to the Word Game";
 
         while (!text.equals("EXIT")) {
 
