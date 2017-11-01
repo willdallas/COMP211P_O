@@ -52,7 +52,7 @@ class UserManagement {
             out.print("\nSorry! Your username must be at least two characters long,\n" +
                     "start with a letter, and contain no symbols.");
 
-            usernameInput = usernameRegistration("re-");
+            usernameInput = usernameRegistration("re-"); // "re-" passed to the method to print "re-enter" rather than "enter" on second time
         }
 
         String passwordInput = passwordRegistration("");
