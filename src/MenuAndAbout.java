@@ -69,9 +69,9 @@ class MenuAndAbout {
                 "1)...................\n\t" +
                 "2)...................\n\t" +
                 "3)...................\n\t" +
-                "4)...................\n\n\n\n");
+                "4)...................\n\n\n");
 
-        out.print("Press enter to return to the Menu: ");
+        out.print("\tPress enter to return to the Menu: ");
         scan.nextLine();
 
     }
