@@ -15,6 +15,6 @@ class Game {
     }
 
     int getGameNumber() {
-        return gameNumber;
+        return this.gameNumber;
     }
 }
