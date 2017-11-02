@@ -77,7 +77,7 @@ class UserManagement {
 
     private static String usernameRegistration(String secondTimeModifier) {
 
-        out.print("\n\n\tPlease " + secondTimeModifier + "enter a new username: ");  // Modifies text printed depending on whether it's the first time this code is run
+        out.print("\n\n\tPlease " + secondTimeModifier + "enter a new username: ");
         String input = scan.nextLine();
 
         return (!(specialCharactersInString(input) > 0 || input.length() < 2 || Character.isDigit(input.charAt(0)))) ? input : "";
