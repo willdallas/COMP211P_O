@@ -1,6 +1,6 @@
 class GameManagement {
 
-    private static Game[] gameObjects = new Game[UserManagement.getNumberOfUsers()];
+    private static Game[] gameObjects = new Game[UserManagement.NUMBER_OF_USERS];
 
     static String newGame(int userNumber) {
 

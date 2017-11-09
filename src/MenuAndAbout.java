@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.Scanner;
 
 import static java.lang.System.out;
@@ -21,6 +22,8 @@ class MenuAndAbout {
                       "\tShow the Leader Board (B)\n" +
                       "\tQuit (Q)\n\n" +
                       "\tPlease choose an option: ");
+
+            System.out.println(FileManagement.getNumUsersInFile());
 
             boolean choiceSuccess = false;
             char userChoice = 0;

@@ -6,8 +6,14 @@ class UserManagement {
 
     private static Scanner scan = new Scanner(System.in);
     private static int lastUserLoggedIn = -1;                // Stores the array index number corresponding to last user logged in. -1 by default to test if any user has logged in.
-    private static final int NUMBER_OF_USERS = 5;            // Constant used to set size of userObject and gameObjects arrays.
+    static final int NUMBER_OF_USERS = 20 + FileManagement.getNumUsersInFile();     // Constant used to set size of userObject and gameObjects arrays.
     static User[] userObjects = new User[NUMBER_OF_USERS];
+
+    static void createUserObjects() {
+
+
+        ///////
+    }
 
     static String login() {
 
@@ -64,9 +70,10 @@ class UserManagement {
         }
 
         if (User.getUserCount() <= (NUMBER_OF_USERS - 1)) {                  // if statement avoids ArrayIndexOutOfBoundsException by limiting number of registrations possible to array size
-            userObjects[User.getUserCount()] = new User();                   // Creates new instance of User class in the userCount array for user registering
-            userObjects[User.getUserCount() - 1].setUsername(usernameInput); // 1 is subtracted from the previous array index because because userCount increments by 1 when the User object is created
-            userObjects[User.getUserCount() - 1].setPassword(passwordInput);
+            userObjects[User.getUserCount()] = new User("", "",
+                    usernameInput, passwordInput, 0, 0);  // Creates new instance of User class in the userCount array for user registering
+            FileManagement.writeNewUser("","",usernameInput, passwordInput);
+
             returnString = "----------\nYou have registered!\n----------\n";
         } else {
             returnString = "----------\nSorry, no more players can be stored\n----------\n";
@@ -108,10 +115,6 @@ class UserManagement {
 
     static int getLastUserLoggedIn() {
         return lastUserLoggedIn;
-    }
-
-    static int getNumberOfUsers() {
-        return NUMBER_OF_USERS;
     }
 
 }
