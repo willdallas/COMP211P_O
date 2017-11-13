@@ -9,7 +9,6 @@ class User {
     private static int userCount = 0;
 
     User(String firstNameInput, String lastNameInput, String usernameInput, String passwordInput, int numGamesInput, int totalScoreInput) { // This constructor is used when creating objects from file
-
         username = usernameInput;
         password = passwordInput;
         firstName = firstNameInput;

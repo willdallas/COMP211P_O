@@ -10,7 +10,6 @@ public class Main {
     }
 
     private static void menu() {
-
         Scanner scan = new Scanner(System.in);
 
         String text = "Welcome to the Word Game";
@@ -60,11 +59,9 @@ public class Main {
                     text = "EXIT";
             }
         }
-
     }
 
     private static String about() {
-
         Scanner scan = new Scanner(System.in);
 
         MiscFunctions.clearScreen("");
@@ -79,8 +76,5 @@ public class Main {
         scan.nextLine();
 
         return "";
-
-
     }
-
 }

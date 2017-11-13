@@ -11,9 +11,7 @@ class UserManagement {
     static User[] userObjects = new User[NUMBER_OF_USERS];
 
     static String login() {
-
         MiscFunctions.clearScreen("");
-
         boolean loginSuccess = false;
 
         out.print("\n\n\tPlease enter your username: ");
@@ -40,7 +38,6 @@ class UserManagement {
             out.print("\nPress enter to return to the Menu: ");
             scan.nextLine();
         }
-
         return loginSuccess ? "----------\nWelcome, " + lastUserLoggedIn.getFirstName() + "\n----------\n" : "";
     }
 
@@ -139,7 +136,6 @@ class UserManagement {
     }
 
     private static String hashPassword(String passwordInput) {
-
         String hashedInput = null;
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -157,7 +153,6 @@ class UserManagement {
     }
 
     private static int specialCharactersInString(String aString) {
-
         String specialCharacters = " !\"#$£%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 
         int numberOfCharacters = 0;
@@ -178,5 +173,4 @@ class UserManagement {
     static User getLastUserLoggedIn() {
         return lastUserLoggedIn;
     }
-
 }

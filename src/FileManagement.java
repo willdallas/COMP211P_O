@@ -7,7 +7,6 @@ import java.util.Scanner;
 class FileManagement {
 
     static void writeUsers(User[] userObjectsInput) {
-
         PrintWriter printFile = null;
         PrintWriter clearFile = null;
 
@@ -29,7 +28,6 @@ class FileManagement {
     }
 
     static void createUsers() {
-
         String firstName;
         String lastName;
         String username;
@@ -55,7 +53,6 @@ class FileManagement {
     }
 
     static Question createQuestion(int n) {
-
         String question;
         String answer;
         String incorrectOne;
@@ -89,7 +86,6 @@ class FileManagement {
     }
 
     static int getNumUsersInFile() {
-
         Scanner scanUser = null;
 
         try {
@@ -111,7 +107,6 @@ class FileManagement {
     }
 
     static int getNumQuestions(){
-
         Scanner scanQuestions = null;
 
         try {
@@ -133,7 +128,6 @@ class FileManagement {
     }
 
     private static String readUser(int fileUserNumber) {
-
         Scanner scanFile = null;
 
         try {
@@ -154,7 +148,6 @@ class FileManagement {
     }
 
     private static String readQuestion(int questionNumber) {
-
         Scanner scanFile = null;
 
         try {

@@ -17,7 +17,6 @@ class GameManagement {
         } else {
             returnString = "----------\nPlease login to play the game.\n----------\n";
         }
-
         return returnString;
     }
 
