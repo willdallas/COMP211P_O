@@ -1,7 +1,10 @@
+import static java.lang.System.out;
+import java.util.Scanner;
+
 class GameManagement {
 
+    private static Scanner scan = new Scanner(System.in);
     private static int numQuestionsInFile = FileManagement.getNumQuestions();
-    private static Game[] gameObjects = new Game[UserManagement.NUMBER_OF_USERS];
     //   static Question[] questionObjects = new Question[numQuestionsInFile - 1];
     private static final int QUESTIONS_PER_GAME = 5;
 
@@ -9,15 +12,25 @@ class GameManagement {
         String returnString;
 
         if (currentUser != null) {
-            gameObjects[currentUser.getUserNumber()] = new Game(currentUser, createRandomizedQuestionArray());
-            gameObjects[currentUser.getUserNumber()].start();
-
+            startGame(currentUser, createRandomizedQuestionArray());
             returnString = "";
         } else {
             returnString = "----------\nPlease login to play the game.\n----------\n";
         }
 
         return returnString;
+    }
+
+    private static void startGame(User currentUser, Question[] questions) {
+        MiscFunctions.clearScreen("");
+        out.print("\n\n\t-----Randomized questions-----\n\n\n");
+
+        for (int i = 0; i < questions.length; i++) {
+            out.println(questions[i].toString() + "\n");
+        }
+
+        out.print("\n\tPress enter to return to the Menu: ");
+        scan.nextLine();
     }
 
     private static Question[] createRandomizedQuestionArray() {

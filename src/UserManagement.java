@@ -7,7 +7,7 @@ class UserManagement {
 
     private static Scanner scan = new Scanner(System.in);
     private static User lastUserLoggedIn = null;    // Stores the array index number corresponding to last user logged in. -1 by default to test if any user has logged in.
-    static final int NUMBER_OF_USERS = 10 + FileManagement.getNumUsersInFile();   // Constant used to set size of userObject and gameObjects arrays.
+    private static final int NUMBER_OF_USERS = 10 + FileManagement.getNumUsersInFile();   // Constant used to set size of userObject and gameObjects arrays.
     static User[] userObjects = new User[NUMBER_OF_USERS];
 
     static String login() {
