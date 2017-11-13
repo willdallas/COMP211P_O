@@ -6,7 +6,6 @@ class User {
     private String lastName;
     private int numGames;
     private int totalScore;
-    private int userNumber;
     private static int userCount = 0;
 
     User(String firstNameInput, String lastNameInput, String usernameInput, String passwordInput, int numGamesInput, int totalScoreInput) { // This constructor is used when creating objects from file
@@ -22,7 +21,6 @@ class User {
             throw new IllegalArgumentException("userdata.txt file contains illegal entries");
         }
 
-        userNumber = userCount;
         userCount++;
     }
 
@@ -34,7 +32,6 @@ class User {
         numGames = 0;
         totalScore = 0;
 
-        userNumber = userCount;
         userCount++;
     }
 
@@ -44,10 +41,6 @@ class User {
 
     String getPassword() {
         return this.password;
-    }
-
-    int getUserNumber() {
-        return this.userNumber;
     }
 
     String getFirstName() {
