@@ -1,4 +1,3 @@
-import java.io.File;
 import java.util.Scanner;
 
 import static java.lang.System.out;
@@ -9,21 +8,19 @@ class MenuAndAbout {
 
     static void menu() {
 
-        String text = "\nWelcome to the Word Game";
+        String text = "Welcome to the Word Game";
 
         while (!text.equals("EXIT")) {
 
             MiscFunctions.clearScreen(text + "\n");
 
             out.print("\tLogin (L)\n" +
-                      "\tRegister (R)\n" +
-                      "\tAbout (A)\n" +
-                      "\tPlay the Game (P)\n" +
-                      "\tShow the Leader Board (B)\n" +
-                      "\tQuit (Q)\n\n" +
-                      "\tPlease choose an option: ");
-
-            System.out.println(FileManagement.getNumUsersInFile());
+                    "\tRegister (R)\n" +
+                    "\tAbout (A)\n" +
+                    "\tPlay the Game (P)\n" +
+                    "\tShow the Leader Board (B)\n" +
+                    "\tQuit (Q)\n\n" +
+                    "\tPlease choose an option: ");
 
             boolean choiceSuccess = false;
             char userChoice = 0;
@@ -48,7 +45,7 @@ class MenuAndAbout {
                     break;
                 case 'A':
                 case 'a':
-                    about();
+                    text = about();
                     break;
                 case 'P':
                 case 'p':
@@ -60,7 +57,7 @@ class MenuAndAbout {
         }
     }
 
-    private static void about() {
+    private static String about() {
 
         MiscFunctions.clearScreen("");
 
@@ -72,5 +69,7 @@ class MenuAndAbout {
 
         out.print("\tPress enter to return to the Menu: ");
         scan.nextLine();
+
+        return "";
     }
 }

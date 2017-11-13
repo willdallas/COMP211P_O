@@ -9,7 +9,7 @@ class User {
     private int userNumber;
     private static int userCount = 0;
 
-    User(String firstNameInput, String lastNameInput, String usernameInput, String passwordInput, int numGamesInput, int totalScoreInput) {
+    User(String firstNameInput, String lastNameInput, String usernameInput, String passwordInput, int numGamesInput, int totalScoreInput) { // This constructor is used when creating objects from file
 
         username = usernameInput;
         password = passwordInput;
@@ -17,6 +17,22 @@ class User {
         lastName = lastNameInput;
         numGames = numGamesInput;
         totalScore = totalScoreInput;
+
+        if (!UserManagement.isUserOK(this)) {
+            throw new IllegalArgumentException("userdata.txt file contains illegal entries");
+        }
+
+        userNumber = userCount;
+        userCount++;
+    }
+
+    User(String firstNameInput, String lastNameInput, String usernameInput, String passwordInput) { // This constructor is used when registering new users
+        username = usernameInput;
+        password = passwordInput;
+        firstName = firstNameInput;
+        lastName = lastNameInput;
+        numGames = 0;
+        totalScore = 0;
 
         userNumber = userCount;
         userCount++;
@@ -30,24 +46,20 @@ class User {
         return this.password;
     }
 
-    void setNumGames(int numInput) {
-        this.numGames = numInput;
-    }
-
-    int getNumGames() {
-        return this.numGames;
-    }
-
-    void setTotalScore(int scoreInput) {
-        this.totalScore = scoreInput;
-    }
-
-    int getTotalScore() {
-        return this.totalScore;
-    }
-
     int getUserNumber() {
         return this.userNumber;
+    }
+
+    String getFirstName() {
+        return this.firstName;
+    }
+
+    String getLastName() {
+        return this.lastName;
+    }
+
+    public String toString() {
+        return this.firstName + "," + this.lastName + "," + this.username + "," + this.password + "," + this.numGames + "," + this.totalScore;
     }
 
     static int getUserCount() {

@@ -11,4 +11,16 @@ class MiscFunctions { //  This class is designed to be expanded throughout the p
 
         out.print(s);
     }
+
+    static int randomIntBetweenNumbers(int lowerInt, int upperInt) {
+
+        int randomInt;
+
+        if (lowerInt < upperInt) {
+            randomInt = (int) (Math.random() * (upperInt - lowerInt) + lowerInt);
+        } else {
+            randomInt = 0;
+        }
+        return randomInt;
+    }
 }
