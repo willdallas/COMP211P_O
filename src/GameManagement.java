@@ -25,7 +25,7 @@ class GameManagement {
         out.print("\n\n\t-----Randomized questions-----\n\n\n");
 
         for (int i = 0; i < questions.length; i++) {
-            out.println(questions[i].toString() + "\n");
+            out.println(questions[i] + "\n");
         }
 
         out.print("\n\tPress enter to return to the Menu: ");
