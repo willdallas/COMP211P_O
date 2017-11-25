@@ -4,20 +4,26 @@ import java.util.ArrayList;
 class Question {
 
     private String question;
-    private ArrayList<String> answers = new ArrayList<String>();
+    private String correctAnswer;
+    private ArrayList<String> incorrectAnswers;
+    private ArrayList<String> allAnswers;
 
     Question(String questionInput, ArrayList<String> answersInput) {
         question = questionInput;
-        answers = answersInput;
+        allAnswers = answersInput;
+        correctAnswer = answersInput.get(answersInput.size() - 1);
+
+        answersInput.remove(answersInput.size() - 1);
+        incorrectAnswers = answersInput;
     }
 
     String getQuestion() {
-        return this.question;
+        return question;
     }
 
     ArrayList<String> getRandomAnswerArray() {
 
-        ArrayList<String> nonRandomAnswerArray = answers;
+        ArrayList<String> nonRandomAnswerArray = allAnswers;
         ArrayList<String> randomAnswerArray = new ArrayList<String>();
         int randomInt;
 
@@ -28,18 +34,6 @@ class Question {
         }
 
         return randomAnswerArray;
-    }
-
-    String getCorrectAnswer() {
-        return answers.get(0);
-    }
-
-    String getAnIncorrectAnswer(int num) {
-        if (num > 0 && num < 4) {
-            return answers.get(num);
-        } else {
-            return null;
-        }
     }
 
     public String toStringRandomized() {
@@ -58,10 +52,10 @@ class Question {
         String questionString;
 
         questionString = ("\tWord: " + this.getQuestion());
-        questionString += ("\n\t\tWrong answers: " + this.getAnIncorrectAnswer(1));
-        questionString += (", " + this.getAnIncorrectAnswer(2));
-        questionString += (", " + this.getAnIncorrectAnswer(3));
-        questionString += ("\n\t\tCorrect answer: " + this.getCorrectAnswer());
+        questionString += ("\n\n\t\tWrong answers: " + incorrectAnswers.get(0));
+        questionString += (", " + incorrectAnswers.get(1));
+        questionString += (", " + incorrectAnswers.get(2));
+        questionString += ("\n\t\tCorrect answer: " + correctAnswer);
 
         return questionString;
     }

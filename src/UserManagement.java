@@ -36,7 +36,7 @@ class UserManagement {
             out.print("\nYour username and password didn't match the records.");
             out.print("\nPress enter to return to the Menu: ");
             scan.nextLine();
-            return "";
+            return "\n";
         }
         return "----------\nWelcome, " + userLoggedIn.getFirstName() + "\n----------";
     }

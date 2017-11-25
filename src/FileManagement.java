@@ -57,13 +57,13 @@ class FileManagement {
 
     static Question createQuestion(int n) { // Returns a question object corresponding to a particular line in the text file
         String question;
-        ArrayList<String> answers = new ArrayList<String>(answersPerQuestion);
+        ArrayList<String> answers = new ArrayList<String>();
 
         Scanner scanLine = new Scanner(readQuestion(n)).useDelimiter(",");
 
         question = scanLine.next();
-        for (int i = 0; i < answersPerQuestion; i++) {
-            answers.add(i, scanLine.next());
+        while (scanLine.hasNext()) {
+            answers.add(scanLine.next());
         }
 
         return new Question(question, answers);

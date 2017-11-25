@@ -20,10 +20,11 @@ class GameManagement {
         Question[] questions = createRandomizedQuestionArray();
 
         MiscFunctions.clearScreen("");
+
         for (int i = 0; i < questions.length; i++) {
             MiscFunctions.clearScreen("");
             out.println("----------\nQuestion " + (i+1) + "\n----------\n");
-            out.println(questions[i].toStringRandomized() + "\n");
+            out.println(questions[i].toString());
 
             if (i != questions.length - 1) {
                 out.print("\n\tPress enter for next question: ");
@@ -33,7 +34,7 @@ class GameManagement {
 
         out.print("\n\tPress enter to return to the menu: ");
         scan.nextLine();
-        return "";
+        return "\n";
     }
 
     private static Question[] createRandomizedQuestionArray() {

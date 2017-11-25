@@ -77,6 +77,6 @@ public class Main {
         out.print("\tPress enter to return to the Menu: ");
         scan.nextLine();
 
-        return "";
+        return "\n";
     }
 }
