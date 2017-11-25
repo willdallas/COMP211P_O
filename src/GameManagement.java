@@ -1,54 +1,61 @@
 import static java.lang.System.out;
+
 import java.util.Scanner;
 
 class GameManagement {
 
     private static Scanner scan = new Scanner(System.in);
     private static int numQuestionsInFile = FileManagement.getNumQuestions();
-    //   static Question[] questionObjects = new Question[numQuestionsInFile - 1];
-    private static final int QUESTIONS_PER_GAME = 5;
+    private static final int QUESTIONS_PER_GAME = 4;
+    private static final int ANSWERS_PER_QUESTION = 4;
 
-    static String newGame(User currentUser) {
-        String returnString;
+    static String newGame() {
 
-        if (currentUser != null) {
-            startGame(currentUser, createRandomizedQuestionArray());
-            returnString = "";
-        } else {
-            returnString = "----------\nPlease login to play the game.\n----------\n";
+        User currentUser = UserManagement.getUserLoggedIn();
+
+        if (currentUser == null) {
+            return "----------\nPlease login to play the game.\n----------";
         }
-        return returnString;
-    }
 
-    private static void startGame(User currentUser, Question[] questions) {
+        Question[] questions = createRandomizedQuestionArray();
+
         MiscFunctions.clearScreen("");
-        out.print("\n\n\t-----Randomized questions-----\n\n\n");
-
         for (int i = 0; i < questions.length; i++) {
-            out.println(questions[i] + "\n");
+            MiscFunctions.clearScreen("");
+            out.println("----------\nQuestion " + (i+1) + "\n----------\n");
+            out.println(questions[i].toStringRandomized() + "\n");
+
+            if (i != questions.length - 1) {
+                out.print("\n\tPress enter for next question: ");
+                scan.nextLine();
+            }
         }
 
-        out.print("\n\tPress enter to return to the Menu: ");
+        out.print("\n\tPress enter to return to the menu: ");
         scan.nextLine();
+        return "";
     }
 
     private static Question[] createRandomizedQuestionArray() {
         Question[] randomizedQuestions = new Question[QUESTIONS_PER_GAME];
         int randomInt;
         boolean isQuestionNew;
-        String oldQuestions = "";
+        String usedQuestionNumbers = "";
 
         for (int i = 0; i < QUESTIONS_PER_GAME; i++) {
-
-            do {
+            do {        // Finds a unique random integer corresponding to a line in the questions.txt file
                 randomInt = MiscFunctions.randomIntBetweenNumbers(0, numQuestionsInFile - 1);
-                isQuestionNew = !oldQuestions.contains(Integer.toString(randomInt));
+                isQuestionNew = !usedQuestionNumbers.contains(Integer.toString(randomInt));
             } while (!isQuestionNew);
 
-            randomizedQuestions[i] = new Question(FileManagement.createQuestion(randomInt));
-            oldQuestions += randomInt + ",";
+            randomizedQuestions[i] = FileManagement.createQuestion(randomInt);
+            usedQuestionNumbers += randomInt + ",";
         }
 
         return randomizedQuestions;
+    }
+
+    static int getAnswersPerQuestion() {
+        return ANSWERS_PER_QUESTION;
     }
 }

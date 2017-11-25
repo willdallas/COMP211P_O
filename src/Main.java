@@ -1,20 +1,22 @@
 import static java.lang.System.out;
+
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        FileManagement.createUsers();
+        FileManagement.createUserArray();
         menu();
-        FileManagement.writeUsers(UserManagement.userObjects);
+        FileManagement.writeUsers();
     }
 
     private static void menu() {
         Scanner scan = new Scanner(System.in);
+        boolean exit = false;
 
-        String text = "Welcome to the Word Game";
+        String text = "----------\nWelcome to the Word Game\n----------";
 
-        while (!text.equals("EXIT")) {
+        while (!exit) {
 
             MiscFunctions.clearScreen(text + "\n");
 
@@ -53,10 +55,10 @@ public class Main {
                     break;
                 case 'P':
                 case 'p':
-                    text = GameManagement.newGame(UserManagement.getLastUserLoggedIn());
+                    text = GameManagement.newGame();
                     break;
                 default:
-                    text = "EXIT";
+                    exit = true;
             }
         }
     }

@@ -1,14 +1,13 @@
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
 import static java.lang.System.out;
 
 class UserManagement {
 
     private static Scanner scan = new Scanner(System.in);
-    private static User lastUserLoggedIn = null;    // Stores the array index number corresponding to last user logged in. -1 by default to test if any user has logged in.
-    private static final int NUMBER_OF_USERS = 10 + FileManagement.getNumUsersInFile();   // Constant used to set size of userObject and gameObjects arrays.
-    static User[] userObjects = new User[NUMBER_OF_USERS];
+    private static User userLoggedIn = null;  // Stores the array index number corresponding to last user logged in. null by default (test for whether user has logged in).
+    private static ArrayList<User> userObjects = new ArrayList<User>(FileManagement.getNumUsersInFile());
 
     static String login() {
         MiscFunctions.clearScreen("");
@@ -18,18 +17,18 @@ class UserManagement {
         String usernameInput = scan.nextLine();
 
         out.print("\tPlease enter your password: ");
-        char[] passwordInputCharArray = System.console().readPassword();
-        String passwordInput = hashPassword(new String(passwordInputCharArray));
+        char[] passwordInputCharArray = System.console().readPassword(); // Hides password text in console for privacy
+        String passwordInput = MiscFunctions.hashString(new String(passwordInputCharArray));
         out.println();
 
+        if (!userObjects.isEmpty()) { // Necessary to prevent a "NullPointerException" if no elements in the array have been initialized yet (no users)
+            for (int i = 0; i < User.getUserCount(); i++) { //  Loops through userObject array to check if username & password provided match an existing User object
 
-        for (int i = 0; i < User.getUserCount(); i++) { //  Loops through userObject array to check if username & password provided match an existing User object
-            if (userObjects[0] == null) {  // Necessary to prevent a "NullPointerException" if no elements in the array have been initialized yet (no users)
-                break;
-            } else if (usernameInput.equals(userObjects[i].getUsername()) && passwordInput.equals(userObjects[i].getPassword())) {
-                lastUserLoggedIn = userObjects[i];
-                loginSuccess = true;
-                break;
+                if (usernameInput.equals(userObjects.get(i).getUsername()) && passwordInput.equals(userObjects.get(i).getPassword())) {
+                    userLoggedIn = userObjects.get(i);
+                    loginSuccess = true;
+                    break;
+                }
             }
         }
 
@@ -37,8 +36,9 @@ class UserManagement {
             out.print("\nYour username and password didn't match the records.");
             out.print("\nPress enter to return to the Menu: ");
             scan.nextLine();
+            return "";
         }
-        return loginSuccess ? "----------\nWelcome, " + lastUserLoggedIn.getFirstName() + "\n----------\n" : "";
+        return "----------\nWelcome, " + userLoggedIn.getFirstName() + "\n----------";
     }
 
     static String register() {
@@ -67,14 +67,29 @@ class UserManagement {
             out.println();
         }
 
-        String returnString;
-        if (User.getUserCount() <= (NUMBER_OF_USERS - 1)) {   // avoids ArrayIndexOutOfBoundsException by limiting number of registrations to array size
-            userObjects[User.getUserCount()] = new User(firstNameInput, lastNameInput, usernameInput, hashPassword(passwordInput));
-            returnString = "----------\nYou have registered!\n----------\n";
-        } else {
-            returnString = "----------\nSorry, no more players can be stored\n----------\n";
-        }
-        return returnString;
+        addAUser(new User(firstNameInput, lastNameInput, usernameInput, MiscFunctions.hashString(passwordInput)));
+        return "----------\nYou have registered!\n----------";
+    }
+
+    static boolean isUserOK(User userObject) {
+        return isNameOK(userObject.getFirstName()) && isNameOK(userObject.getLastName()) &&  // Checks if User object fulfills requirements. (32 is length of password hash)
+                (userObject.getPassword().length() == 64) && isUsernameOK(userObject.getUsername());
+    }
+
+    static User getUserLoggedIn() {
+        return userLoggedIn;
+    }
+
+    static User getAUser(int index) {
+        return userObjects.get(index);
+    }
+
+    static void addAUser(int index, User aUser) {
+        userObjects.add(index, aUser);
+    }
+
+    private static void addAUser(User aUser) {
+        userObjects.add(aUser);
     }
 
     private static boolean isUsernameOK(String input) {
@@ -125,31 +140,14 @@ class UserManagement {
     private static boolean userAlreadyRegistered(String input) {
         boolean alreadyRegistered = false;
         for (int i = 0; i < User.getUserCount(); i++) {
-            if (userObjects[0] == null) {  // Necessary to prevent a "NullPointerException" if no elements in the array have been initialized yet (no users)
+            if (userObjects.get(0) == null) {  // Necessary to prevent a "NullPointerException" if no elements in the array have been initialized yet (no users)
                 break;
-            } else if (input.equals(userObjects[i].getUsername())) {
+            } else if (input.equals(userObjects.get(i).getUsername())) {
                 alreadyRegistered = true;
                 break;
             }
         }
         return alreadyRegistered;
-    }
-
-    private static String hashPassword(String passwordInput) {
-        String hashedInput = null;
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(passwordInput.getBytes());
-            byte[] bytes = md.digest();
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            hashedInput = sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            System.exit(0);
-        }
-        return hashedInput;
     }
 
     private static int specialCharactersInString(String aString) {
@@ -163,14 +161,5 @@ class UserManagement {
             }
         }
         return numberOfCharacters;
-    }
-
-    static boolean isUserOK(User userObject) {
-        return isNameOK(userObject.getFirstName()) && isNameOK(userObject.getLastName()) &&
-                (userObject.getPassword().length() == 32) && isUsernameOK(userObject.getUsername());
-    }
-
-    static User getLastUserLoggedIn() {
-        return lastUserLoggedIn;
     }
 }

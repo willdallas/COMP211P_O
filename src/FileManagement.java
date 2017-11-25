@@ -2,11 +2,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class FileManagement {
 
-    static void writeUsers(User[] userObjectsInput) {
+    private static int answersPerQuestion = GameManagement.getAnswersPerQuestion();
+
+    static void writeUsers() {
         PrintWriter printFile = null;
         PrintWriter clearFile = null;
 
@@ -22,12 +25,12 @@ class FileManagement {
         clearFile.close();
 
         for (int i = 0; i < User.getUserCount(); i++) {
-            printFile.println(userObjectsInput[i]);
+            printFile.println(UserManagement.getAUser(i));
         }
         printFile.close();
     }
 
-    static void createUsers() {
+    static void createUserArray() {
         String firstName;
         String lastName;
         String username;
@@ -48,41 +51,22 @@ class FileManagement {
             numGames = scanLine.nextInt();
             totalScore = scanLine.nextInt();
 
-            UserManagement.userObjects[i] = new User(firstName, lastName, username, password, numGames, totalScore);
+            UserManagement.addAUser(i, new User(firstName, lastName, username, password, numGames, totalScore));
         }
     }
 
-    static Question createQuestion(int n) {
+    static Question createQuestion(int n) { // Returns a question object corresponding to a particular line in the text file
         String question;
-        String answer;
-        String incorrectOne;
-        String incorrectTwo;
-        String incorrectThree;
-
-  //    Scanner scanLine;
-/*
-        for (int i = 0; i < getNumQuestions() - 1; i++) {
-
-            scanLine = new Scanner(readQuestion(i)).useDelimiter(",");             FOR CREATING ALL OBJECTS AT START OF GAME
-                                                                                   (INEFFICIENT)
-            question = scanLine.next();
-            incorrectOne = scanLine.next();
-            incorrectTwo = scanLine.next();
-            incorrectThree = scanLine.next();
-            answer = scanLine.next();
-
-            GameManagement.questionObjects[i] = new Question(question, answer, incorrectOne, incorrectTwo, incorrectThree);
-        }*/
+        ArrayList<String> answers = new ArrayList<String>(answersPerQuestion);
 
         Scanner scanLine = new Scanner(readQuestion(n)).useDelimiter(",");
 
         question = scanLine.next();
-        incorrectOne = scanLine.next();
-        incorrectTwo = scanLine.next();
-        incorrectThree = scanLine.next();
-        answer = scanLine.next();
+        for (int i = 0; i < answersPerQuestion; i++) {
+            answers.add(i, scanLine.next());
+        }
 
-        return new Question(question, answer, incorrectOne, incorrectTwo, incorrectThree);
+        return new Question(question, answers);
     }
 
     static int getNumUsersInFile() {
@@ -106,7 +90,7 @@ class FileManagement {
         return count;
     }
 
-    static int getNumQuestions(){
+    static int getNumQuestions() {
         Scanner scanQuestions = null;
 
         try {
@@ -147,7 +131,7 @@ class FileManagement {
         return userString;
     }
 
-    private static String readQuestion(int questionNumber) {
+    private static String readQuestion(int questionNumber) { //  Returns a line of text from the question.txt file
         Scanner scanFile = null;
 
         try {
