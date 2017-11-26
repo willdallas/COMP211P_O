@@ -40,10 +40,10 @@ class GameManagement {
         Question[] randomizedQuestions = new Question[QUESTIONS_PER_GAME];
         int randomInt;
         boolean isQuestionNew;
-        String usedQuestionNumbers = "";
+        String usedQuestionNumbers = ""; // Stores list of line numbers of questions already put into array
 
         for (int i = 0; i < QUESTIONS_PER_GAME; i++) {
-            do {        // Finds a unique random integer corresponding to a line in the questions.txt file
+            do {                // Finds a random (without replacement) integer corresponding to a line in the questions.txt file
                 randomInt = MiscFunctions.randomIntBetweenNumbers(0, numQuestionsInFile - 1);
                 isQuestionNew = !usedQuestionNumbers.contains(Integer.toString(randomInt));
             } while (!isQuestionNew);

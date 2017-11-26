@@ -17,7 +17,7 @@ class User {
         numGames = numGamesInput;
         totalScore = totalScoreInput;
 
-        if (!UserManagement.isUserOK(this)) {
+        if (!UserManagement.isUserOK(this)) {  // Throws exception if user being created has invalid attributes
             throw new IllegalArgumentException("userdata.txt file contains illegal entries");
         }
         userCount++;
@@ -50,7 +50,7 @@ class User {
         return this.lastName;
     }
 
-    public String toString() { // This method used to print each user to a line in the userdata.txt file when the program exits
+    public String toString() { // Prints the user's data in a format consistent with the userdata.txt format
         return this.firstName + "," + this.lastName + "," + this.username + "," + this.password + "," + this.numGames + "," + this.totalScore;
     }
 

@@ -29,23 +29,23 @@ class Question {
     }
 
     private ArrayList<String> getRandomAnswerArray() {
-        ArrayList<String> allAnswersArray = new ArrayList<String>(allAnswers);
+        ArrayList<String> nonRandomAnswersArray = new ArrayList<String>(allAnswers);
         ArrayList<String> randomAnswerArray = new ArrayList<String>();
         int randomInt;
 
-        while (!allAnswersArray.isEmpty()){
-            randomInt = MiscFunctions.randomIntBetweenNumbers(0, allAnswersArray.size() - 1);
-            randomAnswerArray.add(allAnswersArray.get(randomInt));
-            allAnswersArray.remove(randomInt);
+        while (!nonRandomAnswersArray.isEmpty()){  // Randomly selects entry from nonRandomAnswersArray to add to randomAnswerArray
+            randomInt = MiscFunctions.randomIntBetweenNumbers(0, nonRandomAnswersArray.size() - 1);
+            randomAnswerArray.add(nonRandomAnswersArray.get(randomInt));
+            nonRandomAnswersArray.remove(randomInt);
         }
         return randomAnswerArray;
     }
 
-    String toStringRandomized() {
+    String toStringRandomized() { // Returns string displaying the New Word, and the four potential answers in random order
         String questionString;
         ArrayList randomAnswerArray = getRandomAnswerArray();
 
-        questionString = ("\tWord: " + question + "\n");
+        questionString = ("\tNew Word: " + question + "\n");
         for (int i = 0; i < randomAnswerArray.size(); i++) {
             questionString += ("\n\t(" + (i + 1) + ")  " + randomAnswerArray.get(i));
         }

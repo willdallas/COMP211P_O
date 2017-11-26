@@ -9,7 +9,7 @@ class FileManagement {
 
     private static int numUsers = getNumUsersInFile();
 
-    static void writeUsers() {
+    static void writeUsers() {  // Run at the end of the game, to write the array of users to the file
         PrintWriter printFile = null;
         PrintWriter clearFile = null;
 
@@ -21,16 +21,16 @@ class FileManagement {
             System.exit(0);
         }
 
-        clearFile.print("");
+        clearFile.print(""); // Clears the old data from the file so it can be replaced with new user array
         clearFile.close();
 
         for (int i = 0; i < User.getUserCount(); i++) {
-            printFile.println(UserManagement.getAUser(i));
+            printFile.println(UserManagement.getAUser(i)); // Uses the toString method in User class to print to file
         }
         printFile.close();
     }
 
-    static void createUserArray() {
+    static void createUserArray() { // Run at the start of the game, to create array of users from file data
         String firstName;
         String lastName;
         String username;
@@ -110,7 +110,7 @@ class FileManagement {
         return count;
     }
 
-    private static String readUser(int fileUserNumber) {
+    private static String readUser(int fileUserNumber) { // Returns a String containing a single line from the userdata.txt file
         Scanner userFileScanner = null;
         try {
             userFileScanner = new Scanner(new FileInputStream("userdata.txt"));
@@ -129,7 +129,7 @@ class FileManagement {
         return userString;
     }
 
-    private static String readQuestion(int questionNumber) { //  Returns a line of text from the question.txt file
+    private static String readQuestion(int questionNumber) { // Returns a String containing a single line of text from the question.txt file
         Scanner scanFile = null;
 
         try {

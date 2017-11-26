@@ -18,7 +18,7 @@ class UserManagement {
 
         out.print("\tPlease enter your password: ");
         char[] passwordInputCharArray = System.console().readPassword(); // Hides password text in console for privacy
-        String passwordInput = MiscFunctions.hashString(new String(passwordInputCharArray));
+        String passwordInput = MiscFunctions.hashString(new String(passwordInputCharArray));  // Hashes input so it can be compared with stored hashed password
         out.println();
 
         if (!userObjects.isEmpty()) { // Necessary to prevent a "NullPointerException" if no elements in the array have been initialized yet (no users)
@@ -62,17 +62,17 @@ class UserManagement {
         }
         while (!isPasswordOK(passwordInput)) {
             out.print("\tPlease enter a new password: ");
-            char[] passwordInputCharArray = System.console().readPassword();
+            char[] passwordInputCharArray = System.console().readPassword(); // Hides password text in console for privacy
             passwordInput = new String(passwordInputCharArray);
             out.println();
         }
 
-        addAUser(new User(firstNameInput, lastNameInput, usernameInput, MiscFunctions.hashString(passwordInput)));
+        userObjects.add(new User(firstNameInput, lastNameInput, usernameInput, MiscFunctions.hashString(passwordInput)));
         return "----------\nYou have registered!\n----------";
     }
 
     static boolean isUserOK(User userObject) {
-        return isNameOK(userObject.getFirstName()) && isNameOK(userObject.getLastName()) &&  // Checks if User object fulfills requirements. (32 is length of password hash)
+        return isNameOK(userObject.getFirstName()) && isNameOK(userObject.getLastName()) &&  // Checks if User object fulfills requirements. (64 is length of password hash)
                 (userObject.getPassword().length() == 64) && isUsernameOK(userObject.getUsername());
     }
 
@@ -86,10 +86,6 @@ class UserManagement {
 
     static void addAUser(int index, User aUser) {
         userObjects.add(index, aUser);
-    }
-
-    private static void addAUser(User aUser) {
-        userObjects.add(aUser);
     }
 
     private static boolean isUsernameOK(String input) {

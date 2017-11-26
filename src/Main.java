@@ -34,7 +34,7 @@ public class Main {
             char userChoice = 0;
 
             while (!choiceSuccess) {
-                try {                       // This prevents an exception when return key is pressed with no letter typed in
+                try {              // This prevents an exception when return key is pressed with no letter typed in
                     userChoice = scan.nextLine().charAt(0);
                     choiceSuccess = true;
                 } catch (StringIndexOutOfBoundsException e) {

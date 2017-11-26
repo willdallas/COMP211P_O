@@ -1,7 +1,6 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
-
 import static java.lang.System.out;
 
 class MiscFunctions { //  This class is designed to be expanded throughout the project with functions useful to multiple classes
@@ -21,14 +20,14 @@ class MiscFunctions { //  This class is designed to be expanded throughout the p
         return max > min ? random.nextInt((max - min) + 1) + min : 0;
     }
 
-    static String hashString(String textInput) {
+    static String hashString(String textInput) { // Hashes string input. Used to secure password storage.
         String hashedOutput = null;
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(textInput.getBytes());
-            byte[] bytes = md.digest();
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+            messageDigest.update(textInput.getBytes());
+            byte[] bytes = messageDigest.digest();
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {
+            for (int i = 0; i < bytes.length; i++) {  //  Converts bytes to hexadecimal for easier storage in file
                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
             }
             hashedOutput = sb.toString();
