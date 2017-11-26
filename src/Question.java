@@ -1,4 +1,3 @@
-import java.io.File;
 import java.util.ArrayList;
 
 class Question {
@@ -10,37 +9,43 @@ class Question {
 
     Question(String questionInput, ArrayList<String> answersInput) {
         question = questionInput;
-        allAnswers = answersInput;
+        allAnswers = new ArrayList<String>(answersInput);
         correctAnswer = answersInput.get(answersInput.size() - 1);
 
         answersInput.remove(answersInput.size() - 1);
-        incorrectAnswers = answersInput;
+        incorrectAnswers = new ArrayList<String>(answersInput);
     }
 
     String getQuestion() {
         return question;
     }
 
-    ArrayList<String> getRandomAnswerArray() {
+    String getCorrectAnswer() {
+        return correctAnswer;
+    }
 
-        ArrayList<String> nonRandomAnswerArray = allAnswers;
+    ArrayList<String> getIncorrectAnswers() {
+        return incorrectAnswers;
+    }
+
+    private ArrayList<String> getRandomAnswerArray() {
+        ArrayList<String> allAnswersArray = new ArrayList<String>(allAnswers);
         ArrayList<String> randomAnswerArray = new ArrayList<String>();
         int randomInt;
 
-        while (nonRandomAnswerArray.size() != 0) {
-            randomInt = MiscFunctions.randomIntBetweenNumbers(0, nonRandomAnswerArray.size());
-            randomAnswerArray.add(nonRandomAnswerArray.get(randomInt));
-            nonRandomAnswerArray.remove(randomInt);
+        while (!allAnswersArray.isEmpty()){
+            randomInt = MiscFunctions.randomIntBetweenNumbers(0, allAnswersArray.size() - 1);
+            randomAnswerArray.add(allAnswersArray.get(randomInt));
+            allAnswersArray.remove(randomInt);
         }
-
         return randomAnswerArray;
     }
 
-    public String toStringRandomized() {
+    String toStringRandomized() {
         String questionString;
-        ArrayList<String> randomAnswerArray = getRandomAnswerArray();
+        ArrayList randomAnswerArray = getRandomAnswerArray();
 
-        questionString = ("\tWord: " + getQuestion() + "\n");
+        questionString = ("\tWord: " + question + "\n");
         for (int i = 0; i < randomAnswerArray.size(); i++) {
             questionString += ("\n\t(" + (i + 1) + ")  " + randomAnswerArray.get(i));
         }
@@ -51,7 +56,7 @@ class Question {
     public String toString() {
         String questionString;
 
-        questionString = ("\tWord: " + this.getQuestion());
+        questionString = ("\tWord: " + question);
         questionString += ("\n\n\t\tWrong answers: " + incorrectAnswers.get(0));
         questionString += (", " + incorrectAnswers.get(1));
         questionString += (", " + incorrectAnswers.get(2));

@@ -1,5 +1,6 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 import static java.lang.System.out;
 
@@ -14,15 +15,10 @@ class MiscFunctions { //  This class is designed to be expanded throughout the p
         out.print(s);
     }
 
-    static int randomIntBetweenNumbers(int lowerInt, int upperInt) {
-        int randomInt;
+    static int randomIntBetweenNumbers(int min, int max) {
+        Random random = new Random();
 
-        if (lowerInt < upperInt) {
-            randomInt = (int) (Math.random() * (upperInt - lowerInt) + lowerInt);
-        } else {
-            randomInt = 0;
-        }
-        return randomInt;
+        return max > min ? random.nextInt((max - min) + 1) + min : 0;
     }
 
     static String hashString(String textInput) {

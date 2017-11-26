@@ -6,8 +6,7 @@ class GameManagement {
 
     private static Scanner scan = new Scanner(System.in);
     private static int numQuestionsInFile = FileManagement.getNumQuestions();
-    private static final int QUESTIONS_PER_GAME = 4;
-    private static final int ANSWERS_PER_QUESTION = 4;
+    private static final int QUESTIONS_PER_GAME = 10;
 
     static String newGame() {
 
@@ -24,7 +23,7 @@ class GameManagement {
         for (int i = 0; i < questions.length; i++) {
             MiscFunctions.clearScreen("");
             out.println("----------\nQuestion " + (i+1) + "\n----------\n");
-            out.println(questions[i].toString());
+            out.println(questions[i].toStringRandomized());
 
             if (i != questions.length - 1) {
                 out.print("\n\tPress enter for next question: ");
@@ -54,9 +53,5 @@ class GameManagement {
         }
 
         return randomizedQuestions;
-    }
-
-    static int getAnswersPerQuestion() {
-        return ANSWERS_PER_QUESTION;
     }
 }

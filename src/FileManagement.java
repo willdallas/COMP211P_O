@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 class FileManagement {
 
-    private static int answersPerQuestion = GameManagement.getAnswersPerQuestion();
+    private static int numUsers = getNumUsersInFile();
 
     static void writeUsers() {
         PrintWriter printFile = null;
@@ -40,7 +40,7 @@ class FileManagement {
 
         Scanner scanLine;
 
-        for (int i = 0; i < getNumUsersInFile(); i++) {
+        for (int i = 0; i < numUsers; i++) {
 
             scanLine = new Scanner(readUser(i)).useDelimiter(",");
 
@@ -70,10 +70,9 @@ class FileManagement {
     }
 
     static int getNumUsersInFile() {
-        Scanner scanUser = null;
-
+        Scanner userFileScanner = null;
         try {
-            scanUser = new Scanner(new FileInputStream("userdata.txt"));
+            userFileScanner = new Scanner(new FileInputStream("userdata.txt"));
         } catch (FileNotFoundException e) {
             System.out.println("Error reading file.");
             System.exit(0);
@@ -81,11 +80,11 @@ class FileManagement {
 
         int count = 0;
 
-        while (scanUser.hasNextLine()) {
-            scanUser.nextLine();
+        while (userFileScanner.hasNextLine()) {
+            userFileScanner.nextLine();
             count++;
         }
-        scanUser.close();
+        userFileScanner.close();
 
         return count;
     }
@@ -112,21 +111,20 @@ class FileManagement {
     }
 
     private static String readUser(int fileUserNumber) {
-        Scanner scanFile = null;
-
+        Scanner userFileScanner = null;
         try {
-            scanFile = new Scanner(new FileInputStream("userdata.txt"));
+            userFileScanner = new Scanner(new FileInputStream("userdata.txt"));
         } catch (FileNotFoundException e) {
-            System.out.println("Error reading file");
+            System.out.println("Error reading file.");
             System.exit(0);
         }
 
         for (int i = 0; i < fileUserNumber; i++) {
-            scanFile.nextLine();
+            userFileScanner.nextLine();
         }
 
-        String userString = scanFile.nextLine();
-        scanFile.close();
+        String userString = userFileScanner.nextLine();
+        userFileScanner.close();
 
         return userString;
     }
