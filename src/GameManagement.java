@@ -1,11 +1,13 @@
 import static java.lang.System.out;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class GameManagement {
 
     private static Scanner scan = new Scanner(System.in);
     private static int numQuestionsInFile = FileManagement.getNumQuestions();
+    private static String[] questionStrings = new String[numQuestionsInFile];
     private static final int QUESTIONS_PER_GAME = 10;
 
     static String newGame() {
@@ -40,18 +42,36 @@ class GameManagement {
         Question[] randomizedQuestions = new Question[QUESTIONS_PER_GAME];
         int randomInt;
         boolean isQuestionNew;
-        String usedQuestionNumbers = ""; // Stores list of line numbers of questions already put into array
+        String usedQuestionNumbers = ""; // Stores list of index numbers of questions already put into array
 
         for (int i = 0; i < QUESTIONS_PER_GAME; i++) {
-            do {                // Finds a random (without replacement) integer corresponding to a line in the questions.txt file
+            do {                // Finds a random (without replacement) integer corresponding to an entry in the questionStrings array
                 randomInt = MiscFunctions.randomIntBetweenNumbers(0, numQuestionsInFile - 1);
                 isQuestionNew = !usedQuestionNumbers.contains(Integer.toString(randomInt));
             } while (!isQuestionNew);
 
-            randomizedQuestions[i] = FileManagement.createQuestion(randomInt);
+            randomizedQuestions[i] = createQuestionObject(randomInt);
             usedQuestionNumbers += randomInt + ",";
         }
 
         return randomizedQuestions;
+    }
+
+    private static Question createQuestionObject(int n) { // Returns a question object corresponding to a particular entry in the questionStrings array
+        String question;
+        ArrayList<String> answers = new ArrayList<String>();
+
+        Scanner scanLine = new Scanner(questionStrings[n]).useDelimiter(",");
+
+        question = scanLine.next();
+        while (scanLine.hasNext()) {
+            answers.add(scanLine.next());
+        }
+
+        return new Question(question, answers);
+    }
+
+    static void addQuestionString(int index, String aQuestionString) {
+        questionStrings[index] = aQuestionString;
     }
 }

@@ -6,6 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         FileManagement.createUserArray();
+        FileManagement.createQuestionStringArray();
 
         menu();
 

@@ -1,7 +1,4 @@
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -38,11 +35,19 @@ class FileManagement {
         int numGames;
         int totalScore;
 
+        Scanner userFileScanner = null;
+        try {
+            userFileScanner = new Scanner(new FileInputStream("userdata.txt"));
+        } catch (FileNotFoundException e) {
+            System.out.println("Error reading file.");
+            System.exit(0);
+        }
+
+        int index = 0;
         Scanner scanLine;
 
-        for (int i = 0; i < numUsers; i++) {
-
-            scanLine = new Scanner(readUser(i)).useDelimiter(",");
+        while (userFileScanner.hasNextLine()) {
+            scanLine = new Scanner(userFileScanner.nextLine()).useDelimiter(",");
 
             firstName = scanLine.next();
             lastName = scanLine.next();
@@ -51,22 +56,28 @@ class FileManagement {
             numGames = scanLine.nextInt();
             totalScore = scanLine.nextInt();
 
-            UserManagement.addAUser(i, new User(firstName, lastName, username, password, numGames, totalScore));
+            UserManagement.addAUser(index, new User(firstName, lastName, username, password, numGames, totalScore));
+            index++;
         }
+
+        userFileScanner.close();
     }
 
-    static Question createQuestion(int n) { // Returns a question object corresponding to a particular line in the text file
-        String question;
-        ArrayList<String> answers = new ArrayList<String>();
+    static void createQuestionStringArray() {  // Runs at start of game to create array of strings from the lines of question.txt file
+        Scanner scanFile = null;
 
-        Scanner scanLine = new Scanner(readQuestion(n)).useDelimiter(",");
-
-        question = scanLine.next();
-        while (scanLine.hasNext()) {
-            answers.add(scanLine.next());
+        try {
+            scanFile = new Scanner(new FileInputStream("questions.txt"));
+        } catch (FileNotFoundException e) {
+            System.out.println("Error reading file");
+            System.exit(0);
         }
 
-        return new Question(question, answers);
+        int index = 0;
+        while (scanFile.hasNextLine()) {
+            GameManagement.addQuestionString(index, scanFile.nextLine());
+            index++;
+        }
     }
 
     static int getNumUsersInFile() {
@@ -108,44 +119,5 @@ class FileManagement {
         scanQuestions.close();
 
         return count;
-    }
-
-    private static String readUser(int fileUserNumber) { // Returns a String containing a single line from the userdata.txt file
-        Scanner userFileScanner = null;
-        try {
-            userFileScanner = new Scanner(new FileInputStream("userdata.txt"));
-        } catch (FileNotFoundException e) {
-            System.out.println("Error reading file.");
-            System.exit(0);
-        }
-
-        for (int i = 0; i < fileUserNumber; i++) {
-            userFileScanner.nextLine();
-        }
-
-        String userString = userFileScanner.nextLine();
-        userFileScanner.close();
-
-        return userString;
-    }
-
-    private static String readQuestion(int questionNumber) { // Returns a String containing a single line of text from the question.txt file
-        Scanner scanFile = null;
-
-        try {
-            scanFile = new Scanner(new FileInputStream("questions.txt"));
-        } catch (FileNotFoundException e) {
-            System.out.println("Error reading file");
-            System.exit(0);
-        }
-
-        for (int i = 0; i < questionNumber; i++) {
-            scanFile.nextLine();
-        }
-
-        String questionString = scanFile.nextLine();
-        scanFile.close();
-
-        return questionString;
     }
 }
