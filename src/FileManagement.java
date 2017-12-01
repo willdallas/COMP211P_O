@@ -3,8 +3,6 @@ import java.util.Scanner;
 
 class FileManagement {
 
-    private static int numUsers = getNumUsersInFile();
-
     static void writeUsers() {  // Run at the end of the game, to write the array of users to the file
         PrintWriter printFile = null;
         PrintWriter clearFile = null;
@@ -58,7 +56,6 @@ class FileManagement {
             UserManagement.addAUser(index, new User(firstName, lastName, username, password, numGames, totalScore));
             index++;
         }
-
         userFileScanner.close();
     }
 
@@ -74,7 +71,7 @@ class FileManagement {
 
         int index = 0;
         while (scanFile.hasNextLine()) {
-            GameManagement.addQuestionString(index, scanFile.nextLine());
+            Game.addQuestionString(index, scanFile.nextLine());
             index++;
         }
     }

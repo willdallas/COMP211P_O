@@ -23,7 +23,6 @@ class UserManagement {
 
         if (!userObjects.isEmpty()) { // Necessary to prevent a "NullPointerException" if no elements in the array have been initialized yet (no users)
             for (int i = 0; i < User.getUserCount(); i++) { //  Loops through userObject array to check if username & password provided match an existing User object
-
                 if (usernameInput.equals(userObjects.get(i).getUsername()) && passwordInput.equals(userObjects.get(i).getPassword())) {
                     userLoggedIn = userObjects.get(i);
                     loginSuccess = true;
@@ -31,14 +30,13 @@ class UserManagement {
                 }
             }
         }
-
         if (!loginSuccess) {
             out.print("\nYour username and password didn't match the records.");
             out.print("\nPress enter to return to the Menu: ");
             scan.nextLine();
             return "\n";
         }
-        return "----------\nWelcome, " + userLoggedIn.getFirstName() + "\n----------";
+        return MiscFunctions.getStringWithBorder("Welcome, " + userLoggedIn.getFirstName());
     }
 
     static String register() {
@@ -49,7 +47,7 @@ class UserManagement {
         String passwordInput = null;
 
         while (!isNameOK(firstNameInput)) {
-            out.print("\n\tPlease enter your first name: ");
+            out.print("\n\n\tPlease enter your first name: ");
             firstNameInput = scan.nextLine();
         }
         while (!isNameOK(lastNameInput)) {
@@ -68,7 +66,7 @@ class UserManagement {
         }
 
         userObjects.add(new User(firstNameInput, lastNameInput, usernameInput, MiscFunctions.hashString(passwordInput)));
-        return "----------\nYou have registered!\n----------";
+        return MiscFunctions.getStringWithBorder("You have been registered!");
     }
 
     static boolean isUserOK(User userObject) {
@@ -86,6 +84,10 @@ class UserManagement {
 
     static void addAUser(int index, User aUser) {
         userObjects.add(index, aUser);
+    }
+
+    static ArrayList<User> getUserObjects() {
+        return userObjects;
     }
 
     private static boolean isUsernameOK(String input) {

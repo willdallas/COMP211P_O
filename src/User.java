@@ -1,4 +1,4 @@
-class User {
+class User implements Comparable<User> {
 
     private String username;
     private String password;
@@ -34,6 +34,17 @@ class User {
         userCount++;
     }
 
+    public int compareTo(User otherUser) { // Used to order array of Users by percentage correct
+        if (getPercentageCorrect() == otherUser.getPercentageCorrect()) {
+            return 0;
+        }
+        if (getPercentageCorrect() < otherUser.getPercentageCorrect()) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
     String getUsername() {
         return this.username;
     }
@@ -48,6 +59,30 @@ class User {
 
     String getLastName() {
         return this.lastName;
+    }
+
+    int getNumGames() {
+        return this.numGames;
+    }
+
+    void setNumGames(int number) {
+        this.numGames = number;
+    }
+
+    int getTotalScore() {
+        return this.totalScore;
+    }
+
+    void setTotalScore(int number) {
+        this.totalScore = number;
+    }
+
+    int getPercentageCorrect() {
+        if (numGames > 0) {
+            return (totalScore * 100) / (numGames * Game.getQuestionsPerGame());
+        } else {
+            return 0;
+        }
     }
 
     public String toString() { // Prints the user's data in a format consistent with the userdata.txt format

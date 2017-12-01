@@ -1,5 +1,7 @@
 import static java.lang.System.out;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -14,14 +16,13 @@ public class Main {
     }
 
     private static void menu() {
-        Scanner scan = new Scanner(System.in);
         boolean exit = false;
 
-        String text = "----------\nWelcome to the Word Game\n----------";
+        String text = MiscFunctions.getStringWithBorder("Welcome to the Word Game!");
 
         while (!exit) {
 
-            MiscFunctions.clearScreen(text + "\n");
+            MiscFunctions.clearScreen(text + "\n\n");
 
             out.print("\tLogin (L)\n" +
                     "\tRegister (R)\n" +
@@ -31,17 +32,7 @@ public class Main {
                     "\tQuit (Q)\n\n" +
                     "\tPlease choose an option: ");
 
-            boolean choiceSuccess = false;
-            char userChoice = 0;
-
-            while (!choiceSuccess) {
-                try {              // This prevents an exception when return key is pressed with no letter typed in
-                    userChoice = scan.nextLine().charAt(0);
-                    choiceSuccess = true;
-                } catch (StringIndexOutOfBoundsException e) {
-                    out.print("\tInvalid input - please try again: ");
-                }
-            }
+            char userChoice = MiscFunctions.takeCharInput();
 
             switch (userChoice) {
                 case 'L':
@@ -58,10 +49,16 @@ public class Main {
                     break;
                 case 'P':
                 case 'p':
-                    text = GameManagement.newGame();
+                    text = new Game().newGame();
                     break;
-                default:
+                case 'B':
+                case 'b':
+                    text = leaderBoard();
+                    break;
+                case 'Q':
+                case 'q':
                     exit = true;
+                    break;
             }
         }
     }
@@ -71,8 +68,8 @@ public class Main {
 
         MiscFunctions.clearScreen("");
 
-        out.print("\n\n\tGame Instructions:\n\n\t" +
-                "* You need to register and login to play the game\n\t" +
+        out.print(MiscFunctions.getStringWithBorder("Game Instructions:") +
+                "\n\n\t* You need to register and login to play the game\n\t" +
                 "* The program will display a word, and a list of other words\n\t" +
                 "* You need find the word that is a synonym of the first\n\t" +
                 "* You may skip a word if you are unsure of the answer\n\n\n");
@@ -81,5 +78,28 @@ public class Main {
         scan.nextLine();
 
         return "\n";
+    }
+
+    private static String leaderBoard() {
+        Scanner scan = new Scanner(System.in);
+        ArrayList<User> orderedUsersArray = UserManagement.getUserObjects();
+        MiscFunctions.clearScreen("");
+
+        Collections.sort(orderedUsersArray, Collections.<User>reverseOrder()); // Orders array by percentage correct, using compareTo() method in User
+
+        out.print(MiscFunctions.getStringWithBorder("Leader Board"));
+        out.print("\n\n\tPercentage of words correct\n");
+
+        for (int i = 0; i < orderedUsersArray.size(); i++) {
+            if (orderedUsersArray.get(i).getNumGames() > 0) {
+                out.println();
+                out.format("%-30s%3d%1s", "\t" + orderedUsersArray.get(i).getFirstName() + " (" + orderedUsersArray.get(i).getUsername() + ")", orderedUsersArray.get(i).getPercentageCorrect(), "%");
+            }
+        }
+
+        out.print("\n\n\tPress enter to return to the Menu: ");
+        scan.nextLine();
+
+        return "";
     }
 }
