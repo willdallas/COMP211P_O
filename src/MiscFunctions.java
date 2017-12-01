@@ -1,5 +1,7 @@
+import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -81,13 +83,19 @@ class MiscFunctions { //  This class is designed to be expanded throughout the p
         return border + "\n" + aString + "\n" + border;
     }
 
-    static String formatThreeColumnTable(String[] colOne, String[] colTwo, String[] colThree) {
+    static String formatFourColumnTable(ArrayList<ArrayList<String>> tableArray) { // Used to dynamically format a table based on the lengths of entries
         int colOneWidth = 0;
         int colTwoWidth = 0;
         int colThreeWidth = 0;
+        int colFourWidth = 0;
         String table = "";
 
-        for (String anEntry : colOne) {
+        String[] colOne = (String[]) tableArray.get(0).toArray();
+        String[] colTwo = (String[]) tableArray.get(1).toArray();
+        String[] colThree = (String[]) tableArray.get(2).toArray();
+        String[] colFour = (String[]) tableArray.get(3).toArray();
+
+        for (String anEntry : colOne) {  // Sets length of longest String in column to colOneWidth
             if (anEntry.length() > colOneWidth) {
                 colOneWidth = anEntry.length();
             }
@@ -102,10 +110,15 @@ class MiscFunctions { //  This class is designed to be expanded throughout the p
                 colThreeWidth = anEntry.length();
             }
         }
+        for (String anEntry : colFour) {
+            if (anEntry.length() > colFourWidth) {
+                colFourWidth = anEntry.length();
+            }
+        }
 
         for (int i = 0; i < colOne.length; i++) {
             table += colOne[i];
-            for (int j = colOne[i].length(); j < colOneWidth; j++) {
+            for (int j = colOne[i].length(); j < colOneWidth; j++) {  // Adds spaces to each entry such that the length of the String equals colOneWidth
                 table += " ";
             }
             table += "  " + colTwo[i];
@@ -114,6 +127,10 @@ class MiscFunctions { //  This class is designed to be expanded throughout the p
             }
             table += "  " + colThree[i];
             for (int j = colThree[i].length(); j < colThreeWidth; j++) {
+                table += " ";
+            }
+            table += "  " + colFour[i];
+            for (int j = colFour[i].length(); j < colFourWidth; j++) {
                 table += " ";
             }
             table += "\n";

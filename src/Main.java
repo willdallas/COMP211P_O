@@ -1,5 +1,6 @@
 import static java.lang.System.out;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -84,36 +85,51 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         ArrayList<User> orderedUsersArray = UserManagement.getUserObjects();
         Collections.sort(orderedUsersArray, Collections.<User>reverseOrder()); // Orders array by percentage correct, using compareTo() method in User
-        String[] tableColOne = new String[orderedUsersArray.size() + 3];
-        String[] tableColTwo = new String[orderedUsersArray.size() + 3];
-        String[] tableColThree = new String[orderedUsersArray.size() + 3];
+        ArrayList<String> tableColOne = new ArrayList<String>();
+        ArrayList<String> tableColTwo = new ArrayList<String>();
+        ArrayList<String> tableColThree = new ArrayList<String>();
+        ArrayList<String> tableColFour = new ArrayList<String>();
+
+        ArrayList<ArrayList<String>> table = new ArrayList<ArrayList<String>>();
 
         MiscFunctions.clearScreen("");
         out.print(MiscFunctions.getStringWithBorder("Leader Board"));
 
-        tableColOne[0] = "\tName (username)";
-        tableColOne[1] = "\t---------------";
-        tableColOne[2] = "\t               ";
+        tableColOne.add("\tRank");
+        tableColOne.add("\t----");
+        tableColOne.add("\t    ");
         for (int i = 0; i < orderedUsersArray.size(); i++) {
-            tableColOne[i + 3] = "\t" + orderedUsersArray.get(i).getFirstName() + " (" + orderedUsersArray.get(i).getUsername() + ")";
+            if (orderedUsersArray.get(i).getNumGames() != 0) {
+                tableColOne.add("\t" + (i + 1));
+            } else {
+                tableColOne.add("\tN/A");
+            }
+        }
+        tableColTwo.add("\tName (username)");
+        tableColTwo.add("\t---------------");
+        tableColTwo.add("\t               ");
+        for (int i = 0; i < orderedUsersArray.size(); i++) {
+            tableColTwo.add("\t" + orderedUsersArray.get(i).getFirstName() + " (" + orderedUsersArray.get(i).getUsername() + ")");
+        }
+        tableColThree.add("# of games played");
+        tableColThree.add("-----------------");
+        tableColThree.add("                 ");
+        for (int i = 0; i < orderedUsersArray.size(); i++) {
+            tableColThree.add(orderedUsersArray.get(i).getNumGames() + "");
+        }
+        tableColFour.add("% of answers correct");
+        tableColFour.add("--------------------");
+        tableColFour.add("                    ");
+        for (int i = 0; i < orderedUsersArray.size(); i++) {
+            tableColFour.add(orderedUsersArray.get(i).getPercentageCorrect() + "%");
         }
 
-        tableColTwo[0] = "# of games played";
-        tableColTwo[1] = "-----------------";
-        tableColTwo[2] = "                 ";
-        for (int i = 0; i < orderedUsersArray.size(); i++) {
-            tableColTwo[i + 3] = orderedUsersArray.get(i).getNumGames() + "";
-        }
-
-        tableColThree[0] = "% of answers correct";
-        tableColThree[1] = "--------------------";
-        tableColThree[2] = "                    ";
-        for (int i = 0; i < orderedUsersArray.size(); i++) {
-            tableColThree[i + 3] = orderedUsersArray.get(i).getPercentageCorrect() + "%";
-        }
-
+        table.add(tableColOne);
+        table.add(tableColTwo);
+        table.add(tableColThree);
+        table.add(tableColFour);
         out.println("\n");
-        out.print(MiscFunctions.formatThreeColumnTable(tableColOne, tableColTwo, tableColThree));
+        out.print(MiscFunctions.formatFourColumnTable(table));
 
         out.print("\n\n\tPress enter to return to the Menu: ");
         scan.nextLine();
