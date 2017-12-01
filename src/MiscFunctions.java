@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -90,10 +89,10 @@ class MiscFunctions { //  This class is designed to be expanded throughout the p
         int colFourWidth = 0;
         String table = "";
 
-        String[] colOne = (String[]) tableArray.get(0).toArray();
-        String[] colTwo = (String[]) tableArray.get(1).toArray();
-        String[] colThree = (String[]) tableArray.get(2).toArray();
-        String[] colFour = (String[]) tableArray.get(3).toArray();
+        ArrayList<String> colOne = tableArray.get(0);
+        ArrayList<String> colTwo = tableArray.get(1);
+        ArrayList<String> colThree = tableArray.get(2);
+        ArrayList<String> colFour = tableArray.get(3);
 
         for (String anEntry : colOne) {  // Sets length of longest String in column to colOneWidth
             if (anEntry.length() > colOneWidth) {
@@ -116,21 +115,21 @@ class MiscFunctions { //  This class is designed to be expanded throughout the p
             }
         }
 
-        for (int i = 0; i < colOne.length; i++) {
-            table += colOne[i];
-            for (int j = colOne[i].length(); j < colOneWidth; j++) {  // Adds spaces to each entry such that the length of the String equals colOneWidth
+        for (int i = 0; i < colOne.size(); i++) {
+            table += colOne.get(i);
+            for (int j = colOne.get(i).length(); j < colOneWidth; j++) {  // Adds spaces to each entry such that the length of the String equals colOneWidth
                 table += " ";
             }
-            table += "  " + colTwo[i];
-            for (int j = colTwo[i].length(); j < colTwoWidth; j++) {
+            table += "  " + colTwo.get(i);
+            for (int j = colTwo.get(i).length(); j < colTwoWidth; j++) {
                 table += " ";
             }
-            table += "  " + colThree[i];
-            for (int j = colThree[i].length(); j < colThreeWidth; j++) {
+            table += "  " + colThree.get(i);
+            for (int j = colThree.get(i).length(); j < colThreeWidth; j++) {
                 table += " ";
             }
-            table += "  " + colFour[i];
-            for (int j = colFour[i].length(); j < colFourWidth; j++) {
+            table += "  " + colFour.get(i);
+            for (int j = colFour.get(i).length(); j < colFourWidth; j++) {
                 table += " ";
             }
             table += "\n";
