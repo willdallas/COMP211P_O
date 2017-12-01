@@ -41,6 +41,7 @@ class Game {
 
         displaySummary();
         currentUser.setNumGames(currentUser.getNumGames() + 1);
+        User.setTotalGamesPlayed(User.getTotalGamesPlayed() + 1);
         currentUser.setTotalScore(currentUser.getTotalScore() + currentScore);
 
         return "\n";

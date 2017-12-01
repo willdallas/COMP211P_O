@@ -83,19 +83,37 @@ public class Main {
     private static String leaderBoard() {
         Scanner scan = new Scanner(System.in);
         ArrayList<User> orderedUsersArray = UserManagement.getUserObjects();
-        MiscFunctions.clearScreen("");
-
         Collections.sort(orderedUsersArray, Collections.<User>reverseOrder()); // Orders array by percentage correct, using compareTo() method in User
+        String[] tableColOne = new String[orderedUsersArray.size() + 3];
+        String[] tableColTwo = new String[orderedUsersArray.size() + 3];
+        String[] tableColThree = new String[orderedUsersArray.size() + 3];
 
+        MiscFunctions.clearScreen("");
         out.print(MiscFunctions.getStringWithBorder("Leader Board"));
-        out.print("\n\n\tPercentage of words correct\n");
 
+        tableColOne[0] = "\tName (username)";
+        tableColOne[1] = "\t---------------";
+        tableColOne[2] = "\t               ";
         for (int i = 0; i < orderedUsersArray.size(); i++) {
-            if (orderedUsersArray.get(i).getNumGames() > 0) {
-                out.println();
-                out.format("%-30s%3d%1s", "\t" + orderedUsersArray.get(i).getFirstName() + " (" + orderedUsersArray.get(i).getUsername() + ")", orderedUsersArray.get(i).getPercentageCorrect(), "%");
-            }
+            tableColOne[i + 3] = "\t" + orderedUsersArray.get(i).getFirstName() + " (" + orderedUsersArray.get(i).getUsername() + ")";
         }
+
+        tableColTwo[0] = "# of games played";
+        tableColTwo[1] = "-----------------";
+        tableColTwo[2] = "                 ";
+        for (int i = 0; i < orderedUsersArray.size(); i++) {
+            tableColTwo[i + 3] = orderedUsersArray.get(i).getNumGames() + "";
+        }
+
+        tableColThree[0] = "% of answers correct";
+        tableColThree[1] = "--------------------";
+        tableColThree[2] = "                    ";
+        for (int i = 0; i < orderedUsersArray.size(); i++) {
+            tableColThree[i + 3] = orderedUsersArray.get(i).getPercentageCorrect() + "%";
+        }
+
+        out.println("\n");
+        out.print(MiscFunctions.formatThreeColumnTable(tableColOne, tableColTwo, tableColThree));
 
         out.print("\n\n\tPress enter to return to the Menu: ");
         scan.nextLine();

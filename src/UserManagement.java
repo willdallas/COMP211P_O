@@ -111,11 +111,10 @@ class UserManagement {
         boolean passwordAcceptable;
         if (input == null) {
             passwordAcceptable = false;
-        } else if (!(input.length() < 5 || specialCharactersInString(input) < 1)) {
+        } else if (input.length() >= 5) {
             passwordAcceptable = true;
         } else {
-            out.print("\nSorry! Your password must be at least five characters long,\n" +
-                    "and at least one symbol.\n");
+            out.print("\nSorry! Your password must be at least five characters long\n");
             passwordAcceptable = false;
         }
         return passwordAcceptable;
@@ -149,7 +148,7 @@ class UserManagement {
     }
 
     private static int specialCharactersInString(String aString) {
-        String specialCharacters = " !\"#$£%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+        String specialCharacters = " !\"#$£%&'()*+,./:;<=>?@[\\]^`{|}~";
 
         int numberOfCharacters = 0;
 

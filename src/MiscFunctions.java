@@ -27,8 +27,8 @@ class MiscFunctions { //  This class is designed to be expanded throughout the p
             messageDigest.update(textInput.getBytes());
             byte[] bytes = messageDigest.digest();
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {  //  Converts bytes to hexadecimal for easier storage in file
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            for (byte aByte : bytes) {  //  Converts bytes to hexadecimal for easier storage in file
+                sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
             }
             hashedOutput = sb.toString();
         } catch (NoSuchAlgorithmException e) {
@@ -79,5 +79,47 @@ class MiscFunctions { //  This class is designed to be expanded throughout the p
             border += "-";
         }
         return border + "\n" + aString + "\n" + border;
+    }
+
+    static String formatThreeColumnTable(String[] colOne, String[] colTwo, String[] colThree) {
+        int colOneWidth = 0;
+        int colTwoWidth = 0;
+        int colThreeWidth = 0;
+        String table = "";
+
+        for (String anEntry : colOne) {
+            if (anEntry.length() > colOneWidth) {
+                colOneWidth = anEntry.length();
+            }
+        }
+        for (String anEntry : colTwo) {
+            if (anEntry.length() > colTwoWidth) {
+                colTwoWidth = anEntry.length();
+            }
+        }
+        for (String anEntry : colThree) {
+            if (anEntry.length() > colThreeWidth) {
+                colThreeWidth = anEntry.length();
+            }
+        }
+
+        for (int i = 0; i < colOne.length; i++) {
+            table += colOne[i];
+            for (int j = colOne[i].length(); j < colOneWidth; j++) {
+                table += " ";
+            }
+            table += "  " + colTwo[i];
+            for (int j = colTwo[i].length(); j < colTwoWidth; j++) {
+                table += " ";
+            }
+            table += "  " + colThree[i];
+            for (int j = colThree[i].length(); j < colThreeWidth; j++) {
+                table += " ";
+            }
+            table += "\n";
+        }
+
+        return table;
+
     }
 }

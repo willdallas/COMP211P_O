@@ -7,6 +7,7 @@ class User implements Comparable<User> {
     private int numGames;
     private int totalScore;
     private static int userCount = 0;
+    private static int totalGamesPlayed = 0;
 
     User(String firstNameInput, String lastNameInput, String usernameInput, String passwordInput, int numGamesInput, int totalScoreInput) { // This constructor is used when creating objects from file
 
@@ -20,6 +21,8 @@ class User implements Comparable<User> {
         if (!UserManagement.isUserOK(this)) {  // Throws exception if user being created has invalid attributes
             throw new IllegalArgumentException("userdata.txt file contains illegal entries");
         }
+
+        totalGamesPlayed += numGamesInput;
         userCount++;
     }
 
@@ -91,5 +94,13 @@ class User implements Comparable<User> {
 
     static int getUserCount() {
         return userCount;
+    }
+
+    static void setTotalGamesPlayed(int number) {
+        totalGamesPlayed = number;
+    }
+
+    static int getTotalGamesPlayed() {
+        return totalGamesPlayed;
     }
 }
