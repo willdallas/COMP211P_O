@@ -24,7 +24,7 @@ class Game {
     String newGame() {
 
         if (currentUser == null) {
-            return MiscFunctions.getStringWithBorder("Please login to play the game.");
+            return "Please login to play the game.";
         }
 
         Question[] questions = createRandomizedQuestionArray();
