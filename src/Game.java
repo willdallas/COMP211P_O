@@ -29,11 +29,11 @@ class Game {
 
         Question[] questions = createRandomizedQuestionArray();
 
-        MiscFunctions.clearScreen("");
+        MiscFunctions.clearScreen();
 
         for (int i = 0; i < questions.length; i++) {
 
-            MiscFunctions.clearScreen("");
+            MiscFunctions.clearScreen();
             out.println(MiscFunctions.getStringWithBorder("Question " + (i + 1)));
             displayQuestion(questions[i]);
 
@@ -44,7 +44,7 @@ class Game {
         User.setTotalGamesPlayed(User.getTotalGamesPlayed() + 1);
         currentUser.setTotalScore(currentUser.getTotalScore() + currentScore);
 
-        return "\n";
+        return currentUser.getUsername() + " logged in.";
     }
 
     private void displayQuestion(Question aQuestion) {
@@ -82,7 +82,7 @@ class Game {
         Scanner scan = new Scanner(System.in);
 
         String outcome = "";
-        MiscFunctions.clearScreen("");
+        MiscFunctions.clearScreen();
 
         switch (questionOutcome) {
             case -1:
@@ -108,7 +108,7 @@ class Game {
     private void displaySummary() {
         Scanner scan = new Scanner(System.in);
 
-        MiscFunctions.clearScreen("");
+        MiscFunctions.clearScreen();
         out.println(MiscFunctions.getStringWithBorder("Game over!"));
         out.println("\n\tQuestions answered: \t" + questionsAnswered + "/" + QUESTIONS_PER_GAME);
         out.println("\tQuestions skipped:  \t" + questionsSkipped + "/" + QUESTIONS_PER_GAME);

@@ -1,6 +1,5 @@
 import static java.lang.System.out;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -19,11 +18,19 @@ public class Main {
     private static void menu() {
         boolean exit = false;
 
-        String text = MiscFunctions.getStringWithBorder("Welcome to the Word Game!");
+        final String WELCOME_TEXT = "Welcome to the Word Game!";
+
+        String text = WELCOME_TEXT;
 
         while (!exit) {
+            MiscFunctions.clearScreen();
+            out.print(MiscFunctions.getStringWithBorder(text) + "\n\n");
 
-            MiscFunctions.clearScreen(text + "\n\n");
+            if (UserManagement.getUserLoggedIn() != null) {
+                text = UserManagement.getUserLoggedIn().getUsername() + " logged in.";
+            } else {
+                text = WELCOME_TEXT;
+            }
 
             out.print("\tLogin (L)\n" +
                     "\tRegister (R)\n" +
@@ -42,11 +49,12 @@ public class Main {
                     break;
                 case 'R':
                 case 'r':
-                    text = UserManagement.register();
+                    UserManagement.register();
+                    text = "You have successfully registered!";
                     break;
                 case 'A':
                 case 'a':
-                    text = about();
+                    about();
                     break;
                 case 'P':
                 case 'p':
@@ -54,7 +62,7 @@ public class Main {
                     break;
                 case 'B':
                 case 'b':
-                    text = leaderBoard();
+                    leaderBoard();
                     break;
                 case 'Q':
                 case 'q':
@@ -64,10 +72,10 @@ public class Main {
         }
     }
 
-    private static String about() {
+    private static void about() {
         Scanner scan = new Scanner(System.in);
 
-        MiscFunctions.clearScreen("");
+        MiscFunctions.clearScreen();
 
         out.print(MiscFunctions.getStringWithBorder("Game Instructions:") +
                 "\n\n\t* You need to register and login to play the game\n\t" +
@@ -77,22 +85,20 @@ public class Main {
 
         out.print("\tPress enter to return to the Menu: ");
         scan.nextLine();
-
-        return "\n";
     }
 
-    private static String leaderBoard() {
+    private static void leaderBoard() {
         Scanner scan = new Scanner(System.in);
         ArrayList<User> orderedUsersArray = UserManagement.getUserObjects();
         Collections.sort(orderedUsersArray, Collections.<User>reverseOrder()); // Orders array by percentage correct, using compareTo() method in User
+
         ArrayList<String> tableColOne = new ArrayList<String>();
         ArrayList<String> tableColTwo = new ArrayList<String>();
         ArrayList<String> tableColThree = new ArrayList<String>();
         ArrayList<String> tableColFour = new ArrayList<String>();
-
         ArrayList<ArrayList<String>> table = new ArrayList<ArrayList<String>>();
 
-        MiscFunctions.clearScreen("");
+        MiscFunctions.clearScreen();
         out.print(MiscFunctions.getStringWithBorder("Leader Board"));
 
         tableColOne.add("\tRank");
@@ -105,11 +111,11 @@ public class Main {
                 tableColOne.add("\tN/A");
             }
         }
-        tableColTwo.add("\tName (username)");
-        tableColTwo.add("\t---------------");
-        tableColTwo.add("\t               ");
+        tableColTwo.add("Username (First Name)");
+        tableColTwo.add("---------------------");
+        tableColTwo.add("                     ");
         for (int i = 0; i < orderedUsersArray.size(); i++) {
-            tableColTwo.add("\t" + orderedUsersArray.get(i).getFirstName() + " (" + orderedUsersArray.get(i).getUsername() + ")");
+            tableColTwo.add(orderedUsersArray.get(i).getUsername() + " (" + orderedUsersArray.get(i).getFirstName() + ")");
         }
         tableColThree.add("# of games played");
         tableColThree.add("-----------------");
@@ -128,12 +134,11 @@ public class Main {
         table.add(tableColTwo);
         table.add(tableColThree);
         table.add(tableColFour);
+
         out.println("\n");
         out.print(MiscFunctions.formatFourColumnTable(table));
 
         out.print("\n\n\tPress enter to return to the Menu: ");
         scan.nextLine();
-
-        return "";
     }
 }

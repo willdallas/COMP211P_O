@@ -10,7 +10,7 @@ class UserManagement {
     private static ArrayList<User> userObjects = new ArrayList<User>(FileManagement.getNumUsersInFile());
 
     static String login() {
-        MiscFunctions.clearScreen("");
+        MiscFunctions.clearScreen();
         boolean loginSuccess = false;
 
         out.print("\n\n\tPlease enter your username: ");
@@ -34,13 +34,13 @@ class UserManagement {
             out.print("\nYour username and password didn't match the records.");
             out.print("\nPress enter to return to the Menu: ");
             scan.nextLine();
-            return "\n";
+            return "";
         }
-        return MiscFunctions.getStringWithBorder("Welcome, " + userLoggedIn.getFirstName());
+        return "Welcome, " + userLoggedIn.getFirstName();
     }
 
-    static String register() {
-        MiscFunctions.clearScreen("");
+    static void register() {
+        MiscFunctions.clearScreen();
         String firstNameInput = null;
         String lastNameInput = null;
         String usernameInput = null;
@@ -66,7 +66,6 @@ class UserManagement {
         }
 
         userObjects.add(new User(firstNameInput, lastNameInput, usernameInput, MiscFunctions.hashString(passwordInput)));
-        return MiscFunctions.getStringWithBorder("You have been registered!");
     }
 
     static boolean isUserOK(User userObject) {
