@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class FileManagement {
@@ -18,8 +19,10 @@ class FileManagement {
         clearFile.print(""); // Clears the old data from the file so it can be replaced with new user array
         clearFile.close();
 
+        ArrayList<User> userObjects = UserManagement.getUserObjects();
+
         for (int i = 0; i < User.getUserCount(); i++) {
-            printFile.println(UserManagement.getAUser(i)); // Uses the toString method in User class to print to file
+            printFile.println(userObjects.get(i)); // Uses the toString method in User class to print to file
         }
         printFile.close();
     }

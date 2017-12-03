@@ -34,10 +34,10 @@ class LeaderBoard {
         for (int i = 0; i < orderedUsersArray.size(); i++) {
             tableColTwo.add(" " + orderedUsersArray.get(i).getUsername() + " (" + orderedUsersArray.get(i).getFirstName() + ") ");
         }
-        tableColThree.add(" # of games played ");
-        tableColThree.add("───────────────────");
+        tableColThree.add(" Total score ");
+        tableColThree.add("─────────────");
         for (int i = 0; i < orderedUsersArray.size(); i++) {
-            tableColThree.add(" " + orderedUsersArray.get(i).getNumGames());
+            tableColThree.add(" " + orderedUsersArray.get(i).getTotalScore());
         }
         tableColFour.add(" % of answers correct ");
         tableColFour.add("──────────────────────");

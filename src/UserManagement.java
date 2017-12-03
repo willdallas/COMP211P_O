@@ -37,7 +37,7 @@ class UserManagement {
             scan.nextLine();
             return "";
         }
-        return "Welcome, " + userLoggedIn.getFirstName();
+        return "Welcome, " + userLoggedIn.getFirstName() + " │ Score: " + userLoggedIn.getTotalScore();
     }
 
     static void register() {
@@ -77,10 +77,6 @@ class UserManagement {
 
     static User getUserLoggedIn() {
         return userLoggedIn;
-    }
-
-    static User getAUser(int index) {
-        return userObjects.get(index);
     }
 
     static void addAUser(int index, User aUser) {

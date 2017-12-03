@@ -44,7 +44,7 @@ class Game {
         User.setTotalGamesPlayed(User.getTotalGamesPlayed() + 1);
         currentUser.setTotalScore(currentUser.getTotalScore() + currentScore);
 
-        return currentUser.getUsername() + " logged in.";
+        return "User: " + UserManagement.getUserLoggedIn().getUsername() + " │ Score: " + UserManagement.getUserLoggedIn().getTotalScore();
     }
 
     private void displayQuestion(Question aQuestion) {

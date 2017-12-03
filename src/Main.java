@@ -9,6 +9,7 @@ public class Main {
         FileManagement.createQuestionStringArray();
 
         menu();
+        out.println();
 
         FileManagement.writeUsers();
     }
@@ -25,7 +26,7 @@ public class Main {
             out.print(MiscFunctions.getStringWithBorder(text) + "\n\n");
 
             if (UserManagement.getUserLoggedIn() != null) {
-                text = UserManagement.getUserLoggedIn().getUsername() + " logged in.";
+                text = "User: " + UserManagement.getUserLoggedIn().getUsername() + " │ Score: " + UserManagement.getUserLoggedIn().getTotalScore();
             } else {
                 text = WELCOME_TEXT;
             }
