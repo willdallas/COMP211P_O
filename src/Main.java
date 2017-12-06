@@ -16,20 +16,18 @@ public class Main {
 
     private static void menu() {
         boolean exit = false;
-
-        final String WELCOME_TEXT = "Welcome to the Word Game!";
-
-        String text = WELCOME_TEXT;
+        String menuText;
 
         while (!exit) {
-            MiscFunctions.clearScreen();
-            out.print(MiscFunctions.getStringWithBorder(text) + "\n\n");
 
             if (UserManagement.getUserLoggedIn() != null) {
-                text = "User: " + UserManagement.getUserLoggedIn().getUsername() + " │ Score: " + UserManagement.getUserLoggedIn().getTotalScore();
+                menuText = "Player: " + UserManagement.getUserLoggedIn().getUsername() + " │ Score: " + UserManagement.getUserLoggedIn().getTotalScore();
             } else {
-                text = WELCOME_TEXT;
+                menuText = "Welcome to the Word Game!";
             }
+
+            MiscFunctions.clearScreen();
+            out.print(MiscFunctions.getStringWithBorder(menuText) + "\n\n");
 
             out.print("\tLogin (L)\n" +
                     "\tRegister (R)\n" +
@@ -44,12 +42,11 @@ public class Main {
             switch (userChoice) {
                 case 'L':
                 case 'l':
-                    text = UserManagement.login();
+                    UserManagement.login();
                     break;
                 case 'R':
                 case 'r':
                     UserManagement.register();
-                    text = "You have successfully registered!";
                     break;
                 case 'A':
                 case 'a':
@@ -57,7 +54,7 @@ public class Main {
                     break;
                 case 'P':
                 case 'p':
-                    text = new Game().newGame();
+                    new Game().newGame();
                     break;
                 case 'B':
                 case 'b':
@@ -76,13 +73,13 @@ public class Main {
 
         MiscFunctions.clearScreen();
 
-        out.print(MiscFunctions.getStringWithBorder("Game Instructions:") +
+        out.println(MiscFunctions.getStringWithBorder("Game Instructions:") +
                 "\n\n\t* You need to register and login to play the game\n\t" +
                 "* The program will display a word, and a list of other words\n\t" +
                 "* You need find the word that is a synonym of the first\n\t" +
-                "* You may skip a word if you are unsure of the answer\n\n\n");
+                "* You may skip a word if you are unsure of the answer");
 
-        out.print("\tPress enter to return to the Menu: ");
+        out.print("\n\n\tPress enter to return to the menu: ");
         scan.nextLine();
     }
 }

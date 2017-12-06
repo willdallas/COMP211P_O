@@ -7,7 +7,6 @@ class User implements Comparable<User> {
     private int numGames;
     private int totalScore;
     private static int userCount = 0;
-    private static int totalGamesPlayed = 0;
 
     User(String firstNameInput, String lastNameInput, String usernameInput, String passwordInput, int numGamesInput, int totalScoreInput) { // This constructor is used when creating objects from file
 
@@ -22,7 +21,6 @@ class User implements Comparable<User> {
             throw new IllegalArgumentException("userdata.txt file contains illegal entries");
         }
 
-        totalGamesPlayed += numGamesInput;
         userCount++;
     }
 
@@ -37,11 +35,11 @@ class User implements Comparable<User> {
         userCount++;
     }
 
-    public int compareTo(User otherUser) { // Used to order array of Users by percentage correct
-        if (getPercentageCorrect() == otherUser.getPercentageCorrect()) {
+    public int compareTo(User otherUser) { // Used to order array of Users by percentage correct (with all players with 0 games played at the end of the list)
+        if (this.getPercentageCorrect() == otherUser.getPercentageCorrect() && this.numGames != 0) {
             return 0;
         }
-        if (getPercentageCorrect() < otherUser.getPercentageCorrect()) {
+        if (this.getPercentageCorrect() < otherUser.getPercentageCorrect() || this.numGames == 0) {
             return -1;
         } else {
             return 1;
@@ -94,13 +92,5 @@ class User implements Comparable<User> {
 
     static int getUserCount() {
         return userCount;
-    }
-
-    static void setTotalGamesPlayed(int number) {
-        totalGamesPlayed = number;
-    }
-
-    static int getTotalGamesPlayed() {
-        return totalGamesPlayed;
     }
 }

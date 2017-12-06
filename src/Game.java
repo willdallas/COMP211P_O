@@ -21,30 +21,28 @@ class Game {
         currentScore = 0;
     }
 
-    String newGame() {
-
-        if (currentUser == null) {
-            return "Please login to play the game.";
-        }
-
-        Question[] questions = createRandomizedQuestionArray();
-
+    void newGame() { // Checks if a user is logged in, and if so, shows the questions and feedback.
+        Scanner scan = new Scanner(System.in);
         MiscFunctions.clearScreen();
 
-        for (int i = 0; i < questions.length; i++) {
+        if (currentUser != null) {
 
-            MiscFunctions.clearScreen();
-            out.println(MiscFunctions.getStringWithBorder("Question " + (i + 1)));
-            displayQuestion(questions[i]);
+            Question[] questions = createRandomizedQuestionArray();
 
+            for (int i = 0; i < questions.length; i++) {
+                MiscFunctions.clearScreen();
+                out.println(MiscFunctions.getStringWithBorder("Question " + (i + 1)));
+                displayQuestion(questions[i]);
+            }
+
+            displaySummary();
+            currentUser.setNumGames(currentUser.getNumGames() + 1);
+            currentUser.setTotalScore(currentUser.getTotalScore() + currentScore);
+        } else {
+            out.println(MiscFunctions.getStringWithBorder("Please login to play"));
+            out.print("\n\n\n\n\n\n\tPress enter to return to the menu: ");
+            scan.nextLine();
         }
-
-        displaySummary();
-        currentUser.setNumGames(currentUser.getNumGames() + 1);
-        User.setTotalGamesPlayed(User.getTotalGamesPlayed() + 1);
-        currentUser.setTotalScore(currentUser.getTotalScore() + currentScore);
-
-        return "User: " + UserManagement.getUserLoggedIn().getUsername() + " │ Score: " + UserManagement.getUserLoggedIn().getTotalScore();
     }
 
     private void displayQuestion(Question aQuestion) {

@@ -6,115 +6,87 @@ import static java.lang.System.out;
 
 class LeaderBoard {
 
+    private static ArrayList<ArrayList<String>> table;
+    private static int[] colWidths;
+    private static int totalWidth;
+
     static void leaderBoard() {
         Scanner scan = new Scanner(System.in);
+        table = new ArrayList<ArrayList<String>>(4);
+        colWidths = null;
+        totalWidth = 0;
         ArrayList<User> orderedUsersArray = UserManagement.getUserObjects();
         Collections.sort(orderedUsersArray, Collections.<User>reverseOrder()); // Orders array by percentage correct, using compareTo() method in User
-
-        ArrayList<String> tableColOne = new ArrayList<String>();
-        ArrayList<String> tableColTwo = new ArrayList<String>();
-        ArrayList<String> tableColThree = new ArrayList<String>();
-        ArrayList<String> tableColFour = new ArrayList<String>();
-        ArrayList<ArrayList<String>> table = new ArrayList<ArrayList<String>>();
 
         MiscFunctions.clearScreen();
         out.print(MiscFunctions.getStringWithBorder("Leader Board"));
 
-        tableColOne.add(" Rank ");
-        tableColOne.add("──────");
+        table.get(0).add(" Rank ");
+        table.get(0).add("──────");
         for (int i = 0; i < orderedUsersArray.size(); i++) {
             if (orderedUsersArray.get(i).getNumGames() != 0) {
-                tableColOne.add(" " + (i + 1));
+                table.get(0).add(" " + (i + 1));
             } else {
-                tableColOne.add(" N/A");
+                table.get(0).add(" Hasn't played yet! ");
             }
         }
-        tableColTwo.add(" Username (First Name) ");
-        tableColTwo.add("───────────────────────");
-        for (int i = 0; i < orderedUsersArray.size(); i++) {
-            tableColTwo.add(" " + orderedUsersArray.get(i).getUsername() + " (" + orderedUsersArray.get(i).getFirstName() + ") ");
+        table.get(1).add(" Username (First Name) ");
+        table.get(1).add("───────────────────────");
+        for (User aUser : orderedUsersArray) {
+            table.get(1).add(" " + aUser.getUsername() + " (" + aUser.getFirstName() + ") ");
         }
-        tableColThree.add(" Total score ");
-        tableColThree.add("─────────────");
-        for (int i = 0; i < orderedUsersArray.size(); i++) {
-            tableColThree.add(" " + orderedUsersArray.get(i).getTotalScore());
+        table.get(2).add(" Games played ");
+        table.get(2).add("──────────────");
+        for (User aUser : orderedUsersArray) {
+            table.get(2).add(" " + aUser.getNumGames());
         }
-        tableColFour.add(" % of answers correct ");
-        tableColFour.add("──────────────────────");
-        for (int i = 0; i < orderedUsersArray.size(); i++) {
-            tableColFour.add(" " + orderedUsersArray.get(i).getPercentageCorrect() + "%");
+        table.get(3).add(" % of answers correct ");
+        table.get(3).add("──────────────────────");
+        for (User aUser : orderedUsersArray) {
+            table.get(3).add(" " + aUser.getPercentageCorrect() + "% ");
         }
-
-        table.add(tableColOne);
-        table.add(tableColTwo);
-        table.add(tableColThree);
-        table.add(tableColFour);
 
         out.println("\n");
-        out.print(formatTable(table));
-
-        out.print("\n\n\tPress enter to return to the Menu: ");
+        out.print(formatTable());
+        out.print("\n\n\tPress enter to return to the menu: ");
         scan.nextLine();
     }
 
-    private static String formatTable(ArrayList<ArrayList<String>> tableArray) { // Used to dynamically format a table based on the lengths of entries
-        String table = "";
-
-        ArrayList<String> colOne = tableArray.get(0);
-        ArrayList<String> colTwo = tableArray.get(1);
-        ArrayList<String> colThree = tableArray.get(2);
-        ArrayList<String> colFour = tableArray.get(3);
-        int colOneWidth = findMaxStringLength(colOne);
-        int colTwoWidth = findMaxStringLength(colTwo);
-        int colThreeWidth = findMaxStringLength(colThree);
-        int colFourWidth = findMaxStringLength(colFour);
-        int totalWidth = colOneWidth + colTwoWidth + colThreeWidth + colFourWidth + 3;
-
-        table += "\t╭";
-        for (int i = 0; i < totalWidth; i++) {
-            if (i == colOneWidth || i == colOneWidth + colTwoWidth + 1 || i == colOneWidth + colTwoWidth + colThreeWidth + 2) {
-                table += "┬";
-            } else {
-                table += "─";
-            }
+    private static String formatTable() {  // Used to dynamically format a table based on the lengths of entries
+        String tableString = "";
+        colWidths = new int[]{getMaxLength(table.get(0)), getMaxLength(table.get(1)), getMaxLength(table.get(2)), getMaxLength(table.get(3))};
+        for (int aColumnWidth : colWidths) {
+            totalWidth += aColumnWidth;
         }
-        table += "╮\n";
-        for (int i = 0; i < colOne.size(); i++) {
-            table += "\t" + getTableBorderSymbol(i,0);
-            table += colOne.get(i);
-            for (int j = colOne.get(i).length(); j < colOneWidth; j++) {  // Adds spaces to each entry such that the length of the String equals colOneWidth
-                table += " ";
-            }
-            table += getTableBorderSymbol(i,1);
-            table += colTwo.get(i);
-            for (int j = colTwo.get(i).length(); j < colTwoWidth; j++) {
-                table += " ";
-            }
-            table += getTableBorderSymbol(i,2);
-            table += colThree.get(i);
-            for (int j = colThree.get(i).length(); j < colThreeWidth; j++) {
-                table += " ";
-            }
-            table += getTableBorderSymbol(i,3);
-            table += colFour.get(i);
-            for (int j = colFour.get(i).length(); j < colFourWidth; j++) {
-                table += " ";
-            }
-            table += getTableBorderSymbol(i,4) + "\n";
+        padStrings();
+        for (int i = 0; i < table.get(0).size() + 2; i++) {
+            tableString += getRow(i);
         }
-        table += "\t╰";
-        for (int i = 0; i < totalWidth; i++) {
-            if (i == colOneWidth || i == colOneWidth + colTwoWidth + 1 || i == colOneWidth + colTwoWidth + colThreeWidth + 2) {
-                table += "┴";
-            } else {
-                table += "─";
-            }
-        }
-        table += "╯";
-        return table;
+        return tableString;
     }
 
-    private static int findMaxStringLength(ArrayList<String> anArrayList) {
+    private static String getRow(int rowNumber) {
+        String row = "\t";
+        if (rowNumber == 0 || rowNumber == 2 || rowNumber == table.get(0).size() + 1) {
+            row += (rowNumber > 2) ? "╰" : (rowNumber == 0) ? "╭" : "├";
+            for (int i = 0; i < totalWidth + 3; i++) {
+                if (i == colWidths[0] || i == colWidths[0] + colWidths[1] + 1 || i == totalWidth - colWidths[3] + 2) {
+                    row += (rowNumber > 2) ? "┴" : (rowNumber == 0) ? "┬" : "┼";
+                } else {
+                    row += "─";
+                }
+            }
+            row += (rowNumber > 2) ? "╯\n" : (rowNumber == 0) ? "╮\n" : "┤\n";
+            return row;
+        }
+        for (ArrayList<String> aColumn : table) {
+            row += ("│" + aColumn.get(rowNumber - 1));
+        }
+        row += "│\n";
+        return row;
+    }
+
+    private static int getMaxLength(ArrayList<String> anArrayList) {
         int maxStringLength = 0;
         for (String anEntry : anArrayList) {
             if (anEntry.length() > maxStringLength) {
@@ -124,17 +96,13 @@ class LeaderBoard {
         return maxStringLength;
     }
 
-    private static String getTableBorderSymbol(int rowNumber, int columnNumber) {
-        if (rowNumber == 1) {
-            switch (columnNumber) {
-                case 0:
-                    return "├";
-                case 4:
-                    return "┤";
-                default:
-                    return "┼";
+    private static void padStrings() {   // Adds spaces to entries in columns that are shorter than the longest entry
+        for (int i = 0; i < table.size(); i++) {
+            for (int j = 0; j < table.get(i).size(); j++) {
+                for (int k = table.get(i).get(j).length(); k < colWidths[i]; k++) {
+                    table.get(i).set(j, table.get(i).get(j) + " ");
+                }
             }
         }
-        return "│";
     }
 }

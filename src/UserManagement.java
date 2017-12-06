@@ -9,7 +9,7 @@ class UserManagement {
     private static User userLoggedIn = null;  // Stores the array index number corresponding to last user logged in. null by default (test for whether user has logged in).
     private static ArrayList<User> userObjects = new ArrayList<User>(FileManagement.getNumUsersInFile());
 
-    static String login() {
+    static void login() {
         MiscFunctions.clearScreen();
         boolean loginSuccess = false;
 
@@ -32,12 +32,10 @@ class UserManagement {
             }
         }
         if (!loginSuccess) {
-            out.print("\n\tYour username and password didn't match the records.");
-            out.print("\n\tPress enter to return to the Menu: ");
+            out.println("\n\tYour username and password didn't match the records.");
+            out.print("\n\n\tPress enter to return to the menu: ");
             scan.nextLine();
-            return "";
         }
-        return "Welcome, " + userLoggedIn.getFirstName() + " │ Score: " + userLoggedIn.getTotalScore();
     }
 
     static void register() {
@@ -84,7 +82,7 @@ class UserManagement {
     }
 
     static ArrayList<User> getUserObjects() {
-        return userObjects;
+        return new ArrayList<User>(userObjects);
     }
 
     private static boolean isUsernameOK(String input) {

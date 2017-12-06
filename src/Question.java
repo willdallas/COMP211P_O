@@ -20,10 +20,6 @@ class Question {
         return correctAnswer;
     }
 
-    ArrayList<String> getAllAnswers() {
-        return allAnswers;
-    }
-
     ArrayList<String> getRandomAnswerArray() {
         ArrayList<String> nonRandomAnswersArray = new ArrayList<String>(allAnswers);
         ArrayList<String> randomAnswerArray = new ArrayList<String>();
@@ -48,6 +44,4 @@ class Question {
 
         return questionString;
     }
-
-
 }
