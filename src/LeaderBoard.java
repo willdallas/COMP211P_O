@@ -9,10 +9,11 @@ class LeaderBoard {
     private static ArrayList<ArrayList<String>> table;
     private static int[] colWidths;
     private static int totalWidth;
+    private static final char[] borderChars = new char[]{'╭', '╮', '╰', '╯', '├', '┼', '┤', '┴', '┬', '─', '│'};
 
     static void leaderBoard() {
         Scanner scan = new Scanner(System.in);
-        table = new ArrayList<ArrayList<String>>(4);
+        table = new ArrayList<>(4);
         colWidths = null;
         totalWidth = 0;
         ArrayList<User> orderedUsersArray = UserManagement.getUserObjects();
@@ -21,8 +22,7 @@ class LeaderBoard {
         MiscFunctions.clearScreen();
         out.print(MiscFunctions.getStringWithBorder("Leader Board"));
 
-        table.get(0).add(" Rank ");
-        table.get(0).add("──────");
+        table.add(new ArrayList<>(Collections.singletonList(" Rank ")));
         for (int i = 0; i < orderedUsersArray.size(); i++) {
             if (orderedUsersArray.get(i).getNumGames() != 0) {
                 table.get(0).add(" " + (i + 1));
@@ -30,24 +30,21 @@ class LeaderBoard {
                 table.get(0).add(" Hasn't played yet! ");
             }
         }
-        table.get(1).add(" Username (First Name) ");
-        table.get(1).add("───────────────────────");
+        table.add(new ArrayList<>(Collections.singletonList(" Username (First Name) ")));
         for (User aUser : orderedUsersArray) {
             table.get(1).add(" " + aUser.getUsername() + " (" + aUser.getFirstName() + ") ");
         }
-        table.get(2).add(" Games played ");
-        table.get(2).add("──────────────");
+        table.add(new ArrayList<>(Collections.singletonList(" Games played ")));
         for (User aUser : orderedUsersArray) {
             table.get(2).add(" " + aUser.getNumGames());
         }
-        table.get(3).add(" % of answers correct ");
-        table.get(3).add("──────────────────────");
+        table.add(new ArrayList<>(Collections.singletonList(" % of answers correct ")));
         for (User aUser : orderedUsersArray) {
             table.get(3).add(" " + aUser.getPercentageCorrect() + "% ");
         }
-
         out.println("\n");
         out.print(formatTable());
+
         out.print("\n\n\tPress enter to return to the menu: ");
         scan.nextLine();
     }
@@ -68,22 +65,22 @@ class LeaderBoard {
     private static String getRow(int rowNumber) {
         String row = "\t";
         if (rowNumber == 0 || rowNumber == 2 || rowNumber == table.get(0).size() + 1) {
-            row += (rowNumber > 2) ? "╰" : (rowNumber == 0) ? "╭" : "├";
+            row += (rowNumber > 2) ? borderChars[2] : (rowNumber == 0) ? borderChars[0] : borderChars[4];
             for (int i = 0; i < totalWidth + 3; i++) {
                 if (i == colWidths[0] || i == colWidths[0] + colWidths[1] + 1 || i == totalWidth - colWidths[3] + 2) {
-                    row += (rowNumber > 2) ? "┴" : (rowNumber == 0) ? "┬" : "┼";
+                    row += (rowNumber > 2) ? borderChars[7] : (rowNumber == 0) ? borderChars[8] : borderChars[5];
                 } else {
-                    row += "─";
+                    row += borderChars[9];
                 }
             }
-            row += (rowNumber > 2) ? "╯\n" : (rowNumber == 0) ? "╮\n" : "┤\n";
-            return row;
+            row += (rowNumber > 2) ? borderChars[3] : (rowNumber == 0) ? borderChars[1] : borderChars[6];
+            return row + "\n";
         }
         for (ArrayList<String> aColumn : table) {
-            row += ("│" + aColumn.get(rowNumber - 1));
+            row += (borderChars[10] + aColumn.get(rowNumber - 1));
         }
-        row += "│\n";
-        return row;
+        row += borderChars[10];
+        return row + "\n";
     }
 
     private static int getMaxLength(ArrayList<String> anArrayList) {
