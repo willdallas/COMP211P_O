@@ -13,7 +13,6 @@ class LeaderBoard {
     static void leaderBoard() {
         Scanner scan = new Scanner(System.in);
         table = new ArrayList<>(4);
-        colWidths = null;
         totalWidth = 0;
         ArrayList<User> orderedUsersArray = UserManagement.getUserObjects();
         Collections.sort(orderedUsersArray, Collections.<User>reverseOrder()); // Orders array by percentage correct, using compareTo() method in User

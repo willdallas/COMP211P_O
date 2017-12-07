@@ -8,7 +8,7 @@ class Question {
 
     Question(String questionInput, ArrayList<String> answersInput) {
         question = questionInput;
-        allAnswers = new ArrayList<String>(answersInput);
+        allAnswers = new ArrayList<>(answersInput);
         correctAnswer = answersInput.get(answersInput.size() - 1);
     }
 

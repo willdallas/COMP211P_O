@@ -9,7 +9,7 @@ class Game {
     private static String[] questionStrings = new String[numQuestionsInFile];
     private static final int QUESTIONS_PER_GAME = 10;
 
-    private User currentUser;  // Instance variables for each unique game
+    private User currentUser;  // Instance variables used for each unique game
     private int questionsAnswered;
     private int questionsSkipped;
     private int currentScore;
