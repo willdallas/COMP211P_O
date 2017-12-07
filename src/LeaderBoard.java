@@ -10,7 +10,7 @@ class LeaderBoard {
     private static int[] colWidths;
     private static int totalWidth;
 
-    static void leaderBoard() {
+    static void leaderBoard() { // Sorts users, fills array with data on Users, then prints table
         Scanner scan = new Scanner(System.in);
         table = new ArrayList<>(4);
         totalWidth = 0;
@@ -42,7 +42,6 @@ class LeaderBoard {
         }
         out.println("\n");
         out.print(formatTable());
-
         out.print("\n\n\tPress enter to return to the menu: ");
         scan.nextLine();
     }
@@ -60,7 +59,7 @@ class LeaderBoard {
         return tableString;
     }
 
-    private static String getRow(int rowNumber) {
+    private static String getRow(int rowNumber) {  // Returns a String for each row of the table, using Unicode special characters
         String row = "\t";
         if (rowNumber == 0 || rowNumber == 2 || rowNumber == table.get(0).size() + 2) {
             row += (rowNumber > 2) ? "╰" : (rowNumber == 0) ? "╭" : "├";

@@ -24,7 +24,7 @@ class User implements Comparable<User> {
         userCount++;
     }
 
-    User(String firstNameInput, String lastNameInput, String usernameInput, String passwordInput) { // This constructor is used when registering new users
+    User(String firstNameInput, String lastNameInput, String usernameInput, String passwordInput) { // This constructor is used when registering new users. Inputs already checked
         username = usernameInput;
         password = passwordInput;
         firstName = firstNameInput;
