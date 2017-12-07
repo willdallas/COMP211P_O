@@ -14,30 +14,30 @@ class LeaderBoard {
         Scanner scan = new Scanner(System.in);
         table = new ArrayList<>(4);
         totalWidth = 0;
-        ArrayList<User> orderedUsersArray = UserManagement.getUserObjects();
-        Collections.sort(orderedUsersArray, Collections.<User>reverseOrder()); // Orders array by percentage correct, using compareTo() method in User
+        ArrayList<User> sortedUsers = UserManagement.getUserObjects();
+        Collections.sort(sortedUsers, Collections.<User>reverseOrder()); // Orders array by percentage correct, using compareTo() method in User
 
         MiscFunctions.clearScreen();
         out.print(MiscFunctions.getStringWithBorder("Leader Board", false));
 
         table.add(new ArrayList<>(Collections.singletonList(" Rank ")));
-        for (int i = 0; i < orderedUsersArray.size(); i++) {
-            if (orderedUsersArray.get(i).getNumGames() != 0) {
+        for (int i = 0; i < sortedUsers.size(); i++) {
+            if (sortedUsers.get(i).getNumGames() != 0) {
                 table.get(0).add(" " + (i + 1));
             } else {
                 table.get(0).add(" Hasn't played yet! ");
             }
         }
         table.add(new ArrayList<>(Collections.singletonList(" Username (First Name) ")));
-        for (User aUser : orderedUsersArray) {
+        for (User aUser : sortedUsers) {
             table.get(1).add(" " + aUser.getUsername() + " (" + aUser.getFirstName() + ") ");
         }
         table.add(new ArrayList<>(Collections.singletonList(" Games played ")));
-        for (User aUser : orderedUsersArray) {
+        for (User aUser : sortedUsers) {
             table.get(2).add(" " + aUser.getNumGames());
         }
         table.add(new ArrayList<>(Collections.singletonList(" % of answers correct ")));
-        for (User aUser : orderedUsersArray) {
+        for (User aUser : sortedUsers) {
             table.get(3).add(" " + aUser.getPercentageCorrect() + "% ");
         }
         out.println("\n");
