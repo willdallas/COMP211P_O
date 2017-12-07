@@ -125,23 +125,20 @@ class UserManagement {
     }
 
     private static boolean userAlreadyRegistered(String input) {
-        boolean alreadyRegistered = false;
+        if (userObjects.isEmpty()) {  // Necessary to prevent a "NullPointerException" if no elements in the array have been initialized yet (no users)
+            return false;
+        }
         for (int i = 0; i < User.getUserCount(); i++) {
-            if (userObjects.get(0) == null) {  // Necessary to prevent a "NullPointerException" if no elements in the array have been initialized yet (no users)
-                break;
-            } else if (input.equals(userObjects.get(i).getUsername())) {
-                alreadyRegistered = true;
-                break;
+             if (input.equals(userObjects.get(i).getUsername())) {
+                return true;
             }
         }
-        return alreadyRegistered;
+        return false;
     }
 
     private static int specialCharactersInString(String aString) {
         String specialCharacters = " !\"#$£%&'()*+,./:;<=>?@[\\]^`{|}~";
-
         int numberOfCharacters = 0;
-
         for (int i = 0; i < aString.length(); i++) {
             if (specialCharacters.contains(Character.toString(aString.charAt(i)))) {
                 numberOfCharacters++;

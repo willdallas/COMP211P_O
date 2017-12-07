@@ -20,14 +20,15 @@ class Game {
         currentScore = 0;
     }
 
-    void newGame() { // Checks if a user is logged in, and if so, shows the questions and feedback.
+    void newGame() { // Checks if a user is logged in, and if so, shows the quiz.
         Scanner scan = new Scanner(System.in);
         MiscFunctions.clearScreen();
-
-        if (currentUser != null) {
-
+        if (currentUser == null) {
+            out.println(MiscFunctions.getStringWithBorder("Please login to play", false));
+            out.print("\n\n\tPress enter to return to the menu: ");
+            scan.nextLine();
+        } else {
             Question[] questions = createRandomizedQuestionArray();
-
             for (int i = 0; i < questions.length; i++) {
                 MiscFunctions.clearScreen();
                 out.println(MiscFunctions.getStringWithBorder("Question " + (i + 1), false));
@@ -37,10 +38,6 @@ class Game {
             displaySummary();
             currentUser.setNumGames(currentUser.getNumGames() + 1);
             currentUser.setTotalScore(currentUser.getTotalScore() + currentScore);
-        } else {
-            out.println(MiscFunctions.getStringWithBorder("Please login to play", false));
-            out.print("\n\n\tPress enter to return to the menu: ");
-            scan.nextLine();
         }
     }
 
@@ -70,14 +67,11 @@ class Game {
             questionsAnswered++;
             questionOutcome = -1;
         }
-
         displayFeedback(questionOutcome, aQuestion);
     }
 
     private void displayFeedback(int questionOutcome, Question aQuestion) {
-
         Scanner scan = new Scanner(System.in);
-
         String outcome = "";
         MiscFunctions.clearScreen();
 
