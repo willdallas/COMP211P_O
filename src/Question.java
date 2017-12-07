@@ -10,6 +10,11 @@ class Question {
         question = questionInput;
         allAnswers = new ArrayList<>(answersInput);
         correctAnswer = answersInput.get(answersInput.size() - 1);
+
+        if (!isQuestionOK(this)) {
+            MiscFunctions.clearScreen();
+            throw new IllegalArgumentException("question.txt contains illegal entries");
+        }
     }
 
     String getQuestion() {
@@ -18,6 +23,10 @@ class Question {
 
     String getCorrectAnswer() {
         return correctAnswer;
+    }
+
+    ArrayList<String> getAllAnswers() {
+        return new ArrayList<>(allAnswers);
     }
 
     ArrayList<String> getRandomAnswerArray() {
@@ -43,5 +52,14 @@ class Question {
         questionString += ("\n\t\tCorrect answer: " + correctAnswer);
 
         return questionString;
+    }
+
+    private static boolean isQuestionOK(Question aQuestion) {
+        for (int i = 0; i < aQuestion.getAllAnswers().size(); i++) {
+            if (aQuestion.getAllAnswers().get(i).length() < 0) {
+                return false;
+            }
+        }
+        return aQuestion.getQuestion().length() > 0;
     }
 }

@@ -17,10 +17,10 @@ class User implements Comparable<User> {
         numGames = numGamesInput;
         totalScore = totalScoreInput;
 
-        if (!UserManagement.isUserOK(this)) {  // Throws exception if user being created has invalid attributes
+        if (!isUserOK(this)) {  // Throws exception if user being created has invalid attributes
+            MiscFunctions.clearScreen();
             throw new IllegalArgumentException("userdata.txt file contains illegal entries");
         }
-
         userCount++;
     }
 
@@ -31,7 +31,6 @@ class User implements Comparable<User> {
         lastName = lastNameInput;
         numGames = 0; // Default values for numGames and totalScore
         totalScore = 0;
-
         userCount++;
     }
 
@@ -88,6 +87,15 @@ class User implements Comparable<User> {
 
     public String toString() { // Prints the user's data in a format consistent with the userdata.txt format
         return this.firstName + "," + this.lastName + "," + this.username + "," + this.password + "," + this.numGames + "," + this.totalScore;
+    }
+
+    private static boolean isUserOK(User aUser) { // Checks if User object fulfills requirements. (64 is length of password hash)
+        return UserManagement.isUsernameOK(aUser.getUsername()) &&
+                UserManagement.isNameOK(aUser.getFirstName()) &&
+                UserManagement.isNameOK(aUser.getLastName()) &&
+                aUser.getPassword().length() == 64 &&
+                aUser.getNumGames() >= 0 &&
+                aUser.getTotalScore() >= 0;
     }
 
     static int getUserCount() {

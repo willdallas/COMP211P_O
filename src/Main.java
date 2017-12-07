@@ -5,13 +5,13 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        FileManagement.createUserArray();
-        FileManagement.createQuestionStringArray();
+        UserFileManagement.createUsers();
+        QuestionFileManagement.createQuestions();
 
         menu();
         out.println();
 
-        FileManagement.writeUsers();
+        UserFileManagement.writeUsers();
     }
 
     private static void menu() {

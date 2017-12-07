@@ -7,7 +7,7 @@ class UserManagement {
 
     private static Scanner scan = new Scanner(System.in);
     private static User userLoggedIn = null;  // Stores the array index number corresponding to last user logged in. null by default (test for whether user has logged in).
-    private static ArrayList<User> userObjects = new ArrayList<User>(FileManagement.getNumUsersInFile());
+    private static ArrayList<User> userObjects = new ArrayList<User>();
 
     static void login() {
         MiscFunctions.clearScreen();
@@ -68,24 +68,19 @@ class UserManagement {
         userObjects.add(new User(firstNameInput, lastNameInput, usernameInput, MiscFunctions.hashString(passwordInput)));
     }
 
-    static boolean isUserOK(User userObject) {
-        return isNameOK(userObject.getFirstName()) && isNameOK(userObject.getLastName()) &&  // Checks if User object fulfills requirements. (64 is length of password hash)
-                (userObject.getPassword().length() == 64) && isUsernameOK(userObject.getUsername());
-    }
-
     static User getUserLoggedIn() {
         return userLoggedIn;
     }
 
-    static void addAUser(int index, User aUser) {
-        userObjects.add(index, aUser);
+    static void addAUser(User aUser) {
+        userObjects.add(aUser);
     }
 
     static ArrayList<User> getUserObjects() {
-        return new ArrayList<User>(userObjects);
+        return new ArrayList<>(userObjects);
     }
 
-    private static boolean isUsernameOK(String input) {
+    static boolean isUsernameOK(String input) {
         boolean usernameAcceptable;
         if (input == null) {
             usernameAcceptable = false;
@@ -115,7 +110,7 @@ class UserManagement {
         return passwordAcceptable;
     }
 
-    private static boolean isNameOK(String input) {
+    static boolean isNameOK(String input) {
         boolean nameAcceptable;
         if (input == null) {
             nameAcceptable = false;

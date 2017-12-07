@@ -28,9 +28,9 @@ class LeaderBoard {
                 table.get(0).add(" Hasn't played yet! ");
             }
         }
-        table.add(new ArrayList<>(Collections.singletonList(" Username (First Name) ")));
+        table.add(new ArrayList<>(Collections.singletonList(" Name  (Username) ")));
         for (User aUser : sortedUsers) {
-            table.get(1).add(" " + aUser.getUsername() + " (" + aUser.getFirstName() + ") ");
+            table.get(1).add(" " + aUser.getFirstName() + " " + aUser.getLastName() + "  (" + aUser.getUsername() + ") ");
         }
         table.add(new ArrayList<>(Collections.singletonList(" Games played ")));
         for (User aUser : sortedUsers) {

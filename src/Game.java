@@ -5,8 +5,7 @@ import java.util.Scanner;
 
 class Game {
 
-    private static int numQuestionsInFile = FileManagement.getNumQuestions();
-    private static String[] questionStrings = new String[numQuestionsInFile];
+    private static ArrayList<Question> questionObjects = new ArrayList<>();
     private static final int QUESTIONS_PER_GAME = 10;
 
     private User currentUser;  // Instance variables used for each unique game
@@ -121,37 +120,24 @@ class Game {
         boolean isQuestionNew;
         String usedQuestionNumbers = ""; // Stores list of index numbers of questions already put into array
 
-        for (int i = 0; i < QUESTIONS_PER_GAME; i++) {
+        for (int i = 0; i < QUESTIONS_PER_GAME; i++) {  // Finds a random (without replacement) integer corresponding to an entry in the questionObjects array
             do
-            {                // Finds a random (without replacement) integer corresponding to an entry in the questionStrings array
-                randomInt = MiscFunctions.randomIntBetweenNumbers(0, numQuestionsInFile - 1);
+            {
+                randomInt = MiscFunctions.randomIntBetweenNumbers(0, questionObjects.size() - 1);
                 isQuestionNew = !usedQuestionNumbers.contains(Integer.toString(randomInt));
             } while (!isQuestionNew);
 
-            randomizedQuestions[i] = createQuestionObject(randomInt);
+            randomizedQuestions[i] = questionObjects.get(randomInt);
             usedQuestionNumbers += randomInt + ",";
         }
         return randomizedQuestions;
     }
 
-    private Question createQuestionObject(int n) { // Returns a question object corresponding to a particular entry in the questionStrings array
-        String question;
-        ArrayList<String> answers = new ArrayList<String>();
-
-        Scanner scanLine = new Scanner(questionStrings[n]).useDelimiter(",");
-
-        question = scanLine.next();
-        while (scanLine.hasNext()) {
-            answers.add(scanLine.next());
-        }
-        return new Question(question, answers);
+    static void addAQuestion(Question aQuestion) {
+        questionObjects.add(aQuestion);
     }
 
     static int getQuestionsPerGame() {
         return QUESTIONS_PER_GAME;
-    }
-
-    static void addQuestionString(int index, String aQuestionString) {
-        questionStrings[index] = aQuestionString;
     }
 }
