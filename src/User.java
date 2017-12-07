@@ -94,8 +94,8 @@ class User implements Comparable<User> {
                 UserManagement.isNameOK(aUser.getFirstName()) &&
                 UserManagement.isNameOK(aUser.getLastName()) &&
                 aUser.getPassword().length() == 64 &&
-                aUser.getNumGames() >= 0 &&
-                aUser.getTotalScore() >= 0;
+                aUser.getNumGames() >= 0 && aUser.getTotalScore() >= 0 &&
+                aUser.getNumGames() * Game.getQuestionsPerGame() >= aUser.getTotalScore();
     }
 
     static int getUserCount() {
