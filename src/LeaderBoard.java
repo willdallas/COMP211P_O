@@ -9,7 +9,6 @@ class LeaderBoard {
     private static ArrayList<ArrayList<String>> table;
     private static int[] colWidths;
     private static int totalWidth;
-    private static final char[] borderChars = new char[]{'╭', '╮', '╰', '╯', '├', '┼', '┤', '┴', '┬', '─', '│'};
 
     static void leaderBoard() {
         Scanner scan = new Scanner(System.in);
@@ -20,7 +19,7 @@ class LeaderBoard {
         Collections.sort(orderedUsersArray, Collections.<User>reverseOrder()); // Orders array by percentage correct, using compareTo() method in User
 
         MiscFunctions.clearScreen();
-        out.print(MiscFunctions.getStringWithBorder("Leader Board"));
+        out.print(MiscFunctions.getStringWithBorder("Leader Board", false));
 
         table.add(new ArrayList<>(Collections.singletonList(" Rank ")));
         for (int i = 0; i < orderedUsersArray.size(); i++) {
@@ -49,14 +48,14 @@ class LeaderBoard {
         scan.nextLine();
     }
 
-    private static String formatTable() {  // Used to dynamically format a table based on the lengths of entries
+    private static String formatTable() {  // Used to dynamically format a table based on the number and lengths of entries
         String tableString = "";
         colWidths = new int[]{getMaxLength(table.get(0)), getMaxLength(table.get(1)), getMaxLength(table.get(2)), getMaxLength(table.get(3))};
         for (int aColumnWidth : colWidths) {
             totalWidth += aColumnWidth;
         }
         padStrings();
-        for (int i = 0; i < table.get(0).size() + 2; i++) {
+        for (int i = 0; i < table.get(0).size() + 3; i++) {
             tableString += getRow(i);
         }
         return tableString;
@@ -64,22 +63,22 @@ class LeaderBoard {
 
     private static String getRow(int rowNumber) {
         String row = "\t";
-        if (rowNumber == 0 || rowNumber == 2 || rowNumber == table.get(0).size() + 1) {
-            row += (rowNumber > 2) ? borderChars[2] : (rowNumber == 0) ? borderChars[0] : borderChars[4];
+        if (rowNumber == 0 || rowNumber == 2 || rowNumber == table.get(0).size() + 2) {
+            row += (rowNumber > 2) ? "╰" : (rowNumber == 0) ? "╭" : "├";
             for (int i = 0; i < totalWidth + 3; i++) {
                 if (i == colWidths[0] || i == colWidths[0] + colWidths[1] + 1 || i == totalWidth - colWidths[3] + 2) {
-                    row += (rowNumber > 2) ? borderChars[7] : (rowNumber == 0) ? borderChars[8] : borderChars[5];
+                    row += (rowNumber > 2) ? "┴" : (rowNumber == 0) ? "┬" : "┼";
                 } else {
-                    row += borderChars[9];
+                    row += "─";
                 }
             }
-            row += (rowNumber > 2) ? borderChars[3] : (rowNumber == 0) ? borderChars[1] : borderChars[6];
+            row += (rowNumber > 2) ? "╯" : (rowNumber == 0) ? "╮" : "┤";
             return row + "\n";
         }
         for (ArrayList<String> aColumn : table) {
-            row += (borderChars[10] + aColumn.get(rowNumber - 1));
+            row += (rowNumber == 1) ? ("│" + aColumn.get(0)) : ("│" + aColumn.get(rowNumber - 2));
         }
-        row += borderChars[10];
+        row += "│";
         return row + "\n";
     }
 

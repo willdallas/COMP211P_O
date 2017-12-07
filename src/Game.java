@@ -31,7 +31,7 @@ class Game {
 
             for (int i = 0; i < questions.length; i++) {
                 MiscFunctions.clearScreen();
-                out.println(MiscFunctions.getStringWithBorder("Question " + (i + 1)));
+                out.println(MiscFunctions.getStringWithBorder("Question " + (i + 1), false));
                 displayQuestion(questions[i]);
             }
 
@@ -39,8 +39,8 @@ class Game {
             currentUser.setNumGames(currentUser.getNumGames() + 1);
             currentUser.setTotalScore(currentUser.getTotalScore() + currentScore);
         } else {
-            out.println(MiscFunctions.getStringWithBorder("Please login to play"));
-            out.print("\n\n\n\n\n\n\tPress enter to return to the menu: ");
+            out.println(MiscFunctions.getStringWithBorder("Please login to play", false));
+            out.print("\n\n\tPress enter to return to the menu: ");
             scan.nextLine();
         }
     }
@@ -90,11 +90,11 @@ class Game {
                 outcome = "Skipped";
                 break;
             case 1:
-                outcome = "Correct!";
+                outcome = "Correct! Well done!";
                 break;
         }
 
-        out.println(MiscFunctions.getStringWithBorder(outcome));
+        out.println(MiscFunctions.getStringWithBorder(outcome, false));
         out.println("\n\t\"" + aQuestion.getCorrectAnswer() + "\" is the synonym of \"" + aQuestion.getQuestion() + "\"");
         out.println("\n\tQuestions answered: \t" + questionsAnswered + "/" + QUESTIONS_PER_GAME);
         out.println("\tQuestions skipped:  \t" + questionsSkipped + "/" + QUESTIONS_PER_GAME);
@@ -107,11 +107,11 @@ class Game {
         Scanner scan = new Scanner(System.in);
 
         MiscFunctions.clearScreen();
-        out.println(MiscFunctions.getStringWithBorder("Game over!"));
+        out.println(MiscFunctions.getStringWithBorder("Game over!", false));
         out.println("\n\tQuestions answered: \t" + questionsAnswered + "/" + QUESTIONS_PER_GAME);
-        out.println("\tQuestions skipped:  \t" + questionsSkipped + "/" + QUESTIONS_PER_GAME);
-        out.println("\n\tTotal score:      \t" + currentScore + "/" + QUESTIONS_PER_GAME);
-        out.print("\n\n\n\n\n\tPress enter to continue: ");
+        out.println("\tQuestions skipped: \t" + questionsSkipped + "/" + QUESTIONS_PER_GAME);
+        out.println("\n\tTotal score:\n" + MiscFunctions.getStringWithBorder(currentScore + "/" + QUESTIONS_PER_GAME, true));
+        out.print("\n\n\n\tPress enter to continue: ");
         scan.nextLine();
     }
 

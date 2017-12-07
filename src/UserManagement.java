@@ -13,7 +13,7 @@ class UserManagement {
         MiscFunctions.clearScreen();
         boolean loginSuccess = false;
 
-        out.print(MiscFunctions.getStringWithBorder("Login"));
+        out.print(MiscFunctions.getStringWithBorder("Login", false));
         out.print("\n\n\tPlease enter your username: ");
         String usernameInput = scan.nextLine();
 
@@ -45,7 +45,7 @@ class UserManagement {
         String usernameInput = null;
         String passwordInput = null;
 
-        out.print(MiscFunctions.getStringWithBorder("Register"));
+        out.print(MiscFunctions.getStringWithBorder("Register", false));
         while (!isNameOK(firstNameInput)) {
             out.print("\n\n\tPlease enter your first name: ");
             firstNameInput = scan.nextLine();

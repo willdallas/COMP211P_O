@@ -70,12 +70,12 @@ class MiscFunctions { //  This class is designed to be expanded throughout the p
         }
     }
 
-    static String getStringWithBorder(String aString) {
+    static String getStringWithBorder(String aString, boolean tab) {
         if (aString.equals("")) {
             return "";
         }
-        String upperBorder = "╭";
-        String lowerBorder = "╰";
+        String upperBorder = tab ? "\t╭" : "╭";
+        String lowerBorder = tab ? "\t╰" : "╰";
         for (int i = 0; i < aString.length() + 2; i++) {
             upperBorder += "─";
             lowerBorder += "─";
@@ -83,6 +83,6 @@ class MiscFunctions { //  This class is designed to be expanded throughout the p
         upperBorder += "╮";
         lowerBorder += "╯";
         aString = "│ " + aString + " │";
-        return upperBorder + "\n" + aString + "\n" + lowerBorder;
+        return upperBorder + "\n" + (tab ? "\t" : "") + aString + "\n" + lowerBorder;
     }
 }

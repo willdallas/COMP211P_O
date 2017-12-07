@@ -21,13 +21,13 @@ public class Main {
         while (!exit) {
 
             if (UserManagement.getUserLoggedIn() != null) {
-                menuText = "Player: " + UserManagement.getUserLoggedIn().getUsername() + " │ Score: " + UserManagement.getUserLoggedIn().getTotalScore();
+                menuText = "Player logged in: " + UserManagement.getUserLoggedIn().getUsername() + " │ Score: " + UserManagement.getUserLoggedIn().getTotalScore();
             } else {
                 menuText = "Welcome to the Word Game!";
             }
 
             MiscFunctions.clearScreen();
-            out.print(MiscFunctions.getStringWithBorder(menuText) + "\n\n");
+            out.print(MiscFunctions.getStringWithBorder(menuText, false) + "\n\n");
 
             out.print("\tLogin (L)\n" +
                     "\tRegister (R)\n" +
@@ -73,7 +73,7 @@ public class Main {
 
         MiscFunctions.clearScreen();
 
-        out.println(MiscFunctions.getStringWithBorder("Game Instructions:") +
+        out.println(MiscFunctions.getStringWithBorder("Game Instructions:", false) +
                 "\n\n\t* You need to register and login to play the game\n\t" +
                 "* The program will display a word, and a list of other words\n\t" +
                 "* You need find the word that is a synonym of the first\n\t" +
