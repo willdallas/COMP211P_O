@@ -81,7 +81,7 @@ class LeaderBoard {
         return row + "\n";
     }
 
-    private static int getMaxLength(ArrayList<String> anArrayList) {
+    private static int getMaxLength(ArrayList<String> anArrayList) { // Returns length of longest String in a column
         int maxStringLength = 0;
         for (String anEntry : anArrayList) {
             if (anEntry.length() > maxStringLength) {

@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import static java.lang.System.out;
 
-class MiscFunctions { //  This class is designed to be expanded throughout the project with functions useful to multiple classes
+class MiscFunctions {
 
     static void clearScreen() { //  Clears the screen
         System.out.print("\u001b[2J" + "\u001b[H");
@@ -62,9 +62,7 @@ class MiscFunctions { //  This class is designed to be expanded throughout the p
                 } else {
                     out.print("\tInvalid input - please try again: ");
                 }
-            } catch (StringIndexOutOfBoundsException e) {
-                out.print("\tInvalid input - please try again: ");
-            } catch (NumberFormatException e) {
+            } catch (StringIndexOutOfBoundsException | NumberFormatException e) {
                 out.print("\tInvalid input - please try again: ");
             }
         }
