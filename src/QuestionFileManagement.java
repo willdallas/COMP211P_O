@@ -9,7 +9,6 @@ class QuestionFileManagement {
 
         Scanner questionFileScanner = getFileScanner();
 
-
         ArrayList<String> answers;
         String question;
         Scanner scanLine;

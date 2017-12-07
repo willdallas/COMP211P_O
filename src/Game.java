@@ -121,8 +121,7 @@ class Game {
         String usedQuestionNumbers = ""; // Stores list of index numbers of questions already put into array
 
         for (int i = 0; i < QUESTIONS_PER_GAME; i++) {  // Finds a random (without replacement) integer corresponding to an entry in the questionObjects array
-            do
-            {
+            do {
                 randomInt = MiscFunctions.randomIntBetweenNumbers(0, questionObjects.size() - 1);
                 isQuestionNew = !usedQuestionNumbers.contains(Integer.toString(randomInt));
             } while (!isQuestionNew);
