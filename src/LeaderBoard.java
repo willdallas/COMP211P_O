@@ -40,8 +40,10 @@ class LeaderBoard {
         for (User aUser : sortedUsers) {
             table.get(3).add(" " + aUser.getPercentageCorrect() + "% ");
         }
+
         out.println("\n");
         out.print(formatTable());
+
         out.print("\n\n\tPress enter to return to the menu: ");
         scan.nextLine();
     }
@@ -49,10 +51,13 @@ class LeaderBoard {
     private static String formatTable() {  // Used to dynamically format a table based on the number and lengths of entries
         String tableString = "";
         colWidths = new int[]{getMaxLength(table.get(0)), getMaxLength(table.get(1)), getMaxLength(table.get(2)), getMaxLength(table.get(3))};
+
         for (int aColumnWidth : colWidths) {
             totalWidth += aColumnWidth;
         }
+
         padStrings();
+
         for (int i = 0; i < table.get(0).size() + 3; i++) {
             tableString += getRow(i);
         }
@@ -82,6 +87,7 @@ class LeaderBoard {
 
     private static int getMaxLength(ArrayList<String> anArrayList) { // Returns length of longest String in a column
         int maxStringLength = 0;
+
         for (String anEntry : anArrayList) {
             if (anEntry.length() > maxStringLength) {
                 maxStringLength = anEntry.length();

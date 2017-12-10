@@ -22,6 +22,7 @@ class Game {
 
     void newGame() { // Checks if a user is logged in, and if so, shows the quiz.
         Scanner scan = new Scanner(System.in);
+
         MiscFunctions.clearScreen();
         if (currentUser == null) {
             out.println(MiscFunctions.getStringWithBorder("Please login to play", false));
@@ -42,7 +43,6 @@ class Game {
     }
 
     private void displayQuestion(Question aQuestion) {
-
         ArrayList<String> randomAnswerArray = aQuestion.getRandomAnswerArray();
 
         out.print("\n\tNew Word: " + aQuestion.getQuestion() + "\n");
@@ -52,6 +52,8 @@ class Game {
 
         out.println("\n\n\tEnter '5' to skip the question.");
         out.print("\n\tEnter your answer: ");
+
+
 
         int userInput = MiscFunctions.takeIntInputBetweenInts(1, 5);
 
@@ -67,6 +69,7 @@ class Game {
             questionsAnswered++;
             questionOutcome = -1;
         }
+
         displayFeedback(questionOutcome, aQuestion);
     }
 
@@ -88,10 +91,12 @@ class Game {
         }
 
         out.println(MiscFunctions.getStringWithBorder(outcome, false));
+
         out.println("\n\t\"" + aQuestion.getCorrectAnswer() + "\" is the synonym of \"" + aQuestion.getQuestion() + "\"");
         out.println("\n\tQuestions answered: \t" + questionsAnswered + "/" + QUESTIONS_PER_GAME);
         out.println("\tQuestions skipped:  \t" + questionsSkipped + "/" + QUESTIONS_PER_GAME);
         out.println("\n\tCurrent score:      \t" + currentScore + "/" + QUESTIONS_PER_GAME);
+
         out.print("\n\n\n\tPress enter to continue: ");
         scan.nextLine();
     }
@@ -101,9 +106,11 @@ class Game {
 
         MiscFunctions.clearScreen();
         out.println(MiscFunctions.getStringWithBorder("Game over!", false));
+
         out.println("\n\tQuestions answered: \t" + questionsAnswered + "/" + QUESTIONS_PER_GAME);
         out.println("\tQuestions skipped: \t" + questionsSkipped + "/" + QUESTIONS_PER_GAME);
         out.println("\n\tTotal score:\n" + MiscFunctions.getStringWithBorder(currentScore + "/" + QUESTIONS_PER_GAME, true));
+
         out.print("\n\n\n\tPress enter to continue: ");
         scan.nextLine();
     }

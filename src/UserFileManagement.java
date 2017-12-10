@@ -33,7 +33,6 @@ class UserFileManagement {
     }
 
     static void createUsers() { // Run at the start of the game, to create array of users from file data
-
         Scanner userFileScanner = getFileScanner();
 
         String firstName = null;
@@ -67,6 +66,7 @@ class UserFileManagement {
 
     private static Scanner getFileScanner() { // Returns Scanner object for above class to use, and deals with potential problems with the file
         Scanner userFileScanner = null;
+
         try {
             userFileScanner = new Scanner(new FileInputStream("userdata.txt"));
         } catch (FileNotFoundException e) {

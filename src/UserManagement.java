@@ -81,37 +81,34 @@ class UserManagement {
     }
 
     static boolean isUsernameOK(String input) {
-        boolean usernameAcceptable;
         if (input == null) {
-            usernameAcceptable = false;
+            return false;
         } else if (!userAlreadyRegistered(input) && !((specialCharactersInString(input) > 0) || input.length() < 2 || Character.isDigit(input.charAt(0)))) {
-            usernameAcceptable = true;
+            return true;
         } else if (userAlreadyRegistered(input)) {
             out.print("\nSorry! This username has already been registered.");
-            usernameAcceptable = false;
+            return false;
         } else {
             out.print("\nSorry! Your username must be at least two characters long,\n" +
                     "start with a letter, and contain no symbols.");
-            usernameAcceptable = false;
+            return false;
         }
-        return usernameAcceptable;
     }
 
     private static boolean isPasswordOK(String input) {
-        boolean passwordAcceptable;
         if (input == null) {
-            passwordAcceptable = false;
+            return false;
         } else if (input.length() >= 5) {
-            passwordAcceptable = true;
+            return true;
         } else {
             out.print("\nSorry! Your password must be at least five characters long\n");
-            passwordAcceptable = false;
+            return false;
         }
-        return passwordAcceptable;
     }
 
     static boolean isNameOK(String input) {
         boolean nameAcceptable;
+
         if (input == null) {
             nameAcceptable = false;
         } else if (specialCharactersInString(input) == 0 && input.length() > 1) {
@@ -139,6 +136,7 @@ class UserManagement {
     private static int specialCharactersInString(String aString) {
         String specialCharacters = " !\"#$£%&'()*+,./:;<=>?@[\\]^`{|}~";
         int numberOfCharacters = 0;
+
         for (int i = 0; i < aString.length(); i++) {
             if (specialCharacters.contains(Character.toString(aString.charAt(i)))) {
                 numberOfCharacters++;

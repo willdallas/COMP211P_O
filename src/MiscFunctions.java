@@ -19,6 +19,7 @@ class MiscFunctions {
 
     static String hashString(String textInput) { // Hashes string input. Used to secure password storage.
         String hashedOutput = null;
+
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
             messageDigest.update(textInput.getBytes());

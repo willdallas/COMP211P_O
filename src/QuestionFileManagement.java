@@ -6,7 +6,6 @@ import java.util.Scanner;
 class QuestionFileManagement {
 
     static void createQuestions() {  // Runs at start of game to create array of strings from the lines of question.txt file
-
         Scanner questionFileScanner = getFileScanner();
 
         ArrayList<String> answers;
@@ -52,5 +51,4 @@ class QuestionFileManagement {
 
         return questionFileScanner;
     }
-
 }
