@@ -18,27 +18,32 @@ class LeaderBoard {
         Collections.sort(sortedUsers, Collections.<User>reverseOrder()); // Orders array by percentage correct, using compareTo() method in User
 
         MiscFunctions.clearScreen();
-        out.print(MiscFunctions.getStringWithBorder("Leader Board", false));
+        out.print(MiscFunctions.getStringWithBorder("Leader Board"));
 
-        table.add(new ArrayList<>(Collections.singletonList(" Rank ")));
-        for (int i = 0; i < sortedUsers.size(); i++) {
-            if (sortedUsers.get(i).getNumGames() != 0) {
-                table.get(0).add(" " + (i + 1));
-            } else {
-                table.get(0).add(" Hasn't played yet! ");
-            }
-        }
+
         table.add(new ArrayList<>(Collections.singletonList(" Name  (Username) ")));
         for (User aUser : sortedUsers) {
-            table.get(1).add(" " + aUser.getFirstName() + " " + aUser.getLastName() + "  (" + aUser.getUsername() + ") ");
+            table.get(0).add(" " + aUser.getFirstName() + " " + aUser.getLastName() + "  (" + aUser.getUsername() + ") ");
         }
         table.add(new ArrayList<>(Collections.singletonList(" Games played ")));
         for (User aUser : sortedUsers) {
-            table.get(2).add(" " + aUser.getNumGames());
+            table.get(1).add(" " + aUser.getNumGames());
         }
-        table.add(new ArrayList<>(Collections.singletonList(" % of answers correct ")));
+        table.add(new ArrayList<>(Collections.singletonList(" % correct ")));
         for (User aUser : sortedUsers) {
-            table.get(3).add(" " + aUser.getPercentageCorrect() + "% ");
+            if (aUser.getNumGames() != 0) {
+                table.get(2).add(" " + aUser.getPercentageCorrect() + "% ");
+            } else {
+                table.get(2).add(" N/A ");
+            }
+        }
+        table.add(new ArrayList<>(Collections.singletonList(" Avg. time per question ")));
+        for (int i = 0; i < sortedUsers.size(); i++) {
+            if (sortedUsers.get(i).getNumGames() != 0) {
+                table.get(3).add(" " + String.format("%.2f", sortedUsers.get(i).getAverageTimeTaken()) + " seconds ");
+            } else {
+                table.get(3).add(" N/A ");
+            }
         }
 
         out.println("\n");

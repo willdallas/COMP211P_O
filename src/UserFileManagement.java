@@ -41,6 +41,7 @@ class UserFileManagement {
         String password = null;
         int numGames = 0;
         int totalScore = 0;
+        double totalTimeTaken = 0;
         Scanner scanLine;
 
         while (userFileScanner.hasNextLine()) {
@@ -53,13 +54,14 @@ class UserFileManagement {
                 password = scanLine.next();
                 numGames = scanLine.nextInt();
                 totalScore = scanLine.nextInt();
+                totalTimeTaken = scanLine.nextDouble();
             } catch (NoSuchElementException e) {
                 MiscFunctions.clearScreen();
                 System.out.println("\n\tuserdata.txt file has invalid entries\n");
                 System.exit(0);
             }
 
-            UserManagement.addAUser(new User(firstName, lastName, username, password, numGames, totalScore));
+            UserManagement.addAUser(new User(firstName, lastName, username, password, numGames, totalScore, totalTimeTaken));
         }
         userFileScanner.close();
     }

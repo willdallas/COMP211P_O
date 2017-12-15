@@ -6,15 +6,18 @@ class User implements Comparable<User> {
     private String lastName;
     private int numGames;
     private int totalScore;
+    private double totalTimeTaken;
     private static int userCount = 0;
 
-    User(String firstNameInput, String lastNameInput, String usernameInput, String passwordInput, int numGamesInput, int totalScoreInput) { // This constructor is used when creating objects from file
+    User(String firstNameInput, String lastNameInput, String usernameInput,
+         String passwordInput, int numGamesInput, int totalScoreInput, double totalTimeInput) { // This constructor is used when creating objects from file
         username = usernameInput;
         password = passwordInput;
         firstName = firstNameInput;
         lastName = lastNameInput;
         numGames = numGamesInput;
         totalScore = totalScoreInput;
+        totalTimeTaken = totalTimeInput;
 
         if (!isUserOK(this)) {  // Throws exception if user being created has invalid attributes
             MiscFunctions.clearScreen();
@@ -30,14 +33,18 @@ class User implements Comparable<User> {
         lastName = lastNameInput;
         numGames = 0; // Default values for numGames and totalScore
         totalScore = 0;
+        totalTimeTaken = 0;
         userCount++;
     }
 
-    public int compareTo(User otherUser) { // Used to order array of Users by percentage correct (with all players with 0 games played at the end of the list)
-        if (this.getPercentageCorrect() == otherUser.getPercentageCorrect() && this.numGames != 0) {
+    public int compareTo(User otherUser) { // Used to order array of Users by ratio of percentage correct and average time.
+        double thisScore = this.getPercentageCorrect() / (this.getAverageTimeTaken() + 2);
+        double otherScore = otherUser.getPercentageCorrect() / (otherUser.getAverageTimeTaken() + 2);
+
+        if (thisScore == otherScore && this.numGames != 0) {
             return 0;
         }
-        if (this.getPercentageCorrect() < otherUser.getPercentageCorrect() || this.numGames == 0) {
+        if (thisScore < otherScore || this.numGames == 0) {
             return -1;
         } else {
             return 1;
@@ -76,6 +83,18 @@ class User implements Comparable<User> {
         this.totalScore = number;
     }
 
+    void setTotalTimeTaken(double timeTaken) {
+        totalTimeTaken = timeTaken;
+    }
+
+    double getTotalTimeTaken() {
+        return totalTimeTaken;
+    }
+
+    double getAverageTimeTaken() {
+        return totalTimeTaken / (Game.getQuestionsPerGame() * numGames);
+    }
+
     int getPercentageCorrect() {
         if (numGames > 0) {
             return (totalScore * 100) / (numGames * Game.getQuestionsPerGame());
@@ -85,7 +104,8 @@ class User implements Comparable<User> {
     }
 
     public String toString() { // Prints the user's data in a format consistent with the userdata.txt format
-        return this.firstName + "," + this.lastName + "," + this.username + "," + this.password + "," + this.numGames + "," + this.totalScore;
+        return this.firstName + "," + this.lastName + "," + this.username + "," + this.password + "," +
+                this.numGames + "," + this.totalScore + "," + this.totalTimeTaken;
     }
 
     private static boolean isUserOK(User aUser) { // Checks if User object fulfills requirements. (64 is length of password hash)

@@ -30,8 +30,8 @@ class Question {
     }
 
     ArrayList<String> getRandomAnswerArray() {
-        ArrayList<String> nonRandomAnswersArray = new ArrayList<String>(allAnswers);
-        ArrayList<String> randomAnswerArray = new ArrayList<String>();
+        ArrayList<String> nonRandomAnswersArray = new ArrayList<>(allAnswers);
+        ArrayList<String> randomAnswerArray = new ArrayList<>();
         int randomInt;
 
         while (!nonRandomAnswersArray.isEmpty()) {  // Randomly selects entry from nonRandomAnswersArray to add to randomAnswerArray

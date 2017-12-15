@@ -11,6 +11,7 @@ class Game {
     private User currentUser;  // Instance variables used for each unique game
     private int questionsAnswered;
     private int questionsSkipped;
+    private double timeTaken;
     private int currentScore;
 
     Game() {
@@ -18,6 +19,7 @@ class Game {
         questionsAnswered = 0;
         questionsSkipped = 0;
         currentScore = 0;
+        timeTaken = 0;
     }
 
     void newGame() { // Checks if a user is logged in, and if so, shows the quiz.
@@ -25,20 +27,21 @@ class Game {
 
         MiscFunctions.clearScreen();
         if (currentUser == null) {
-            out.println(MiscFunctions.getStringWithBorder("Please login to play", false));
+            out.println(MiscFunctions.getStringWithBorder("Please login to play"));
             out.print("\n\n\tPress enter to return to the menu: ");
             scan.nextLine();
         } else {
             Question[] questions = createRandomizedQuestionArray();
             for (int i = 0; i < questions.length; i++) {
                 MiscFunctions.clearScreen();
-                out.println(MiscFunctions.getStringWithBorder("Question " + (i + 1), false));
+                out.println(MiscFunctions.getStringWithBorder("Question " + (i + 1)));
                 displayQuestion(questions[i]);
             }
 
             displaySummary();
             currentUser.setNumGames(currentUser.getNumGames() + 1);
             currentUser.setTotalScore(currentUser.getTotalScore() + currentScore);
+            currentUser.setTotalTimeTaken(currentUser.getTotalTimeTaken() + timeTaken);
         }
     }
 
@@ -53,9 +56,10 @@ class Game {
         out.println("\n\n\tEnter '5' to skip the question.");
         out.print("\n\tEnter your answer: ");
 
-
-
+        double startTime = (double) System.currentTimeMillis() / 1000; // Used to calculate the time taken for a player to answer
         int userInput = MiscFunctions.takeIntInputBetweenInts(1, 5);
+        double endTime = (double) System.currentTimeMillis() / 1000;
+        timeTaken += endTime - startTime;
 
         int questionOutcome;
         if (userInput == 5) {
@@ -70,10 +74,10 @@ class Game {
             questionOutcome = -1;
         }
 
-        displayFeedback(questionOutcome, aQuestion);
+        displayFeedback(questionOutcome, aQuestion, endTime - startTime);
     }
 
-    private void displayFeedback(int questionOutcome, Question aQuestion) {
+    private void displayFeedback(int questionOutcome, Question aQuestion, double questionTimeTaken) {
         Scanner scan = new Scanner(System.in);
         String outcome = "";
         MiscFunctions.clearScreen();
@@ -90,12 +94,13 @@ class Game {
                 break;
         }
 
-        out.println(MiscFunctions.getStringWithBorder(outcome, false));
+        out.println(MiscFunctions.getStringWithBorder(outcome));
 
         out.println("\n\t\"" + aQuestion.getCorrectAnswer() + "\" is the synonym of \"" + aQuestion.getQuestion() + "\"");
         out.println("\n\tQuestions answered: \t" + questionsAnswered + "/" + QUESTIONS_PER_GAME);
         out.println("\tQuestions skipped:  \t" + questionsSkipped + "/" + QUESTIONS_PER_GAME);
-        out.println("\n\tCurrent score:      \t" + currentScore + "/" + QUESTIONS_PER_GAME);
+        out.println("\n\tTime taken: \t\t" + String.format("%.2f", questionTimeTaken) + " seconds");
+        out.println("\tCurrent score:      \t" + currentScore + "/" + QUESTIONS_PER_GAME);
 
         out.print("\n\n\n\tPress enter to continue: ");
         scan.nextLine();
@@ -105,11 +110,12 @@ class Game {
         Scanner scan = new Scanner(System.in);
 
         MiscFunctions.clearScreen();
-        out.println(MiscFunctions.getStringWithBorder("Game over!", false));
+        out.println(MiscFunctions.getStringWithBorder("Game over!"));
 
-        out.println("\n\tQuestions answered: \t" + questionsAnswered + "/" + QUESTIONS_PER_GAME);
-        out.println("\tQuestions skipped: \t" + questionsSkipped + "/" + QUESTIONS_PER_GAME);
-        out.println("\n\tTotal score:\n" + MiscFunctions.getStringWithBorder(currentScore + "/" + QUESTIONS_PER_GAME, true));
+        out.println("\n\tQuestions answered:\t" + questionsAnswered + "/" + QUESTIONS_PER_GAME);
+        out.println("\tQuestions skipped:\t" + questionsSkipped + "/" + QUESTIONS_PER_GAME);
+        out.println("\n\tAvg. time per question:\t" + String.format("%.2f", timeTaken / (QUESTIONS_PER_GAME)) + "seconds");
+        out.println("\tTotal score:\t" + currentScore + "/" + QUESTIONS_PER_GAME);
 
         out.print("\n\n\n\tPress enter to continue: ");
         scan.nextLine();
