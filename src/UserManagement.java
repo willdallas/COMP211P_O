@@ -126,7 +126,7 @@ class UserManagement {
             return false;
         }
         for (int i = 0; i < User.getUserCount(); i++) {
-             if (input.equals(userObjects.get(i).getUsername())) {
+            if (input.equals(userObjects.get(i).getUsername())) {
                 return true;
             }
         }
