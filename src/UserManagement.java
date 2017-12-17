@@ -7,7 +7,7 @@ class UserManagement {
 
     private static Scanner scan = new Scanner(System.in);
     private static User userLoggedIn = null;  // Stores the array index number corresponding to last user logged in. null by default (test for whether user has logged in).
-    private static ArrayList<User> userObjects = new ArrayList<User>();
+    private static ArrayList<User> userObjects = new ArrayList<>();
 
     static void login() {
         MiscFunctions.clearScreen();
@@ -66,6 +66,7 @@ class UserManagement {
         }
 
         userObjects.add(new User(firstNameInput, lastNameInput, usernameInput, MiscFunctions.hashString(passwordInput)));
+        userLoggedIn = null;  // If a user is logged in before someone registers, this logs them out
     }
 
     static User getUserLoggedIn() {

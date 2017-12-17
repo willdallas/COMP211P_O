@@ -13,8 +13,8 @@ class UserFileManagement {
         PrintWriter clearFile = null;
 
         try {
-            printFile = new PrintWriter(new FileOutputStream("userdata.txt", true));
-            clearFile = new PrintWriter(new FileOutputStream("userdata.txt"));
+            printFile = new PrintWriter(new FileOutputStream("userdata.csv", true));
+            clearFile = new PrintWriter(new FileOutputStream("userdata.csv"));
         } catch (FileNotFoundException e) {
             MiscFunctions.clearScreen();
             System.out.println("\n\tError writing to file.\n");
@@ -57,7 +57,7 @@ class UserFileManagement {
                 totalTimeTaken = scanLine.nextDouble();
             } catch (NoSuchElementException e) {
                 MiscFunctions.clearScreen();
-                System.out.println("\n\tuserdata.txt file has invalid entries\n");
+                System.out.println("\n\tuserdata.csv file has invalid entries\n");
                 System.exit(0);
             }
 
@@ -70,10 +70,10 @@ class UserFileManagement {
         Scanner userFileScanner = null;
 
         try {
-            userFileScanner = new Scanner(new FileInputStream("userdata.txt"));
+            userFileScanner = new Scanner(new FileInputStream("userdata.csv"));
         } catch (FileNotFoundException e) {
             MiscFunctions.clearScreen();
-            System.out.println("\n\tError reading userdata.txt file.\n");
+            System.out.println("\n\tError reading userdata.csv file.\n");
             System.exit(0);
         }
 

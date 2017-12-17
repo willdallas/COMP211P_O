@@ -25,7 +25,7 @@ class QuestionFileManagement {
                 }
             } catch (NoSuchElementException e) {
                 MiscFunctions.clearScreen();
-                System.out.println("\n\tquestions.txt file has invalid entries\n");
+                System.out.println("\n\tquestions.csv file has invalid entries\n");
                 System.exit(0);
             }
 
@@ -37,7 +37,7 @@ class QuestionFileManagement {
         Scanner questionFileScanner = null;
 
         try {
-            questionFileScanner = new Scanner(new FileInputStream("questions.txt"));
+            questionFileScanner = new Scanner(new FileInputStream("questions.csv"));
         } catch (FileNotFoundException e) {
             MiscFunctions.clearScreen();
             System.out.println("\n\tError reading file\n");
@@ -46,7 +46,7 @@ class QuestionFileManagement {
 
         if (!questionFileScanner.hasNext()) {
             MiscFunctions.clearScreen();
-            System.out.println("\n\tquestions.txt file is empty\n");
+            System.out.println("\n\tquestions.csv file is empty\n");
             System.exit(0);
         }
 

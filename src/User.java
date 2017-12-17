@@ -21,7 +21,7 @@ class User implements Comparable<User> {
 
         if (!isUserOK(this)) {  // Throws exception if user being created has invalid attributes
             MiscFunctions.clearScreen();
-            throw new IllegalArgumentException("userdata.txt file contains illegal entries");
+            throw new IllegalArgumentException("userdata.csv file contains illegal entries");
         }
         userCount++;
     }
@@ -38,13 +38,13 @@ class User implements Comparable<User> {
     }
 
     public int compareTo(User otherUser) { // Used to order array of Users by ratio of percentage correct and average time.
-        double thisScore = this.getPercentageCorrect() / (this.getAverageTimeTaken() + 2);
-        double otherScore = otherUser.getPercentageCorrect() / (otherUser.getAverageTimeTaken() + 2);
+        double scoreRatio = this.getPercentageCorrect() / otherUser.getPercentageCorrect();
+        double timeRatio = this.getAverageTimeTaken() / otherUser.getAverageTimeTaken();
 
-        if (thisScore == otherScore && this.numGames != 0) {
-            return 0;
+        if (scoreRatio == 1 && this.numGames != 0) {
+            return (timeRatio == 0) ? 0 : ((timeRatio < 1) ? 1 : -1); // Orders by score first, then by time taken
         }
-        if (thisScore < otherScore || this.numGames == 0) {
+        if (scoreRatio < 1 || this.numGames == 0) {
             return -1;
         } else {
             return 1;
@@ -103,7 +103,7 @@ class User implements Comparable<User> {
         }
     }
 
-    public String toString() { // Prints the user's data in a format consistent with the userdata.txt format
+    public String toString() { // Prints the user's data in a format consistent with the userdata.csv format
         return this.firstName + "," + this.lastName + "," + this.username + "," + this.password + "," +
                 this.numGames + "," + this.totalScore + "," + this.totalTimeTaken;
     }
@@ -114,7 +114,7 @@ class User implements Comparable<User> {
                 UserManagement.isNameOK(aUser.getLastName()) &&
                 aUser.getPassword().length() == 64 &&
                 aUser.getNumGames() >= 0 && aUser.getTotalScore() >= 0 &&
-                aUser.getNumGames() * Game.getQuestionsPerGame() >= aUser.getTotalScore();
+                aUser.getNumGames() * Game.getQuestionsPerGame() >= aUser.getTotalScore(); // Checks that the score, and number of games makes sense
     }
 
     static int getUserCount() {
