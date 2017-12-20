@@ -47,7 +47,7 @@ class UserFileManagement {
         while (userFileScanner.hasNextLine()) {
             scanLine = new Scanner(userFileScanner.nextLine()).useDelimiter(",");
 
-            try {  // Catches exception if to many entries in a line, or wrong data type given
+            try {  // Catches exception if too many entries in a line
                 firstName = scanLine.next();
                 lastName = scanLine.next();
                 username = scanLine.next();

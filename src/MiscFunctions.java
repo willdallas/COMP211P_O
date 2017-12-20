@@ -40,7 +40,7 @@ class MiscFunctions {
         char userInput;
 
         while (true) {
-            try {              // This prevents an exception when return key is pressed with no letter typed in
+            try {            // This prevents an exception when return key is pressed with no letter typed in
                 userInput = scan.nextLine().charAt(0);
                 return userInput;
             } catch (StringIndexOutOfBoundsException e) {

@@ -1,7 +1,7 @@
 class User implements Comparable<User> {
 
     private String username;
-    private String password;
+    private String hashedPassword;
     private String firstName;
     private String lastName;
     private int numGames;
@@ -12,7 +12,7 @@ class User implements Comparable<User> {
     User(String firstNameInput, String lastNameInput, String usernameInput,
          String passwordInput, int numGamesInput, int totalScoreInput, double totalTimeInput) { // This constructor is used when creating objects from file
         username = usernameInput;
-        password = passwordInput;
+        hashedPassword = passwordInput;
         firstName = firstNameInput;
         lastName = lastNameInput;
         numGames = numGamesInput;
@@ -28,7 +28,7 @@ class User implements Comparable<User> {
 
     User(String firstNameInput, String lastNameInput, String usernameInput, String passwordInput) { // This constructor is used when registering new users. Inputs already checked
         username = usernameInput;
-        password = passwordInput;
+        hashedPassword = passwordInput;
         firstName = firstNameInput;
         lastName = lastNameInput;
         numGames = 0; // Default values for numGames and totalScore
@@ -37,14 +37,14 @@ class User implements Comparable<User> {
         userCount++;
     }
 
-    public int compareTo(User otherUser) { // Used to order array of Users by ratio of percentage correct and average time.
-        double scoreRatio = this.getPercentageCorrect() / otherUser.getPercentageCorrect();
-        double timeRatio = this.getAverageTimeTaken() / otherUser.getAverageTimeTaken();
+    public int compareTo(User otherUser) { // Used to order array of Users by percentage correct and average time taken.
+        double scoreDifference = this.getPercentageCorrect() - (otherUser.getPercentageCorrect());
+        double timeDifference = this.getAverageTimeTaken() - otherUser.getAverageTimeTaken();
 
-        if (scoreRatio == 1 && this.numGames != 0) {
-            return (timeRatio == 0) ? 0 : ((timeRatio < 1) ? 1 : -1); // Orders by score first, then by time taken
+        if (scoreDifference == 0 && this.numGames != 0) {
+            return (timeDifference == 0) ? 0 : ((timeDifference < 0) ? 1 : -1); // Orders by score first, then by time taken
         }
-        if (scoreRatio < 1 || this.numGames == 0) {
+        if (scoreDifference < 0 || this.numGames == 0) {
             return -1;
         } else {
             return 1;
@@ -55,8 +55,8 @@ class User implements Comparable<User> {
         return this.username;
     }
 
-    String getPassword() {
-        return this.password;
+    String getHashedPassword() {
+        return this.hashedPassword;
     }
 
     String getFirstName() {
@@ -84,15 +84,15 @@ class User implements Comparable<User> {
     }
 
     void setTotalTimeTaken(double timeTaken) {
-        totalTimeTaken = timeTaken;
+        this.totalTimeTaken = timeTaken;
     }
 
     double getTotalTimeTaken() {
-        return totalTimeTaken;
+        return this.totalTimeTaken;
     }
 
     double getAverageTimeTaken() {
-        return totalTimeTaken / (Game.getQuestionsPerGame() * numGames);
+        return this.totalTimeTaken / (Game.getQuestionsPerGame() * this.numGames);
     }
 
     int getPercentageCorrect() {
@@ -104,15 +104,15 @@ class User implements Comparable<User> {
     }
 
     public String toString() { // Prints the user's data in a format consistent with the userdata.csv format
-        return this.firstName + "," + this.lastName + "," + this.username + "," + this.password + "," +
+        return this.firstName + "," + this.lastName + "," + this.username + "," + this.hashedPassword + "," +
                 this.numGames + "," + this.totalScore + "," + this.totalTimeTaken;
     }
 
-    private static boolean isUserOK(User aUser) { // Checks if User object fulfills requirements. (64 is length of password hash)
+    private static boolean isUserOK(User aUser) { // Checks if User object fulfills requirements. (64 is length of hashedPassword hash)
         return UserManagement.isUsernameOK(aUser.getUsername()) &&
                 UserManagement.isNameOK(aUser.getFirstName()) &&
                 UserManagement.isNameOK(aUser.getLastName()) &&
-                aUser.getPassword().length() == 64 &&
+                aUser.getHashedPassword().length() == 64 &&
                 aUser.getNumGames() >= 0 && aUser.getTotalScore() >= 0 &&
                 aUser.getNumGames() * Game.getQuestionsPerGame() >= aUser.getTotalScore(); // Checks that the score, and number of games makes sense
     }

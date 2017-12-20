@@ -18,7 +18,7 @@ class QuestionFileManagement {
             answers = new ArrayList<>();
             question = null;
 
-            try {  // Catches exception if to many entries in a line, or wrong data type given
+            try {  // Catches exception if too many entries in a line
                 question = scanLine.next();
                 for (int i = 0; i < 4; i++) {
                     answers.add(scanLine.next());

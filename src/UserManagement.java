@@ -24,7 +24,7 @@ class UserManagement {
 
         if (!userObjects.isEmpty()) { // Necessary to prevent a "NullPointerException" if no elements in the array have been initialized yet (no users)
             for (int i = 0; i < User.getUserCount(); i++) { //  Loops through userObject array to check if username & password provided match an existing User object
-                if (usernameInput.equals(userObjects.get(i).getUsername()) && passwordInput.equals(userObjects.get(i).getPassword())) {
+                if (usernameInput.equals(userObjects.get(i).getUsername()) && passwordInput.equals(userObjects.get(i).getHashedPassword())) {
                     userLoggedIn = userObjects.get(i);
                     loginSuccess = true;
                     break;
